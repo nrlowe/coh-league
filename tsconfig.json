@@ -19,6 +19,9 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
+    //Added for firebase 9.9.2 and later conflicting with 
+    // angular 15+ ::: error TS2430: Interface 'DocumentSnapshotExists<T>' incorrectly extends interface 'DocumentSnapshot<DocumentData>'.
+    "skipLibCheck": true, 
     "lib": [
       "ES2022",
       "dom"
