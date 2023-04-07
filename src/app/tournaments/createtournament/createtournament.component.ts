@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Tournament } from 'src/app/models/tournament';
+import { TournamentDetails } from 'src/app/models/tournamentdetails';
 import { TournamentService } from 'src/app/services/tournament.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'createtournament',
@@ -9,10 +11,11 @@ import { TournamentService } from 'src/app/services/tournament.service';
 })
 export class CreateTournament {
 
-  tournament: Tournament = new Tournament();
+  tournament: Tournament = new Tournament(4);
   submitted = false;
+  tournamentDetails? : TournamentDetails;
 
-  constructor(private tournamentService: TournamentService) { }
+  constructor(private tournamentService: TournamentService, private router : Router) { }
 
   saveTutorial(): void {
     this.tournamentService.create(this.tournament).then(() => {
@@ -23,6 +26,10 @@ export class CreateTournament {
 
   newTutorial(): void {
     this.submitted = false;
-    this.tournament = new Tournament();
+    this.tournament = new Tournament(4);
+  }
+
+  createNewTournament(newTournament : Tournament){
+    this.router.navigate(['/viewtournament', newTournament]);
   }
 }
