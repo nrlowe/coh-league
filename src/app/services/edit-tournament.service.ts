@@ -7,7 +7,7 @@ import { TournamentTree } from '../models/tournamenttree';
 @Injectable({
   providedIn: 'root'
 })
-export class TournamentService {
+export class EditTournamentService {
     
 
     constructor() {
@@ -20,19 +20,19 @@ export class TournamentService {
         return tournamenttree;
     }
 
-    createTournamentRounds(tree : TournamentTree, newTournament : Tournament){
+    private createTournamentRounds(tree : TournamentTree, newTournament : Tournament){
         var numberOfRounds = Math.log2(newTournament.players);
         this.createRound(numberOfRounds);
 
     }
 
-    createRound(roundNum : number, ){
+    private createRound(roundNum : number, ){
         var headRoundNode = this.createHeadRoundAndMatchNodes(roundNum);
         this.createNextRound(roundNum, headRoundNode);
     }
 
-    createHeadRoundAndMatchNodes(roundNum : number) : RoundNode {
-        var roundNode = new RoundNode();
+    private createHeadRoundAndMatchNodes(roundNum : number) : RoundNode {
+        var roundNode = new RoundNode([]);
         roundNode.roundId = roundNum;
         var finalMatch = new MatchNode();
         var matchArray = [];
@@ -41,22 +41,32 @@ export class TournamentService {
         return roundNode;
     }
 
-    createNextRound(roundNumber : number, headRoundNode : RoundNode){
+    private createNextRound(roundNumber : number, parentRoundNode : RoundNode){
         if(roundNumber > 0){
-            var newRound = new RoundNode;
-            headRoundNode.previousRound = newRound;
-            newRound.nextRound = headRoundNode;
+            var newRound = new RoundNode([]);
+            newRound.matchs = this.addMatch(parentRoundNode);
+            parentRoundNode.previousRound = newRound;
+            newRound.nextRound = parentRoundNode;
             roundNumber--;
             this.createNextRound(roundNumber, newRound);
         }
     }
 
-    addeMatch() : MatchNode[]{
-        return [];
+    private addMatch(parentRoundNode : RoundNode) : MatchNode[]{
+        var roundMatchs = [];
+        for(var node of parentRoundNode.matchs){
+            node.leftNode = this.creatMatch(node);
+            node.rightNode = this.creatMatch(node);
+            roundMatchs.push(node.leftNode);
+            roundMatchs.push(node.rightNode);
+        }
+        return roundMatchs;
     }
 
-    creatMatch() : MatchNode{
-        return new MatchNode;
+    private creatMatch(parentNode : MatchNode) : MatchNode{
+        var newMatch = new MatchNode();
+        newMatch.parentMatchNode = parentNode;
+        return newMatch;
     }
 
 
