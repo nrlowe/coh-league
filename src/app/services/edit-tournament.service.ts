@@ -15,20 +15,23 @@ export class EditTournamentService {
     }  
     //edit round names? edit match names? 
     createNewTournament(newTournament : Tournament) : TournamentTree{
-        var tournamenttree = new TournamentTree();
-        this.createTournamentRounds(tournamenttree, newTournament);
-        return tournamenttree;
+        return this.createTournamentRounds(newTournament);
     }
 
-    private createTournamentRounds(tree : TournamentTree, newTournament : Tournament){
+    private createTournamentRounds(newTournament : Tournament) : TournamentTree{
+        var tournamentTree = new TournamentTree;
         var numberOfRounds = Math.log2(newTournament.players);
-        this.createRound(numberOfRounds);
+        var roundsArray = this.createRound(numberOfRounds);
+        tournamentTree.rounds = roundsArray;
+        return tournamentTree;
 
     }
 
-    private createRound(roundNum : number, ){
+    private createRound(roundNum : number, ) : RoundNode[]{
         var headRoundNode = this.createHeadRoundAndMatchNodes(roundNum);
-        this.createNextRound(roundNum, headRoundNode);
+        roundNum--;
+        var nodeArray = [headRoundNode];
+        return this.createNextRound(roundNum, headRoundNode, nodeArray);
     }
 
     private createHeadRoundAndMatchNodes(roundNum : number) : RoundNode {
@@ -41,15 +44,19 @@ export class EditTournamentService {
         return roundNode;
     }
 
-    private createNextRound(roundNumber : number, parentRoundNode : RoundNode){
+    private createNextRound(roundNumber : number, parentRoundNode : RoundNode, 
+        nodearray : RoundNode[]) : RoundNode[]{
         if(roundNumber > 0){
+            roundNumber--;
             var newRound = new RoundNode([]);
+            newRound.roundId = roundNumber;
             newRound.matchs = this.addMatch(parentRoundNode);
             parentRoundNode.previousRound = newRound;
             newRound.nextRound = parentRoundNode;
-            roundNumber--;
-            this.createNextRound(roundNumber, newRound);
+            nodearray.push(newRound);
+            this.createNextRound(roundNumber, newRound, nodearray);
         }
+        return nodearray;
     }
 
     private addMatch(parentRoundNode : RoundNode) : MatchNode[]{

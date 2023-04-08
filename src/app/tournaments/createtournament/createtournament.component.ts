@@ -3,6 +3,7 @@ import { Tournament } from 'src/app/models/tournament';
 import { TournamentDetails } from 'src/app/models/tournamentdetails';
 import { TournamentService } from 'src/app/services/tournament.service';
 import { EditTournamentService } from 'src/app/services/edit-tournament.service';
+import { SharedTournamentService } from 'src/app/services/shared-tournament.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,7 +18,7 @@ export class CreateTournament {
   tournamentDetails? : TournamentDetails;
 
   constructor(private tournamentService: TournamentService, private editTournamentService : EditTournamentService
-    ,private router : Router) { }
+    ,private sharedTournamentService : SharedTournamentService, private router : Router) { }
 
   saveTutorial(): void {
     this.tournamentService.create(this.tournament).then(() => {
@@ -33,6 +34,7 @@ export class CreateTournament {
 
   createNewTournament(newTournament : Tournament){
     var tournamentTree = this.editTournamentService.createNewTournament(newTournament);
-    this.router.navigate(['/viewtournament', newTournament]);
+    this.sharedTournamentService.setNewTournament(tournamentTree);
+    this.router.navigate(['/viewtournament', tournamentTree]);
   }
 }

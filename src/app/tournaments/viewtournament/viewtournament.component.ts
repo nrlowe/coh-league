@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Tournament } from 'src/app/models/tournament';
+import { TournamentTree } from 'src/app/models/tournamenttree';
+import { SharedTournamentService } from 'src/app/services/shared-tournament.service';
 
 @Component({
   selector: 'app-viewtournament',
@@ -7,12 +9,16 @@ import { Tournament } from 'src/app/models/tournament';
   styleUrls: ['./viewtournament.component.css']
 })
 export class ViewtournamentComponent implements OnInit{
-  @Input() newTournament? : Tournament;
+  newTournament : any;
   ngOnInit(): void {
+    this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
+      this.newTournament = data;
+    });
+    console.log(this.newTournament.rounds);
     
   }
   
-  constructor(){
+  constructor(private sharedTournamentService : SharedTournamentService){
     
   }
 

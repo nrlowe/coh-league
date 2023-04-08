@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateTournament } from './tournaments/createtournament/createtournament.component';
+import { ViewtournamentComponent } from './tournaments/viewtournament/viewtournament.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { CreateTournament } from './tournaments/createtournament/createtournamen
     NavbarComponent,
     FooterComponent,
     FrontpageComponent,
-    CreateTournament
+    CreateTournament,
+    ViewtournamentComponent
   ],
   imports: [
     BrowserModule,
