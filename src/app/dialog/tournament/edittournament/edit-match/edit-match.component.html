@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Edit Match Details</h1>
+TODO: Allow teams to be custom names, attch player details to teams,
+ allow option to select to be individual vs multiple player teams
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Team Name 1</mat-label>
+    <input matInput [(ngModel)]="data.teamOne">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Team Name 2</mat-label>
+    <input matInput [(ngModel)]="data.teamTwo">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>
