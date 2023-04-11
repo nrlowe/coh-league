@@ -8,7 +8,7 @@
   padding: 40px 0;
 }
 .container {
-  width: 100vh;
+  max-width: 100vh;
   margin: 0 auto;
   display:block;
   display: -webkit-box;
@@ -29,7 +29,7 @@
 .split-two .round {margin: 0 0 0 2.5%;}
 .matchup {margin:0;width: 100%;padding: 10px 0;height:60px;-webkit-transition: all 0.2s;transition: all 0.2s;}
 .matchup:hover{
-  border-color: blue;
+  border-color: green;
   border-style: solid;
 }
 .score {font-size: 11px;text-transform: uppercase;float: right;color: #2C7399;font-weight: bold;font-family: 'Roboto Condensed', sans-serif;position: absolute;right: 5px;}

@@ -1,15 +1,19 @@
 
 
 <!-- test -->
+<!-- should only allow edit of round 1 at start?-->
 <section id="bracket">
     <div class="container">
+        BY DEFAULT ONLY HACE FIRST ROUND EDITABLE? 
         <div class="split split-one">
             <div *ngFor="let round of newTournament.rounds">
-                <div class="round">
+                <div class="round round-one current">
+                    <button mat-button (click)="openRoundEditDialog(round)">Edit Round Details</button>
+                    <div class="round-details">{{round.roundName}}<br/><span class="date">{{round.date}}</span></div>
                     <div *ngFor="let match of round.matchs">
-                        <ul class="matchup">
-                            <li class="team team-top">&nbsp;<span class="score">&nbsp;</span></li>
-                            <li class="team team-bottom">&nbsp;<span class="score">&nbsp;</span></li>
+                        <ul class="matchup" (click)="openEditMatchDialog(match)">
+                            <li class="team team-top">{{match.teamOne}}<span class="score">{{match.teamOneScore}}</span></li>
+                            <li class="team team-bottom">{{match.teamTwo}}<span class="score">{{match.teamTwoScore}}</span></li>
                         </ul>
                     </div>
                 </div>

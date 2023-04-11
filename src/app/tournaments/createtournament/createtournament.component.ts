@@ -5,6 +5,10 @@ import { TournamentService } from 'src/app/services/tournament.service';
 import { EditTournamentService } from 'src/app/services/edit-tournament.service';
 import { SharedTournamentService } from 'src/app/services/shared-tournament.service';
 import { Router } from '@angular/router';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TournamentTree } from 'src/app/models/tournamenttree';
+import { CreatetournamentComponent } from 'src/app/dialog/tournament/createtournament/createtournament.component';
+
 
 @Component({
   selector: 'createtournament',
@@ -13,28 +17,41 @@ import { Router } from '@angular/router';
 })
 export class CreateTournament {
 
-  tournament: Tournament = new Tournament(4);
+  tournament?: TournamentTree;
   submitted = false;
   tournamentDetails? : TournamentDetails;
 
   constructor(private tournamentService: TournamentService, private editTournamentService : EditTournamentService
-    ,private sharedTournamentService : SharedTournamentService, private router : Router) { }
+    ,private sharedTournamentService : SharedTournamentService, private router : Router,
+    public dialog : MatDialog) { }
 
-  saveTutorial(): void {
-    this.tournamentService.create(this.tournament).then(() => {
-      console.log('Created new item successfully!');
-      this.submitted = true;
+  // saveTutorial(): void {
+  //   this.tournamentService.create(this.tournament).then(() => {
+  //     console.log('Created new item successfully!');
+  //     this.submitted = true;
+  //   });
+  // }
+
+  // newTutorial(): void {
+  //   this.submitted = false;
+  //   this.tournament = new Tournament(4);
+  // }
+
+  // createNewTournament(newTournament : Tournament){
+  //   var tournamentTree = this.editTournamentService.createNewTournament(newTournament);
+    
+  //   this.sharedTournamentService.setNewTournament(tournamentTree);
+  //   this.router.navigate(['/viewtournament', tournamentTree]);
+  // }
+
+  createNewtournament(){
+    this.tournament = new TournamentTree;
+    const dialogRef = this.dialog.open(CreatetournamentComponent, {
+      data : this.tournament,
     });
-  }
 
-  newTutorial(): void {
-    this.submitted = false;
-    this.tournament = new Tournament(4);
-  }
-
-  createNewTournament(newTournament : Tournament){
-    var tournamentTree = this.editTournamentService.createNewTournament(newTournament);
-    this.sharedTournamentService.setNewTournament(tournamentTree);
-    this.router.navigate(['/viewtournament', tournamentTree]);
+    dialogRef.afterClosed().subscribe(result => {
+      this.tournament = result;
+    })
   }
 }
