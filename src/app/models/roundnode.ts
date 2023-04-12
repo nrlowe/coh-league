@@ -6,9 +6,8 @@ export class RoundNode {
     previousRound? : RoundNode;
     roundId? : number;
     roundName? : string;
-
+    date? : string;
     constructor(matchs : MatchNode[]){
         this.matchs = matchs;
-
     }
 }

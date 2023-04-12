@@ -2,4 +2,7 @@
     max-width: 300px;
     margin: auto;
   }
-  
+  .container{
+    height: 100vh;
+    color: white;
+  }

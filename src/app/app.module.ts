@@ -19,6 +19,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreateTournament } from './tournaments/createtournament/createtournament.component';
 import { ViewtournamentComponent } from './tournaments/viewtournament/viewtournament.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogOverviewExampleDialog } from './tournaments/viewtournament/viewtournament.component';
+import { MatInputModule } from '@angular/material/input';
+import { DialogModule } from './dialog/dialog.module';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -32,18 +38,24 @@ import { ViewtournamentComponent } from './tournaments/viewtournament/viewtourna
     FooterComponent,
     FrontpageComponent,
     CreateTournament,
-    ViewtournamentComponent
+    ViewtournamentComponent,
+    DialogOverviewExampleDialog
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatDialogModule,
     NgxPaginationModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    DialogModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

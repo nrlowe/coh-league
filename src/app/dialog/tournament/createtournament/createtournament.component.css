@@ -1,0 +1,10 @@
+
+.dialog-window {
+    /* height: auto !important;
+    max-height: calc(100vh - 340px) !important; */
+  }
+mat-form-field
+{
+    width: 50vh;
+    z-index: 100000;
+}

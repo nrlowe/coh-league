@@ -13,7 +13,7 @@ export class EditTournamentService {
     constructor() {
 
     }  
-    //edit round names? edit match names? 
+
     createNewTournament(newTournament : Tournament) : TournamentTree{
         return this.createTournamentRounds(newTournament);
     }
@@ -23,6 +23,8 @@ export class EditTournamentService {
         var numberOfRounds = Math.log2(newTournament.players);
         var roundsArray = this.createRound(numberOfRounds);
         tournamentTree.rounds = roundsArray;
+        tournamentTree.matchTree = tournamentTree.rounds[0].matchs[0];
+        console.log(tournamentTree.matchTree);
         return tournamentTree;
 
     }
@@ -72,6 +74,8 @@ export class EditTournamentService {
 
     private creatMatch(parentNode : MatchNode) : MatchNode{
         var newMatch = new MatchNode();
+        newMatch.teamOneScore = 0;
+        newMatch.teamTwoScore = 2;
         newMatch.parentMatchNode = parentNode;
         return newMatch;
     }

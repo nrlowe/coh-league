@@ -1,5 +1,17 @@
-
+.container{
+    width: auto;
+}
 .footer-contents {
     margin-top: 1vh;
     margin-bottom: 1vh;
+}
+
+.legal{
+    color: white;
+    border-top: 0.5vh solid aliceblue;
+    padding-top: 2px;
+}
+
+.context {
+    text-align: center;
 }

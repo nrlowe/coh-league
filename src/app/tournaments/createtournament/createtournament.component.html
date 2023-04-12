@@ -36,16 +36,29 @@
   <!-- Show three divs/ process of creating tournament-->
   
 <div class="container">
+  <div class="row">
     <div class="col-4">
-      create
-      <button (click)="createNewtournament()">Create New Tournament</button>
+      Create a new tournament -> You can 
+      <ul>
+        <li>Customize Match Formats</li>
+        <li>Customize Round Formats</li>
+      </ul>
     </div>
 
     <div class="col-4">
-      update
+      Update your tournament -> You can 
+      <ul>
+        <li>Update match and game results</li>
+        <li>Indicate winners, publish results to award points to players</li>
+      </ul>
     </div>
 
     <div class="col-4">
-      ????
+      Delete 
+      At any time you can delete your tournament and start again, you can not delete published tournaments
     </div>
+  </div>
+  <div class="row">
+    <button (click)="createNewtournament()">Create New Tournament</button>
+  </div>
 </div>

@@ -7,6 +7,11 @@ export class TournamentTree {
     description? : string;
     rounds? : RoundNode[];
     matchTree? : MatchNode;
+    teamSize? : number;
+    gameFormat? : number;
     playerNumber? : number;
+    gameVersion? : string;
+    startDate? : string;
+    endDate? : string;
     
 }
