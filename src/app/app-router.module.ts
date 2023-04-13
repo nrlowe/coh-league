@@ -8,6 +8,7 @@ import { RankingsComponent } from './rankings/rankings.component';
 import { FrontpageComponent } from './frontpage/frontpage.component';
 import { CreateTournament } from './tournaments/createtournament/createtournament.component';
 import { ViewtournamentComponent } from './tournaments/viewtournament/viewtournament.component';
+import { EdittournamentComponent } from './tournaments/edittournament/edittournament.component';
 
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'tournaments/create', component: CreateTournament},
   { path: 'rankings', component: RankingsComponent},
   { path: 'tools', component: ToolsComponent},
-  { path: 'viewtournament', component: ViewtournamentComponent}
+  { path: 'viewtournament', component: ViewtournamentComponent},
+  { path: 'edittournament', component: EdittournamentComponent}
   
 ];
 

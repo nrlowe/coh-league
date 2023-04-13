@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TournamentTree } from 'src/app/models/tournamenttree';
 import { CreatetournamentComponent } from 'src/app/dialog/tournament/createtournament/createtournament.component';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -17,12 +18,11 @@ import { CreatetournamentComponent } from 'src/app/dialog/tournament/createtourn
 })
 export class CreateTournament {
 
-  tournament?: TournamentTree;
+  tournament: TournamentTree = new TournamentTree();
   submitted = false;
-  tournamentDetails? : TournamentDetails;
 
-  constructor(private tournamentService: TournamentService, private editTournamentService : EditTournamentService
-    ,private sharedTournamentService : SharedTournamentService, private router : Router,
+  constructor(private sharedTournamentService : SharedTournamentService, 
+    private editTournamentService : EditTournamentService, private router : Router,
     public dialog : MatDialog) { }
 
   // saveTutorial(): void {
@@ -45,13 +45,16 @@ export class CreateTournament {
   // }
 
   createNewtournament(){
-    this.tournament = new TournamentTree;
     const dialogRef = this.dialog.open(CreatetournamentComponent, {
       data : this.tournament,
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.tournament = result;
+      if(result.open){
+        this.tournament = this.editTournamentService.createNewTournament(result);
+        this.sharedTournamentService.setNewTournament(this.tournament);
+        this.router.navigate(['/edittournament']);
+      }
     })
   }
 }

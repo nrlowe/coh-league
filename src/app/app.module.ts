@@ -25,6 +25,7 @@ import { DialogOverviewExampleDialog } from './tournaments/viewtournament/viewto
 import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from './dialog/dialog.module';
 import { MatSelectModule } from '@angular/material/select';
+import { EdittournamentComponent } from './tournaments/edittournament/edittournament.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { MatSelectModule } from '@angular/material/select';
     FrontpageComponent,
     CreateTournament,
     ViewtournamentComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    EdittournamentComponent
   ],
   imports: [
     BrowserModule,

@@ -13,5 +13,5 @@ export class TournamentTree {
     gameVersion? : string;
     startDate? : string;
     endDate? : string;
-    
+    open? : boolean | false;
 }

@@ -2,6 +2,7 @@ import { Component, Inject, NgModule } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { TournamentDetails } from 'src/app/models/tournamentdetails';
 import { TournamentTree } from 'src/app/models/tournamenttree';
 import { SharedTournamentService } from 'src/app/services/shared-tournament.service';
 
@@ -16,7 +17,7 @@ import { SharedTournamentService } from 'src/app/services/shared-tournament.serv
   styleUrls: ['./createtournament.component.css']
 })
 export class CreatetournamentComponent {
-  private tournament : TournamentTree = new TournamentTree();
+  private tournament? : TournamentDetails;
   tournamentForm : FormGroup;
   constructor(public dialogRef: MatDialogRef<CreatetournamentComponent>){
       this.tournamentForm = new FormGroup({
@@ -34,8 +35,7 @@ export class CreatetournamentComponent {
 
   submitNewTournament(): void {
     if(this.tournamentForm.valid){
-      this.tournament = this.tournamentForm.value;
-      console.log(this.tournament.title);
+      this.convertFormToTournamentTree();
       this.dialogRef.close(this.tournament);
     }
     
@@ -57,6 +57,15 @@ export class CreatetournamentComponent {
   // hasNumberOfPlayersError(){
     
   // }
+
+  convertFormToTournamentTree(){
+    this.tournament = new TournamentDetails(this.tournamentForm.controls["tournamentTitle"].value, 
+    this.tournamentForm.controls["tournamentTeamSize"].value,
+    this.tournamentForm.controls["tournamentGameFormat"].value,
+    this.tournamentForm.controls["tournamentPlayerNum"].value,
+    this.tournamentForm.controls["tournamentGame"].value,
+    true);
+  }
 
 
 }

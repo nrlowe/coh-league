@@ -3,6 +3,7 @@ import { MatchNode } from '../models/matchnode';
 import { RoundNode } from '../models/roundnode';
 import { Tournament } from '../models/tournament';
 import { TournamentTree } from '../models/tournamenttree';
+import { TournamentDetails } from '../models/tournamentdetails';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,13 @@ export class EditTournamentService {
 
     }  
 
-    createNewTournament(newTournament : Tournament) : TournamentTree{
+    createNewTournament(newTournament : TournamentDetails) : TournamentTree{
         return this.createTournamentRounds(newTournament);
     }
 
-    private createTournamentRounds(newTournament : Tournament) : TournamentTree{
+    private createTournamentRounds(newTournament : TournamentDetails) : TournamentTree{
         var tournamentTree = new TournamentTree;
-        var numberOfRounds = Math.log2(newTournament.players);
+        var numberOfRounds = Math.log2(newTournament.playerNumber);
         var roundsArray = this.createRound(numberOfRounds);
         tournamentTree.rounds = roundsArray;
         tournamentTree.matchTree = tournamentTree.rounds[0].matchs[0];
