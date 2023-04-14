@@ -52,6 +52,10 @@ export class ViewtournamentComponent implements OnInit{
     })
   }
 
+  saveTournament(tournamentTree : TournamentTree){
+    
+  }
+
   
 
 }

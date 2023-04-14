@@ -4,6 +4,7 @@ import { RoundNode } from '../models/roundnode';
 import { Tournament } from '../models/tournament';
 import { TournamentTree } from '../models/tournamenttree';
 import { TournamentDetails } from '../models/tournamentdetails';
+import { GameDetails } from '../models/gameDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,12 @@ export class EditTournamentService {
 
     }  
 
+    private gameFormat : number = 0;
+
     createNewTournament(newTournament : TournamentDetails) : TournamentTree{
-        return this.createTournamentRounds(newTournament);
+        this.gameFormat = newTournament.gameFormat;
+        var tournamentTree = this.createTournamentRounds(newTournament);
+        return this.finalizeTournamentTree(tournamentTree, newTournament);
     }
 
     private createTournamentRounds(newTournament : TournamentDetails) : TournamentTree{
@@ -24,8 +29,9 @@ export class EditTournamentService {
         var numberOfRounds = Math.log2(newTournament.playerNumber);
         var roundsArray = this.createRound(numberOfRounds);
         tournamentTree.rounds = roundsArray;
+        var reversedRounds = tournamentTree.rounds.reverse()
+        tournamentTree.rounds = reversedRounds;
         tournamentTree.matchTree = tournamentTree.rounds[0].matchs[0];
-        console.log(tournamentTree.matchTree);
         return tournamentTree;
 
     }
@@ -75,10 +81,31 @@ export class EditTournamentService {
 
     private creatMatch(parentNode : MatchNode) : MatchNode{
         var newMatch = new MatchNode();
-        newMatch.teamOneScore = 0;
-        newMatch.teamTwoScore = 2;
         newMatch.parentMatchNode = parentNode;
-        return newMatch;
+        return this.addGameDetails(newMatch);
+    }
+
+    private addGameDetails(match : MatchNode) : MatchNode{
+        var gameDetailsArray = [];
+        for(var i = 0; i < this.gameFormat; i++){
+            gameDetailsArray.push(new GameDetails(i + 1));
+        }
+        match.gameDetails = gameDetailsArray;
+        return match;
+    }
+
+    private finalizeTournamentTree(tournamentTree : TournamentTree, 
+        tournamentDetails : TournamentDetails) : TournamentTree{
+        tournamentTree.title = tournamentDetails.title;
+        if(tournamentDetails.description != undefined){
+            tournamentTree.description = tournamentDetails.description;
+        }
+        tournamentTree.teamSize = tournamentDetails.teamSize;
+        tournamentTree.gameFormat = tournamentDetails.gameFormat;
+        tournamentTree.playerNumber = tournamentDetails.playerNumber;
+        tournamentTree.gameVersion = tournamentDetails.gameVersion;
+        tournamentTree.open = tournamentDetails.open;
+        return tournamentTree;
     }
 
 

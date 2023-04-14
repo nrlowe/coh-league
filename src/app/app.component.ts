@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,8 +11,12 @@ export class AppComponent {
   title = 'coh-league';
 
 
-  constructor(){
+  constructor(private router : Router){
 
+  }
+
+  ngOnInit() {
+    this.router.navigate([''])
   }
 
  

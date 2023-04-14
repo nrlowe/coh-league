@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TournamentTree } from 'src/app/models/tournamenttree';
 import { SharedTournamentService } from 'src/app/services/shared-tournament.service';
 
@@ -10,7 +11,7 @@ import { SharedTournamentService } from 'src/app/services/shared-tournament.serv
 export class EdittournamentComponent {
   editTournament? : any;
   bracketView : boolean = false;
-  constructor(private sharedTournamentService : SharedTournamentService){
+  constructor(private sharedTournamentService : SharedTournamentService, private router : Router){
 
   }
 
@@ -18,6 +19,11 @@ export class EdittournamentComponent {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.editTournament = data;
     });
+  }
+
+  proceedToView(tournamentTree : TournamentTree) {
+    this.sharedTournamentService.setNewTournament(tournamentTree);
+    this.router.navigate(['/viewtournament']);
   }
 }
 

@@ -1,3 +1,12 @@
 export class GameDetails{
-    //any stats associated with the game? vps? etc?
+    teamOne? : string;
+    teamTwo? : string;
+    gameNum : number;
+    scoreOne? : number;
+    scoreTwo? : number;
+    gameWinner? : string;
+
+    constructor(gameNum : number){
+        this.gameNum = gameNum;
+    }
 }

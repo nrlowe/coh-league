@@ -1,21 +1,20 @@
-<p>edittournament works!</p>
 <!-- Selector for number of players + fill in the matches for round 1 (dates??)-->
 <!-- After confirming go to customization (round names etc) -->
 <!-- Save option at the bottom of that -> redirect to view the tournament -->
 <div *ngIf="!bracketView" class="container editContainer">
     <!-- for number of players-->
+    <p>test</p>
     <div *ngFor="let round of editTournament.rounds">
         <!-- Match n-->
-        <div *ngFor="let match of round.matches">
-            Team Names
+        <div *ngFor="let match of round.matchs">
             <div class="row">
                 <!-- Team One-->
                 <div class="col-6">
-
+                    <input [(ngModel)]="match.teamOne">
                 </div>
                 <!-- Team Two-->
                 <div class="col-6">
-
+                    <input [(ngModel)]="match.teamTwo">
                 </div>
             </div>
             Team Players <!-- if team games selected-->
@@ -23,10 +22,12 @@
                 <!-- Player n for Team One-->
                 <div class="col-6">
                     <!-- drop down search (type by name too) based on game-->
+                    Enter player name for team <span aria-placeholder="Team One">{{match.teamOne}}</span>
                 </div>
                 <!-- Player n for Team Two-->
                 <div class="col-6">
                     <!-- drop down search (type by name too) based on game-->
+                    Enter player name for team {{match.teamTwo}}
                 </div>
             </div>
         </div>
@@ -36,5 +37,7 @@
 <div *ngIf="bracketView" class="container editContainer">
 
 </div>
+
+<button (click) = "proceedToView(editTournament)">View Tournament</button>
 
 <!-- Option to add new players (update option later)? add steam id -> verify they arenty already in db -->
