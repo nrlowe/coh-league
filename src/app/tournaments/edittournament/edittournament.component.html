@@ -1,6 +1,9 @@
 <!-- Selector for number of players + fill in the matches for round 1 (dates??)-->
 <!-- After confirming go to customization (round names etc) -->
 <!-- Save option at the bottom of that -> redirect to view the tournament -->
+<div class="container">
+<button (click)="brackView()">BrackView</button>
+<button (click)="matchView()">MatchView</button>
 <div *ngIf="!bracketView" class="container editContainer">
     <!-- for number of players-->
     <p>test</p>
@@ -34,10 +37,8 @@
     </div>
 </div>
 
-<div *ngIf="bracketView" class="container editContainer">
-
-</div>
 
 <button (click) = "proceedToView(editTournament)">View Tournament</button>
+</div>
 
 <!-- Option to add new players (update option later)? add steam id -> verify they arenty already in db -->

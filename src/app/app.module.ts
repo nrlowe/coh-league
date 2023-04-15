@@ -21,7 +21,6 @@ import { CreateTournament } from './tournaments/createtournament/createtournamen
 import { ViewtournamentComponent } from './tournaments/viewtournament/viewtournament.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogOverviewExampleDialog } from './tournaments/viewtournament/viewtournament.component';
 import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from './dialog/dialog.module';
 import { MatSelectModule } from '@angular/material/select';
@@ -40,7 +39,6 @@ import { EdittournamentComponent } from './tournaments/edittournament/edittourna
     FrontpageComponent,
     CreateTournament,
     ViewtournamentComponent,
-    DialogOverviewExampleDialog,
     EdittournamentComponent
   ],
   imports: [

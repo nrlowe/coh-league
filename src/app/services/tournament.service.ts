@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Tournament } from '../models/tournament';
-import { BracketsManager } from 'brackets-manager';
 import { TournamentDetails } from '../models/tournamentdetails';
-import { MatchDetails } from '../models/matchdetails';
-import { RoundDetails } from '../models/rounddetails';
 
 @Injectable({
   providedIn: 'root'

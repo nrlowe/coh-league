@@ -6,13 +6,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CreatetournamentComponent } from './tournament/createtournament/createtournament.component';
+import { EditRoundComponent } from './tournament/edittournament/edit-round/editround.component';
 
 
 
 @NgModule({
   declarations: [
     EditMatchComponent,
-    CreatetournamentComponent
+    CreatetournamentComponent,
+    EditRoundComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,6 @@ import { CreatetournamentComponent } from './tournament/createtournament/createt
     MatSelectModule,
     ReactiveFormsModule
   ],
-  exports: [EditMatchComponent, CreatetournamentComponent]
+  exports: [EditMatchComponent, CreatetournamentComponent, EditRoundComponent]
 })
 export class DialogModule { }

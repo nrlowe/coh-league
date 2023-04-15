@@ -8,6 +8,7 @@ import { SharedTournamentService } from 'src/app/services/shared-tournament.serv
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatPseudoCheckbox } from '@angular/material/core';
 import { EditMatchComponent } from 'src/app/dialog/tournament/edittournament/edit-match/edit-match.component';
+import { EditRoundComponent } from 'src/app/dialog/tournament/edittournament/edit-round/editround.component';
 
 @Component({
   selector: 'app-viewtournament',
@@ -33,7 +34,7 @@ export class ViewtournamentComponent implements OnInit{
   }
 
   openRoundEditDialog(roundNode : RoundNode){
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+    const dialogRef = this.dialog.open(EditRoundComponent, {
       data : roundNode,
     });
 
@@ -60,17 +61,3 @@ export class ViewtournamentComponent implements OnInit{
 
 }
 
-@Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-edit-round-details.html',
-})
-export class DialogOverviewExampleDialog {
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: RoundNode,
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
