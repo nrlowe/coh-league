@@ -1,0 +1,40 @@
+
+<!-- Thinking about it wrong, reverse the array back so championship round is first
+float right, then center the next to matchs based on the left and right node to the parent (final round)-->
+<!-- final round/champion is the parent, center everything else to it-->
+
+<!-- Container for Tournament -->
+<div class="box">
+    <!-- Tournament Background -->
+    <div class="tournamentrow">
+        <!-- Tournament Image Header -->
+        <div>
+            IMAGE
+        </div>
+            <!-- Round Headers -->
+        <div class="roundheadercontainer">
+            <div *ngFor = "let round of tournament.rounds">
+                <div  class="roundheader">
+                    Round {{round.roundId}}
+                    Date
+                    </div>
+            </div>
+        </div>
+        <div class="b">
+            <div *ngFor = "let round of tournament.rounds" class="g">
+                <!-- Tournament Bracket -->
+                <div *ngFor = "let match of round.matchs">
+                    <!-- Match Column -->
+                    <div class="matchup">
+                        <div class="teamhighlight">
+                            Team 1
+                        </div>
+                        <div class="teamhighlight">
+                            Team 2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

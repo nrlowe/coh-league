@@ -29,7 +29,7 @@ export class EditTournamentService {
         var numberOfRounds = Math.log2(newTournament.playerNumber);
         var roundsArray = this.createRound(numberOfRounds);
         tournamentTree.rounds = roundsArray;
-        var reversedRounds = tournamentTree.rounds.reverse()
+        var reversedRounds = tournamentTree.rounds.reverse();
         tournamentTree.rounds = reversedRounds;
         tournamentTree.matchTree = tournamentTree.rounds[0].matchs[0];
         return tournamentTree;

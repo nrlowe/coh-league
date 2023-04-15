@@ -9,6 +9,8 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { MatPseudoCheckbox } from '@angular/material/core';
 import { EditMatchComponent } from 'src/app/dialog/tournament/edittournament/edit-match/edit-match.component';
 import { EditRoundComponent } from 'src/app/dialog/tournament/edittournament/edit-round/editround.component';
+import { EditTournamentService } from 'src/app/services/edit-tournament.service';
+import { TournamentDetails } from 'src/app/models/tournamentdetails';
 
 @Component({
   selector: 'app-viewtournament',
@@ -17,15 +19,19 @@ import { EditRoundComponent } from 'src/app/dialog/tournament/edittournament/edi
 })
 export class ViewtournamentComponent implements OnInit{
   newTournament : any;
+  tournament : any;
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
     });
-    
+    var tournamentDetails = new TournamentDetails("Test Tournament", 2, 3, 16, "CoH2", true);
+    var x = this.editTournamentService.createNewTournament(tournamentDetails);
+    this.tournament = x;
+    console.log(this.tournament.rounds.length);
   }
   
-  constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog){
-    
+  constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
+    private editTournamentService : EditTournamentService){
   }
 
   editDate(round : RoundNode){
