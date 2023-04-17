@@ -1,48 +1,45 @@
-.box{
-    padding-bottom: 5vh;
-    background-color: white;
-}
-
-.tournamentrow{
-    border: 2px solid orange;
-}
-
-.roundheadercontainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border: 2px solid orange;
-}
-
-.roundheader {
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+  .tournamentbox{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+  }
+  .tournamentrow {
+    display: flex;
+    flex-direction: row;
+  }
+
+  
+  .roundheadercontainer{
+    display:flex;
+    flex-direction: row;
     border: 2px solid red;
-    color: blue;
-    padding-right: -20%;
-}
-
-.b {
-    display: flex;
-    flex-direction: row;
     justify-content: space-around;
   }
-  .matchup {
-    background-color: lightgrey;
-    width: 90%;
-    position: relative;
-    margin: 20px 0px 20px 0px;
+
+  .roundheader{
+    color: white;
   }
-  .g {
+  .rounds {
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+  }
+  
+  .matchup {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+    margin: 0px 10px;
+    padding: 30px 0;
     flex-grow: 1;
-    /* margin: 20px 20px 20px 20px; */
-    width: 10vh;
+    position: relative;
   }
-  .teamhighlight {
+
+  .matchcontent {
     font-family:sans-serif;
     background-color: #F6FAFE;
     border: 2px solid #9DB7D0;
@@ -54,46 +51,70 @@
     position: relative;
   }
 
-  .matchup::after {
+  .matchup:nth-child(odd)::after {
     content: "";
     display: block;
     border: 2px solid transparent;
-    border-bottom-color: blue;
-    border-left-color: blue;
-    height: 100%;
-    position: absolute;
-    left: -10px;
-    width: 10px;
-    bottom: 50%;
-  }
-
-  .teamhighlight:nth-child(odd)::after {
-    content: "";
-    display: block;
-    border: 2px solid transparent;
-    border-top-color: grey;
     border-left-color: grey;
-    height: 51%;
+    height: 52%;
     position: absolute;
-    left: -10px;
-    width: 10px;
+    right: -3%;
     top: 50%;
   }
   
-  .teamhighlight::after {
+  .matchup:nth-child(even)::after {
     content: "";
     display: block;
-    width: 5%;
-    border-bottom: 3px solid green;
-    margin-left: -2px;
+    border: 2px solid transparent;
+    border-left-color: grey;
+    height: 52%;
     position: absolute;
-    top: -5%;
-    right: -5%;
+    right: -3%;
+    bottom: 48%;
   }
 
+  .matchcontent {
+    font-family:sans-serif;
+    background-color: #F6FAFE;
+    border: 2px solid #9DB7D0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    position: relative;
+  }
   
-
-
-
-
-
+  .matchcontent::after {
+    content: "";
+    display: block;
+    width: 14px;
+    border-bottom: 2px solid grey;
+    margin-left: -2px;
+    position: absolute;
+    top: 50%;
+    right: -14px;
+  }
+  
+  .matchcontent::before {
+    content: "";
+    display: block;
+    width: 3%;
+    border-bottom: 2px solid grey;
+    margin-left: 2px;
+    position: absolute;
+    top: 50%;
+    left: -4%;
+  }
+  
+  .rounds:last-child .matchup::after {
+    display: none;
+  }
+  
+  .rounds:first-child .matchup::before {
+    display: none;
+  }
+  
+  .rounds:last-child .matchcontent::after {
+    display: none;
+  }

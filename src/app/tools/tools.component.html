@@ -2,17 +2,42 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-      <a class="nav-link" href="#" routerLink="/tournaments/create">Create</a> 
+      <div class="toolselectioncontainer" (click)="goToCreate()">
+        <img src="./assets/images/tankmake.jpg" class="img-fluid">
+        <p class="text-center selectionheader">Create a new tournament</p>
+        <ul>
+          <li>
+            <span>Currently only supports single elimination tournaments with predefined player number selection</span>
+          </li>
+          <li>
+            <span>Allows for editing of round formats and allows for input of individual match performances</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="col-4">
-      <img src="./assets/images/edittournament.jpg" class="img-fluid">
-      <i class="bi bi-hammer">Edit Tournament</i>
+      <div class="toolselectioncontainer" (click)="goToUpdate()">
+        <img src="./assets/images/edittournament.jpg" class="img-fluid">
+        <p class="text-center selectionheader">Edit a current tournament</p>
+        <ul>
+          <li>
+            <span>Allows for a full edit of any open stage tournaments</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="col-4">
-      <img src="./assets/images/deletetournament.jpg" class="img-fluid">
-      delete
+      <div class="toolselectioncontainer" (click)="goToDelete()">
+        <img src="./assets/images/deletetournament.jpg" class="img-fluid">
+        <p class="text-center selectionheader">Delete a tournament</p>
+        <ul>
+          <li>
+            <span>Allows for deletion of any un-published tournament</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
