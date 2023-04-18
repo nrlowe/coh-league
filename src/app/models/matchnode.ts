@@ -4,6 +4,8 @@ import { PlayerDetails } from "./playerdetails";
 export class MatchNode {
     teamOne? : PlayerDetails[];
     teamTwo? : PlayerDetails[];
+    teamOneName? : string;
+    teamTwoName? : string;
     teamSize? : number;
     parentMatchNode? : MatchNode;
     leftNode? : MatchNode;
@@ -12,4 +14,9 @@ export class MatchNode {
     teamTwoScore? : number;
     gameFormat? : number;
     gameDetails? : GameDetails[];
+
+    constructor(teamOne : PlayerDetails[], teamTwo : PlayerDetails[]){
+        this.teamOne = teamOne;
+        this.teamTwo = teamTwo;
+    }
 }

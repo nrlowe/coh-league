@@ -1,8 +1,17 @@
-.submit-form {
-    max-width: 300px;
-    margin: auto;
-  }
-  .container{
-    height: 100vh;
+
+.container{
+  color: white;
+  margin-bottom: 5vh;
+  height: 70vh;
+}
+
+.infobox{
+    display: flex;
+    flex-direction: column;
+    background-color: #434647; 
+    border: 2px solid #535556;
     color: white;
-  }
+    padding: 5% 5% 5% 5%;
+    height: 50vh;
+    margin-bottom: 5vh;
+}

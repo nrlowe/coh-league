@@ -5,6 +5,7 @@ import { Tournament } from '../models/tournament';
 import { TournamentTree } from '../models/tournamenttree';
 import { TournamentDetails } from '../models/tournamentdetails';
 import { GameDetails } from '../models/gameDetails';
+import { PlayerDetails } from '../models/playerdetails';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,11 @@ export class EditTournamentService {
     }  
 
     private gameFormat : number = 0;
+    private teamSize : number = 0;
 
     createNewTournament(newTournament : TournamentDetails) : TournamentTree{
         this.gameFormat = newTournament.gameFormat;
+        this.teamSize = newTournament.teamSize;
         var tournamentTree = this.createTournamentRounds(newTournament);
         return this.finalizeTournamentTree(tournamentTree, newTournament);
     }
@@ -46,7 +49,7 @@ export class EditTournamentService {
     private createHeadRoundAndMatchNodes(roundNum : number) : RoundNode {
         var roundNode = new RoundNode([]);
         roundNode.roundId = roundNum;
-        var finalMatch = new MatchNode();
+        var finalMatch = new MatchNode([],[]);
         var matchArray = [];
         matchArray.push(finalMatch);
         roundNode.matchs = matchArray;
@@ -80,8 +83,17 @@ export class EditTournamentService {
     }
 
     private creatMatch(parentNode : MatchNode) : MatchNode{
-        var newMatch = new MatchNode();
+        var newMatch = new MatchNode([],[]);
         newMatch.parentMatchNode = parentNode;
+        newMatch.teamSize = this.teamSize;
+        newMatch.teamOneName = "Team One";
+        newMatch.teamTwoName = "Team Two";
+        for(var i = 1; i <= this.teamSize; i++){
+            var player = new PlayerDetails;
+            player.name = "Player " + i;
+            newMatch.teamOne?.push();
+            newMatch.teamTwo?.push();
+        }
         return this.addGameDetails(newMatch);
     }
 

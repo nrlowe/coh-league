@@ -16,7 +16,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.router.navigate(['/tools'])
+    this.router.navigate(['/edittournament'])
   }
 
  

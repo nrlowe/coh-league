@@ -29,7 +29,7 @@ export class FrontpageComponent implements OnInit {
 
   pager: any = {};
 
-
+//NEED USER SESSIONS FOR PERSISTENCE
   ngOnInit(): void {
     for(var i = 0; i < 5; i++){
       //this.liveTournaments.push(new Tournament(i, "Test Tournament " + i, "CoH 2",  new Date().toDateString()));

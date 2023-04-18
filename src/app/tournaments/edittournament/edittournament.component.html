@@ -2,43 +2,53 @@
 <!-- After confirming go to customization (round names etc) -->
 <!-- Save option at the bottom of that -> redirect to view the tournament -->
 <div class="container">
-<button (click)="brackView()">BrackView</button>
-<button (click)="matchView()">MatchView</button>
-<div *ngIf="!bracketView" class="container editContainer">
-    <!-- for number of players-->
-    <p>test</p>
-    <div *ngFor="let round of editTournament.rounds">
-        <!-- Match n-->
-        <div *ngFor="let match of round.matchs">
-            <div class="row">
-                <!-- Team One-->
-                <div class="col-6">
-                    <input [(ngModel)]="match.teamOne">
+    <div class="container editContainer">
+        <!-- for number of players-->
+        <div *ngFor="let round of editTournament.rounds; first as isFirst">
+            
+<div *ngIf="isFirst">
+    <div><h2>Set Teams for Round {{round.roundId + 1}}</h2><p>Rounds and later matchs can be edited on the next page</p></div>
+            <div *ngFor="let match of round.matchs; let i = index" [attr.data-index]="i">
+                Match #{{i + 1}}
+                <div class="row">
+                    <!-- Team One-->
+                    <div class="col-6">
+                        Enter Name for Team 1:
+                        <input [(ngModel)]="match.teamOne">
+                    </div>
+                    <!-- Team Two-->
+                    <div class="col-6">
+                        Enter Name for Team 2:
+                        <input [(ngModel)]="match.teamTwo">
+                    </div>
                 </div>
-                <!-- Team Two-->
-                <div class="col-6">
-                    <input [(ngModel)]="match.teamTwo">
+                Team Players <!-- if team games selected-->
+                <div class="row">
+                    <div *ngFor="let number of teamFormat">
+                    <!-- Player n for Team One-->
+                    <div class="col-5">
+                        <!-- drop down search (type by name too) based on game-->
+                        Enter player name for team <span placeholder="Team One">{{match.teamOne}}</span>
+                        <input type="text" placeholder="Search Name" (keyup)="onKeyUp(text)" list="dynamicPlayers">
+                        <datalist id="dynamicPlayers">
+                            <option *ngFor="let p of filterPlayers" [value]="p.name">{{p.name}}</option>
+                        </datalist>
+                    </div>
+                    <!-- Player n for Team Two-->
+                    <div class="col-5">
+                        <!-- drop down search (type by name too) based on game-->
+                        Enter player name for team {{match.teamTwo}}
+                        <input>
+                    </div>
+                    </div>
                 </div>
-            </div>
-            Team Players <!-- if team games selected-->
-            <div class="row">
-                <!-- Player n for Team One-->
-                <div class="col-6">
-                    <!-- drop down search (type by name too) based on game-->
-                    Enter player name for team <span aria-placeholder="Team One">{{match.teamOne}}</span>
-                </div>
-                <!-- Player n for Team Two-->
-                <div class="col-6">
-                    <!-- drop down search (type by name too) based on game-->
-                    Enter player name for team {{match.teamTwo}}
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<button (click) = "proceedToView(editTournament)">View Tournament</button>
+    <button (click) = "proceedToView(editTournament)">View Tournament</button>
 </div>
 
 <!-- Option to add new players (update option later)? add steam id -> verify they arenty already in db -->

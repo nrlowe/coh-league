@@ -1,64 +1,38 @@
-<!-- <div class="submit-form">
-    <div *ngIf="!submitted">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          required
-          [(ngModel)]="tournament.title"
-          name="title"
-        />
-      </div>
-  
-      <div class="form-group">
-        <label for="game">Game</label>
-        <input
-          class="form-control"
-          id="game"
-          required
-          [(ngModel)]="tournament.game"
-          name="game"
-        />
-      </div>
-  
-      <button (click)="saveTutorial()" class="btn btn-success">Submit</button>
-    </div>
-  
-    <div *ngIf="submitted">
-      <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" (click)="newTutorial()">Add</button>
-    </div>
-  </div> -->
-
-
-  <!-- Show three divs/ process of creating tournament-->
-  
 <div class="container">
   <div class="row">
     <div class="col-4">
-      Create a new tournament -> You can 
-      <ul>
+      <div class="infobox">
+        <i class="bi bi-diagram-2" style="font-size: 2em; color: cornflowerblue;">Create new tournament</i>
+        
+      <ul> After filling in the starting infomartion
+      
         <li>Customize Match Formats</li>
         <li>Customize Round Formats</li>
       </ul>
+      </div>
     </div>
 
     <div class="col-4">
-      Update your tournament -> You can 
+      <div CLASS="infobox">
+        <i class="bi bi-hammer" style="font-size: 2em; color: cornflowerblue;">Update your tournament</i>
+      
       <ul>
         <li>Update match and game results</li>
         <li>Indicate winners, publish results to award points to players</li>
       </ul>
     </div>
+    </div>
 
     <div class="col-4">
+      <div class="infobox">
+        <i class="bi bi-x-square"></i>
       Delete 
-      At any time you can delete your tournament and start again, you can not delete published tournaments
+      At any time you can delete your tournament and start again, 
+      Note: You can not delete published tournaments
+    </div>
     </div>
   </div>
-  <div class="row">
-    <button (click)="createNewtournament()">Create New Tournament</button>
+  <div class="align-items-center justify-content-center row">
+    <button class="col-3 proceed-button" (click)="createNewtournament()">Create New Tournament</button>
   </div>
 </div>

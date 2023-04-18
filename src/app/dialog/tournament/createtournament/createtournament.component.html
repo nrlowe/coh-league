@@ -56,7 +56,7 @@
     
       <div mat-dialog-content>
         <mat-form-field appearance="fill">
-        <mat-label>Number of Players</mat-label>
+        <mat-label>Number of Players/Teams</mat-label>
         <mat-select formControlName="tournamentPlayerNum" required>
           <mat-option value=4>4</mat-option>
           <mat-option value=8>8</mat-option>
@@ -69,8 +69,8 @@
     <!--Add tooltip -> this is to preset all round matches, can make additional changes to rounds later-->
     </div>
     <div mat-dialog-actions align="center">
-      <button mat-button (click)="submitNewTournament()">Confirm</button>
-      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button class="submit-button" mat-button (click)="submitNewTournament()">Confirm</button>
+      <button class="cancel-button"mat-button (click)="onNoClick()">Cancel</button>
     </div>
   </form>
 </div>
