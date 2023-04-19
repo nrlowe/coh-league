@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CreatetournamentComponent } from './tournament/createtournament/createtournament.component';
 import { EditRoundComponent } from './tournament/edittournament/edit-round/editround.component';
+import { SetRoundOneComponent } from './tournament/edittournament/set-round-one/set-round-one.component';
 
 
 
@@ -14,7 +15,8 @@ import { EditRoundComponent } from './tournament/edittournament/edit-round/editr
   declarations: [
     EditMatchComponent,
     CreatetournamentComponent,
-    EditRoundComponent
+    EditRoundComponent,
+    SetRoundOneComponent
   ],
   imports: [
     CommonModule,

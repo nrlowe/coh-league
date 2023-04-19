@@ -1,3 +1,87 @@
-.editContainer{
+.container{
     color:white;
+    background-color: rgb(92, 96, 96);
+    border: solid 1px rgb(168, 176, 176);
+    margin-bottom: 1vh;
+}
+#search-form {
+    margin-top: 1vh;
+}
+
+h4{
+    border-bottom: 1px solid transparent;
+    padding-bottom: 1vh;
+}
+
+h4::after{
+    content: "";
+    display: block;
+    border: 3px solid transparent;
+    border-bottom: 1px solid  rgb(168, 176, 176);
+    height: 1vh;
+    left: -15%;
+    width: 30%;
+    padding-bottom: 1vh;
+}
+
+.teamSep{
+    content: "";
+    display: block;
+    border: 3px solid transparent;
+    border-bottom: 5px solid  rgb(168, 176, 176);
+    height: 1vh;
+    left: -15%;
+    width: 10%;
+    padding-bottom: 1vh;
+    margin-bottom: 1vh;
+}
+.playerdatalist:hover {
+ 
+        background-color: yellow;
+
+}
+
+
+    #search-form .mat-form-field-underline {
+      background-color: blue;
+    }
+    .mat-form-field-ripple {
+      background-color: orange;
+    }
+    .placeholder {
+      display: none;
+    }
+    .example-full-width .matinput {
+        color: greenyellow;
+        border-color: white;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: white;
+        border-color: white;
+      }
+.test{
+    color: #ff33cc;
+}
+
+input .matinput{
+    border-color:#ff33cc;
+}
+.test .mat-form-field-invalid .mat-input-element {
+    color: #ff33cc;
+}
+ .test .mat-form-field-invalid .mat-form-field-label {
+    color: #ff33cc!important;
+}
+ .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
+    color: #ff33cc;
+}
+ .mat-form-field.mat-form-field-invalid .mat-form-field-ripple {
+    background-color: #ff33cc;
+}
+.showIcon{
+    display: block;
+}
+
+.hideIcon{
+    display: none;
 }

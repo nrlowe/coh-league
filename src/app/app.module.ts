@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-router.module';
 import { AppComponent } from './app.component';
@@ -25,6 +25,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from './dialog/dialog.module';
 import { MatSelectModule } from '@angular/material/select';
 import { EdittournamentComponent } from './tournaments/edittournament/edittournament.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
 
 
 @NgModule({
@@ -55,7 +56,13 @@ import { EdittournamentComponent } from './tournaments/edittournament/edittourna
     MatFormFieldModule,
     MatInputModule,
     DialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule,
+    MatDialogModule,
+    FormsModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

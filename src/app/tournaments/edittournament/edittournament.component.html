@@ -1,54 +1,100 @@
-<!-- Selector for number of players + fill in the matches for round 1 (dates??)-->
+<!-- Selector for number of players + fill in the matches for round 1 (dates??) create player option/update player option?-->
 <!-- After confirming go to customization (round names etc) -->
 <!-- Save option at the bottom of that -> redirect to view the tournament -->
 <div class="container">
-    <div class="container editContainer">
-        <!-- for number of players-->
-        <div *ngFor="let round of editTournament.rounds; first as isFirst">
-            
-<div *ngIf="isFirst">
-    <div><h2>Set Teams for Round {{round.roundId + 1}}</h2><p>Rounds and later matchs can be edited on the next page</p></div>
-            <div *ngFor="let match of round.matchs; let i = index" [attr.data-index]="i">
-                Match #{{i + 1}}
+    <form [formGroup] = "roundOneForm" id="search-form">
+        <div formArrayName="matchs">
+            <div *ngFor="let match of roundOneForm.controls.matchs.controls; let i = index" 
+            [formGroupName]="i">
+                <!-- Match Title / Team 1 Name Row -->
                 <div class="row">
-                    <!-- Team One-->
-                    <div class="col-6">
-                        Enter Name for Team 1:
-                        <input [(ngModel)]="match.teamOne">
-                    </div>
-                    <!-- Team Two-->
-                    <div class="col-6">
-                        Enter Name for Team 2:
-                        <input [(ngModel)]="match.teamTwo">
+                    <h4>Match {{i + 1}}</h4>
+                    <div class="col-4">
+                        <mat-form-field class="example-full-width matinput" appearance="outline">
+                            <mat-label class="test">Team One Name</mat-label>
+                            <input class="matinput" matInput formControlName=teamOne value="">
+                        </mat-form-field>
                     </div>
                 </div>
-                Team Players <!-- if team games selected-->
+                <!-- Plasyer Roster Row -->
                 <div class="row">
-                    <div *ngFor="let number of teamFormat">
-                    <!-- Player n for Team One-->
-                    <div class="col-5">
-                        <!-- drop down search (type by name too) based on game-->
-                        Enter player name for team <span placeholder="Team One">{{match.teamOne}}</span>
-                        <input type="text" placeholder="Search Name" (keyup)="onKeyUp(text)" list="dynamicPlayers">
-                        <datalist id="dynamicPlayers">
-                            <option *ngFor="let p of filterPlayers" [value]="p.name">{{p.name}}</option>
-                        </datalist>
-                    </div>
-                    <!-- Player n for Team Two-->
-                    <div class="col-5">
-                        <!-- drop down search (type by name too) based on game-->
-                        Enter player name for team {{match.teamTwo}}
-                        <input>
-                    </div>
+                    <h5>Player Roster</h5>
+                    <div formArrayName="teamOnePlayers">
+                        <div [formGroupName]="p" *ngFor="let playersOne of getTeamOnePlayers(i).controls; let p = index">
+                            <div class="col-3">
+                                <mat-form-field class="example-full-width matinput" appearance="outline">
+                                    <mat-label class="test">Player Spot {{p + 1}}</mat-label>
+                                    <input class="matinput" matInput formControlName=playerOneName value=""
+                                    [matAutocomplete]="auto" (keyup)="playerFilter(playerNameInput)">
+                                    <mat-icon [ngClass]="playersOne.value.playerSelected?'showIcon':'hideIcon'"
+                                    matSuffix
+                                    (click)="deleteT1Player(i, p)"
+                                    color="secondary"
+                                    matTooltip="the number must be formatted in english"
+                                    matTooltipPosition="below"><i class="bi bi-clipboard2-x" style="color: red"></i></mat-icon>
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option (click)="saveT1Player(option, i, p)" *ngFor="let option of players" [value]="option.name">
+                                        {{option.name}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="teamSep"></div>
+                <div class="row">
+                    <div class="col-4">
+                        <mat-form-field class="example-full-width matinput" appearance="outline">
+                            <mat-label class="test">Team Two Name</mat-label>
+                            <input class="matinput" matInput formControlName=teamTwo value="">
+                        </mat-form-field>
+                    </div>
                 </div>
+                <div class="row">
+                    <h5>Player Roster</h5>
+                    <div formArrayName="teamTwoPlayers">
+                        <div [formGroupName]="p" *ngFor="let playersTwo of getTeamTwoPlayers(i).controls; let p = index">
+                            <mat-form-field class="example-full-width matinput" appearance="outline">
+                                <mat-label class="test">Player Spot {{p + 1}}</mat-label>
+                                <input class="matinput" matInput formControlName=playerTwoName placeholder="Enter Name" 
+                                [matAutocomplete]="auto" (keyup)="playerFilter(playerNameInput)">
+                                <mat-icon [ngClass]="playersTwo.value.playerSelected?'showIcon':'hideIcon'"
+                                matSuffix
+                                (click)="deleteT2Player(i, p)"
+                                color="primary"
+                                matTooltip="the number must be formatted in english"
+                                matTooltipPosition="below"><i class="bi bi-clipboard2-x" style="color: red"></i></mat-icon>
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option (click)="saveT2Player(option, i, p)" *ngFor="let option of players" [value]="option.name">
+                                    {{option.name}}
+                                </mat-option>
+                                </mat-autocomplete>
+                            
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
-    </div>
-
-
-    <button (click) = "proceedToView(editTournament)">View Tournament</button>
+        <div mat-dialog-actions align="center">
+            <button class="submit-button" mat-button (click)="submitNewTournament()">Confirm</button>
+            <button class="cancel-button"mat-button (click)="onNoClick()">Cancel</button>
+          </div>
+    </form>
 </div>
+      
+
+
+
+
+
+
+
+
+
+
 
 <!-- Option to add new players (update option later)? add steam id -> verify they arenty already in db -->

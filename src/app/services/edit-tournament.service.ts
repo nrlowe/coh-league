@@ -19,6 +19,7 @@ export class EditTournamentService {
 
     private gameFormat : number = 0;
     private teamSize : number = 0;
+    private globalMatchCount : number = 1;
 
     createNewTournament(newTournament : TournamentDetails) : TournamentTree{
         this.gameFormat = newTournament.gameFormat;
@@ -88,6 +89,8 @@ export class EditTournamentService {
         newMatch.teamSize = this.teamSize;
         newMatch.teamOneName = "Team One";
         newMatch.teamTwoName = "Team Two";
+        newMatch.matchId = this.globalMatchCount;
+        this.globalMatchCount++;
         for(var i = 1; i <= this.teamSize; i++){
             var player = new PlayerDetails;
             player.name = "Player " + i;
