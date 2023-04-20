@@ -26,6 +26,7 @@ import { DialogModule } from './dialog/dialog.module';
 import { MatSelectModule } from '@angular/material/select';
 import { EdittournamentComponent } from './tournaments/edittournament/edittournament.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     FormsModule,
     MatSelectModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

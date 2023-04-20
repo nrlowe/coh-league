@@ -19,15 +19,10 @@ import { TournamentDetails } from 'src/app/models/tournamentdetails';
 })
 export class ViewtournamentComponent implements OnInit{
   newTournament : any;
-  tournament : any;
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
     });
-    var tournamentDetails = new TournamentDetails("Test Tournament", 2, 3, 16, "CoH2", true);
-    var x = this.editTournamentService.createNewTournament(tournamentDetails);
-    this.tournament = x;
-    console.log(this.tournament.rounds.length);
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,

@@ -178,7 +178,58 @@ export class EdittournamentComponent {
 
   submitNewTournament(): void {
     if(this.roundOneForm.valid){
+      this.addInfoToTournament(this.roundOneForm);
+      this.sharedTournamentService.setNewTournament(this.editTournament);
+      console.log(this.editTournament.rounds!.length);
+    var roundArray = this.editTournament.rounds as RoundNode[];
+    var matchArray = roundArray[0].matchs;
+    console.log(matchArray.length);
+    var matchNode = matchArray[0] as MatchNode;
+    console.log(matchArray[0].teamOneName);
       this.router.navigate(['/viewtournament']);
+    }
+  }
+
+  // teamOne: new FormControl('',[Validators.required, Validators.minLength(2)]),
+  //       teamTwo: new FormControl('',[Validators.required, Validators.minLength(2)]),
+  //       teamOnePlayers : this.formBuilder.array([]),
+  //       teamTwoPlayers : this.formBuilder.array([]),
+  //     });
+  //     this.getMatchs().push(x);
+  //     for(var j = 0; j < this.teamFormat.length; j++){
+  //         var playerTeamOne = this.formBuilder.group ({
+  //           playerOneName : new FormControl('', Validators.required),
+  //           playerSelected : new FormControl(false, Validators.requiredTrue),
+  //           playerOneDetails : new FormControl(new PlayerDetails, Validators.required)
+
+  //         });
+  //         var playerTeamTwo =this.formBuilder.group ({
+  //           playerTwoName : new FormControl('', Validators.required),
+  //           playerSelected : new FormControl(false, Validators.requiredTrue),
+  //           playerTwoDetails : new FormControl(new PlayerDetails, Validators.required)
+  //         });
+  //         var one = this.getTeamOnePlayers(i) as FormArray;
+  //         one.push(playerTeamOne);
+  //         var two = this.getTeamTwoPlayers(i) as FormArray;
+  //         two.push(playerTeamTwo);
+
+  addInfoToTournament(roundForm : FormGroup){
+    var matchArray = this.editTournament.rounds[0].matchs as MatchNode[];
+    for(var i = 0; i < matchArray.length; i++){
+      var matchArrayForm = roundForm.controls['matchs'] as FormArray;
+      var matchForm = matchArrayForm.at(i) as FormControl;
+      var tournyMatch = matchArray[i] as MatchNode;
+      console.log( matchForm.get('teamOne')?.value);
+      console.log(tournyMatch.teamOneName);
+      tournyMatch.teamOneName = matchForm.get('teamOne')?.value;
+      tournyMatch.teamTwoName = matchForm.get('teamTwo')?.value;
+      console.log(tournyMatch.teamOneName);
+      var playerOneArray = matchForm.get('teamOnePlayers') as FormArray;
+      var playerTwoArray = matchForm.get('teamTwoPlayers') as FormArray;
+      for(var x = 0; x < this.teamFormat.length; x++){
+        tournyMatch.teamOne?.push(playerOneArray.at(x).get('playerOneDetails')!.value);
+        tournyMatch.teamOne?.push(playerTwoArray.at(x).get('playerTwoDetails')!.value);
+      }
     }
   }
 
@@ -215,6 +266,12 @@ export class EdittournamentComponent {
 
   proceedToView(tournamentTree : TournamentTree) {
     this.sharedTournamentService.setNewTournament(tournamentTree);
+    console.log(tournamentTree.rounds!.length);
+    var roundArray = tournamentTree.rounds as RoundNode[];
+    var matchArray = roundArray[0].matchs;
+    console.log(matchArray.length);
+    var matchNode = matchArray[0] as MatchNode;
+    console.log(matchNode.teamOne);
     this.router.navigate(['/viewtournament']);
   }
 }

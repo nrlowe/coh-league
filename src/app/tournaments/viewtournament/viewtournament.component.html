@@ -13,7 +13,7 @@ float right, then center the next to matchs based on the left and right node to 
     </div>
     <!-- Round Headers -->
     <div class="roundheadercontainer">
-      <div *ngFor = "let round of tournament.rounds">
+      <div *ngFor = "let round of newTournament.rounds">
         <div  class="roundheader">
           Round {{round.roundId}}
           Date
@@ -21,16 +21,28 @@ float right, then center the next to matchs based on the left and right node to 
       </div>
     </div>
     <div class="tournamentrow">
-      <div *ngFor = "let round of tournament.rounds" class="rounds">
+      <div *ngFor = "let round of newTournament.rounds" class="rounds">
         <!-- Tournament Bracket -->
         <div *ngFor = "let match of round.matchs" class="matchup">
           <!-- Match Column -->
           <div class="matchcontent">
             <div>
-              Team 1
+              {{match.teamOneName}}
+              <button mat-raised-button
+        matTooltip={{match.teamOne}}
+        aria-label="Button that displays a tooltip when focused or hovered over">
+        <i class="bi bi-info-circle"></i>
+</button>
+
             </div>
             <div>
-              Team 2
+              {{match.teamTwoName}}
+              <button mat-raised-button
+        matTooltip={{match.teamTwo}}
+        matTooltipPosition="left"
+        aria-label="Button that displays a tooltip when focused or hovered over">
+        <i class="bi bi-info-circle"></i>
+</button>
             </div>
           </div>
         </div>
