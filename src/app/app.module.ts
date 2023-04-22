@@ -27,6 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { EdittournamentComponent } from './tournaments/edittournament/edittournament.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
+import { EditviewTournamentComponent } from './tournaments/editview-tournament/editview-tournament.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FrontpageComponent,
     CreateTournament,
     ViewtournamentComponent,
-    EdittournamentComponent
+    EdittournamentComponent,
+    EditviewTournamentComponent
   ],
   imports: [
     BrowserModule,

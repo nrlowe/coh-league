@@ -16,9 +16,11 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.router.navigate(['/edittournament'])
+    this.router.navigate(['/tournament/viewedit'])
   }
 
- 
+  // if error kick out to error screen
+
+  //user sessions
   
 }

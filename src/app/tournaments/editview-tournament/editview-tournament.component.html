@@ -1,0 +1,79 @@
+
+<!-- Thinking about it wrong, reverse the array back so championship round is first
+float right, then center the next to matchs based on the left and right node to the parent (final round)-->
+<!-- final round/champion is the parent, center everything else to it-->
+
+<!-- Container for Tournament -->
+<div class="box">
+    <!-- Tournament Background -->
+    <div class="tournamentbox">
+        <!-- if no image resort to title-->
+        <div *ngIf="!image" class="tournyName">
+          <h1>{{newTournament.title}}</h1>
+      </div>
+      
+        
+      <!-- Tournament Image Header -->
+      <div *ngIf="image" class="imagebox">
+        <img src="./assets/images/imagetest.jpg" class="img-fluid"> 
+      </div>
+    
+      <!-- champion box? under image show winner of tourny -->
+
+      <!-- Round Headers -->
+      <div class="roundheadercontainer">
+        <div *ngFor = "let round of newTournament.rounds">
+          <div  class=" d-flex align-items-center justify-content-center roundheader">
+            <div>Round {{round.roundId}}</div>
+            <div>Date</div>
+          </div>
+        </div>
+      </div>
+      <div class="tournamentrow">
+        <div *ngFor = "let round of newTournament.rounds" class="rounds">
+          <!-- Tournament Bracket -->
+          <div *ngFor = "let match of round.matchs" class="matchup">
+            <!-- Match Column -->
+            <!-- if winner assign ngclass-->
+            <div class="matchcontent">
+              <div class="team">
+                <div class="teamname" (click)="viewteam(match.teamOne)">
+                    {{match.teamOneName}}
+            
+                </div>
+                <div class="teamscore">
+                    {{match.teamOneScore}} 00
+                </div>
+              </div>
+              <div class="team">
+                    <div class="teamname">
+                        {{match.teamTwoName}}
+                        <i class="bi bi-info-circle"></i>
+                    </div>
+                     <div class="teamscore">
+                        {{match.teamTwoScore}} 00
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="teamview" class="teamview">
+        TEFDKGBDPOFBJKDPBKDPKB
+        <div *ngFor="let player of playerview">
+          {{player.name}}
+          TEST TEST
+        </div>
+        <button (click)="closeteamview()">Close</button>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="submit-button">Save</button>
+        </div>
+        <div class="col">
+          <button class="cancel-button">Cancel</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
