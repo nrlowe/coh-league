@@ -7,46 +7,63 @@ float right, then center the next to matchs based on the left and right node to 
 <div class="box">
   <!-- Tournament Background -->
   <div class="tournamentbox">
+    
     <!-- Tournament Image Header -->
-    <div>
-      IMAGE
+    <div *ngIf="!tournamentView.hasImage" class="tournyName">
+      <h1>{{tournamentView.title}}</h1>
     </div>
+    <div *ngIf="tournamentView.hasImage" class="imagebox">
+      <img src="./assets/images/imagetest.jpg" class="img-fluid"> 
+      <!-- <img [src]="imagepath" style="width: 100px;height:100px;" /> -->
+    </div>
+  
+    <!-- champion box? under image show winner of tourny -->
+
     <!-- Round Headers -->
     <div class="roundheadercontainer">
-      <div *ngFor = "let round of newTournament.rounds">
-        <div  class="roundheader">
-          Round {{round.roundId}}
-          Date
+      <div *ngFor = "let round of tournamentView.rounds">
+        <div  class=" d-flex align-items-center justify-content-center roundheader">
+          <div>Round {{round.roundId + 1}}</div>
+          <div>{{round.roundName}}</div>
+          <div>{{round.date}}</div>
         </div>
       </div>
     </div>
     <div class="tournamentrow">
-      <div *ngFor = "let round of newTournament.rounds" class="rounds">
+      <div *ngFor = "let round of tournamentView.rounds" class="rounds">
         <!-- Tournament Bracket -->
         <div *ngFor = "let match of round.matchs" class="matchup">
           <!-- Match Column -->
+          <!-- if winner assign ngclass-->
           <div class="matchcontent">
-            <div>
-              {{match.teamOneName}}
-              <button mat-raised-button
-        matTooltip={{match.teamOne}}
-        aria-label="Button that displays a tooltip when focused or hovered over">
-        <i class="bi bi-info-circle"></i>
-</button>
-
+            <div class="team">
+              <div class="align-items-center justify-content-center roundheader teamname" (click)="viewteam(match)">
+                  {{match.teamOneName}}
+                  <div *ngIf="match.teamview" class="teamview">
+                    TEFDKGBDPOFBJKDPBKDPKB
+                    <div *ngFor="let player of match.teamOne">
+                      {{player.name}}
+                      TEST TEST
+                    </div>
+                    <button (click)="closeteamview()">Close</button>
+                  </div>
+              </div>
+              <div class="teamscore">
+                  {{match.teamOneScore}}
+              </div>
             </div>
-            <div>
-              {{match.teamTwoName}}
-              <button mat-raised-button
-        matTooltip={{match.teamTwo}}
-        matTooltipPosition="left"
-        aria-label="Button that displays a tooltip when focused or hovered over">
-        <i class="bi bi-info-circle"></i>
-</button>
-            </div>
+            <div class="team">
+                  <div class="align-items-center justify-content-center roundheader teamname">
+                      {{match.teamTwoName}}
+                  </div>
+                   <div class="teamscore">
+                      {{match.teamTwoScore}}
+                  </div>
+              </div>
           </div>
         </div>
       </div>
     </div>
+    
   </div>
 </div>

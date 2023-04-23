@@ -7,15 +7,23 @@ float right, then center the next to matchs based on the left and right node to 
 <div class="box">
     <!-- Tournament Background -->
     <div class="tournamentbox">
-        <!-- if no image resort to title-->
-        <div *ngIf="!image" class="tournyName">
-          <h1>{{newTournament.title}}</h1>
-      </div>
       
-        
+      
+      <p style="color: white;">Tip ::: To edit round/match info click on desired round/match</p>
       <!-- Tournament Image Header -->
+      <div class="d-flex align-items-center justify-content-center col-12">
+        <div *ngIf="newTournament.hasImage">
+        <button class="proceed-button" (click)="displayImage()">Image View</button>
+      </div>
+        <button class="proceed-button" (click)="hideImage()">Name View</button>
+        <button class="proceed-button" (click)="uploadImage()">Upload New Image</button>
+      </div>
+      <div *ngIf="!image" class="tournyName">
+        <h1>{{newTournament.title}}</h1>
+      </div>
       <div *ngIf="image" class="imagebox">
         <img src="./assets/images/imagetest.jpg" class="img-fluid"> 
+        <!-- <img [src]="imagepath" style="width: 100px;height:100px;" /> -->
       </div>
     
       <!-- champion box? under image show winner of tourny -->
@@ -23,9 +31,10 @@ float right, then center the next to matchs based on the left and right node to 
       <!-- Round Headers -->
       <div class="roundheadercontainer">
         <div *ngFor = "let round of newTournament.rounds">
-          <div  class=" d-flex align-items-center justify-content-center roundheader">
-            <div>Round {{round.roundId}}</div>
-            <div>Date</div>
+          <div  class=" d-flex align-items-center justify-content-center roundheader" (click)="editRoundInfo(round)">
+            <div>Round {{round.roundId + 1}}</div>
+            <div>{{round.roundName}}</div>
+            <div>{{round.date}}</div>
           </div>
         </div>
       </div>
@@ -35,44 +44,41 @@ float right, then center the next to matchs based on the left and right node to 
           <div *ngFor = "let match of round.matchs" class="matchup">
             <!-- Match Column -->
             <!-- if winner assign ngclass-->
-            <div class="matchcontent">
+            <div class="matchcontent" (click)="editMatchInfo(round)">
               <div class="team">
-                <div class="teamname" (click)="viewteam(match.teamOne)">
+                <div class="align-items-center justify-content-center roundheader teamname" (click)="viewteam(match)">
                     {{match.teamOneName}}
-            
+                    <div *ngIf="match.teamview" class="teamview">
+                      TEFDKGBDPOFBJKDPBKDPKB
+                      <div *ngFor="let player of match.teamOne">
+                        {{player.name}}
+                        TEST TEST
+                      </div>
+                      <button (click)="closeteamview()">Close</button>
+                    </div>
                 </div>
                 <div class="teamscore">
-                    {{match.teamOneScore}} 00
+                    {{match.teamOneScore}}
                 </div>
               </div>
               <div class="team">
-                    <div class="teamname">
+                    <div class="align-items-center justify-content-center roundheader teamname">
                         {{match.teamTwoName}}
-                        <i class="bi bi-info-circle"></i>
                     </div>
                      <div class="teamscore">
-                        {{match.teamTwoScore}} 00
+                        {{match.teamTwoScore}}
                     </div>
                 </div>
             </div>
           </div>
         </div>
       </div>
-      <div *ngIf="teamview" class="teamview">
-        TEFDKGBDPOFBJKDPBKDPKB
-        <div *ngFor="let player of playerview">
-          {{player.name}}
-          TEST TEST
-        </div>
-        <button (click)="closeteamview()">Close</button>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button class="submit-button">Save</button>
-        </div>
-        <div class="col">
-          <button class="cancel-button">Cancel</button>
-        </div>
+      <div class="d-flex align-items-center justify-content-center col-12">
+     
+          <button class="submit-button" (click)="saveTournament(newTournament)">Save</button>
+        
+          <button class="cancel-button" (click)="cancelTournament()">Cancel</button>
+        
       </div>
       
     </div>

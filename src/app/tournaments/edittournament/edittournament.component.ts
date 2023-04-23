@@ -186,7 +186,7 @@ export class EdittournamentComponent {
     console.log(matchArray.length);
     var matchNode = matchArray[0] as MatchNode;
     console.log(matchArray[0].teamOneName);
-      this.router.navigate(['/viewtournament']);
+      this.router.navigate(['tournament/viewedit']);
     }
   }
 

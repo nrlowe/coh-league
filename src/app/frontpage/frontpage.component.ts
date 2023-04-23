@@ -29,7 +29,13 @@ export class FrontpageComponent implements OnInit {
 
   pager: any = {};
 
-//NEED USER SESSIONS FOR PERSISTENCE
+
+//TODOS:::::::
+//convert string to image on editview load /save image to a global value in editview for quick access
+//allow user to select team as 'OPEN' or 'BYE' 
+// user session
+// proceed button error animation
+
   ngOnInit(): void {
     for(var i = 0; i < 5; i++){
       //this.liveTournaments.push(new Tournament(i, "Test Tournament " + i, "CoH 2",  new Date().toDateString()));

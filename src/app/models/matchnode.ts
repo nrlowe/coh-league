@@ -15,7 +15,9 @@ export class MatchNode {
     gameFormat? : number;
     gameDetails? : GameDetails[];
     matchId? : number;
-
+    teamView : boolean = false;
+    hasWinner : boolean = false;
+    winner? : PlayerDetails[];
     constructor(teamOne : PlayerDetails[], teamTwo : PlayerDetails[]){
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;

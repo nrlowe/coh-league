@@ -52,6 +52,10 @@ export class EditTournamentService {
         roundNode.roundId = roundNum;
         var finalMatch = new MatchNode([],[]);
         var matchArray = [];
+        finalMatch.teamOneName = "TBD";
+        finalMatch.teamTwoName = "TBD";
+        finalMatch.teamOneScore = 0;
+        finalMatch.teamTwoScore = 0;
         matchArray.push(finalMatch);
         roundNode.matchs = matchArray;
         return roundNode;
@@ -87,8 +91,10 @@ export class EditTournamentService {
         var newMatch = new MatchNode([],[]);
         newMatch.parentMatchNode = parentNode;
         newMatch.teamSize = this.teamSize;
-        newMatch.teamOneName = "Team One";
-        newMatch.teamTwoName = "Team Two";
+        newMatch.teamOneName = "TBD";
+        newMatch.teamTwoName = "TBD";
+        newMatch.teamOneScore = 0;
+        newMatch.teamTwoScore = 0;
         newMatch.matchId = this.globalMatchCount;
         this.globalMatchCount++;
         for(var i = 1; i <= this.teamSize; i++){

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { Tournament } from '../models/tournament';
 import { TournamentDetails } from '../models/tournamentdetails';
+import { TournamentTree } from '../models/tournamenttree';
+import { TournamentDto } from '../models/dto/tournamentdto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TournamentService {
-    private dbPath = '/tournament';
-    tournamentRef: AngularFirestoreCollection<Tournament>;
+    private dbPath = '/tournamentdetails';
+    tournamentRef: AngularFirestoreCollection<TournamentDto>;
     tournamentDetails? : TournamentDetails;
 
     constructor(private db: AngularFirestore) {
@@ -17,12 +18,11 @@ export class TournamentService {
 
     }
     //save tournament + tournament details at the same time
-    getAll(): AngularFirestoreCollection<Tournament> {
-        return this.tournamentRef;
-    }
+    
 
-    create(tutorial: Tournament): any {
-        return this.tournamentRef.add({ ...tutorial });
+    create(tutorial: TournamentDto): any {
+        return this.tournamentRef.add({... tutorial
+        });
     }
 
     update(id: string, data: any): Promise<void> {

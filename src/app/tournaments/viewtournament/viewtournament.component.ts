@@ -11,6 +11,9 @@ import { EditMatchComponent } from 'src/app/dialog/tournament/edittournament/edi
 import { EditRoundComponent } from 'src/app/dialog/tournament/edittournament/edit-round/editround.component';
 import { EditTournamentService } from 'src/app/services/edit-tournament.service';
 import { TournamentDetails } from 'src/app/models/tournamentdetails';
+import { PlayerDetails } from 'src/app/models/playerdetails';
+import { Router } from '@angular/router';
+import { TournamentService } from 'src/app/services/tournament.service';
 
 @Component({
   selector: 'app-viewtournament',
@@ -18,47 +21,33 @@ import { TournamentDetails } from 'src/app/models/tournamentdetails';
   styleUrls: ['./viewtournament.component.css']
 })
 export class ViewtournamentComponent implements OnInit{
-  newTournament : any;
+  tournamentView : any;
+  teamview : boolean = false;
+  playerview : PlayerDetails[] = [];
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
-      this.newTournament = data;
+      this.tournamentView = data;
     });
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
-    private editTournamentService : EditTournamentService){
+    private router : Router, private editTournamentService : EditTournamentService,
+    private tournamentService : TournamentService){
   }
 
-  editDate(round : RoundNode){
-    round.date = "March 2025";
-    round.roundName = "Round 50";
+  viewteam(match : MatchNode){
+    if (!match.teamView) {
+      match.teamView = true;
+    } else {
+      //highlight open teamview
+    }
+
   }
 
-  openRoundEditDialog(roundNode : RoundNode){
-    const dialogRef = this.dialog.open(EditRoundComponent, {
-      data : roundNode,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      roundNode = result;
-    })
+  closeteamview(){
+    this.teamview = false;
+    this.playerview = [];
   }
-
-  openEditMatchDialog(match : MatchNode) {
-    const dialogRef = this.dialog.open(EditMatchComponent, {
-      data : match,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      match = result;
-    })
-  }
-
-  saveTournament(tournamentTree : TournamentTree){
-    
-  }
-
-  
 
 }
 
