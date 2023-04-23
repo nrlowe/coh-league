@@ -14,6 +14,7 @@ export class MatchDto {
     gameDetails? : string;
     matchId? : number;
     winner? : string;
+    hasWinner? : boolean;
     constructor(teamOneName: string, teamTwoName : string,
        teamOneScore : number, teamTwoScore : number, matchId : number){
             this.teamOneName = teamOneName;

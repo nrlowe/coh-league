@@ -33,9 +33,9 @@ export class EditTournamentService {
         var numberOfRounds = Math.log2(newTournament.playerNumber);
         var roundsArray = this.createRound(numberOfRounds);
         tournamentTree.rounds = roundsArray;
+        tournamentTree.matchTree = tournamentTree.rounds[0].matchs[0];
         var reversedRounds = tournamentTree.rounds.reverse();
         tournamentTree.rounds = reversedRounds;
-        tournamentTree.matchTree = tournamentTree.rounds[0].matchs[0];
         return tournamentTree;
 
     }
@@ -52,10 +52,21 @@ export class EditTournamentService {
         roundNode.roundId = roundNum;
         var finalMatch = new MatchNode([],[]);
         var matchArray = [];
+        finalMatch.teamSize = this.teamSize;
         finalMatch.teamOneName = "TBD";
         finalMatch.teamTwoName = "TBD";
         finalMatch.teamOneScore = 0;
         finalMatch.teamTwoScore = 0;
+        finalMatch.matchId = this.globalMatchCount;
+        console.log(this.globalMatchCount);
+        this.globalMatchCount++;
+        this.addGameDetails(finalMatch);
+        for(var i = 1; i <= this.teamSize; i++){
+            var player = new PlayerDetails;
+            player.name = "Player " + i;
+            finalMatch.teamOne?.push();
+            finalMatch.teamTwo?.push();
+        }
         matchArray.push(finalMatch);
         roundNode.matchs = matchArray;
         return roundNode;
@@ -64,9 +75,9 @@ export class EditTournamentService {
     private createNextRound(roundNumber : number, parentRoundNode : RoundNode, 
         nodearray : RoundNode[]) : RoundNode[]{
         if(roundNumber > 0){
-            roundNumber--;
             var newRound = new RoundNode([]);
             newRound.roundId = roundNumber;
+            roundNumber--;
             newRound.matchs = this.addMatch(parentRoundNode);
             parentRoundNode.previousRound = newRound;
             newRound.nextRound = parentRoundNode;
@@ -79,17 +90,16 @@ export class EditTournamentService {
     private addMatch(parentRoundNode : RoundNode) : MatchNode[]{
         var roundMatchs = [];
         for(var node of parentRoundNode.matchs){
-            node.leftNode = this.creatMatch(node);
-            node.rightNode = this.creatMatch(node);
+            node.leftNode = this.creatMatch();
+            node.rightNode = this.creatMatch();
             roundMatchs.push(node.leftNode);
             roundMatchs.push(node.rightNode);
         }
         return roundMatchs;
     }
 
-    private creatMatch(parentNode : MatchNode) : MatchNode{
+    private creatMatch() : MatchNode{
         var newMatch = new MatchNode([],[]);
-        newMatch.parentMatchNode = parentNode;
         newMatch.teamSize = this.teamSize;
         newMatch.teamOneName = "TBD";
         newMatch.teamTwoName = "TBD";

@@ -32,7 +32,7 @@ float right, then center the next to matchs based on the left and right node to 
       <div class="roundheadercontainer">
         <div *ngFor = "let round of newTournament.rounds">
           <div  class=" d-flex align-items-center justify-content-center roundheader" (click)="editRoundInfo(round)">
-            <div>Round {{round.roundId + 1}}</div>
+            <div>Round {{round.roundId}}</div>
             <div>{{round.roundName}}</div>
             <div>{{round.date}}</div>
           </div>

@@ -31,6 +31,7 @@ export class FrontpageComponent implements OnInit {
 
 
 //TODOS:::::::
+//make dates mandatory, date selection(only allow picks between start and end?)
 //convert string to image on editview load /save image to a global value in editview for quick access
 //allow user to select team as 'OPEN' or 'BYE' 
 // user session

@@ -116,13 +116,8 @@ export class EditviewTournamentComponent {
   }
 
   saveTournament(saveTournament : TournamentTree){
-    var rounds = saveTournament.rounds as RoundNode[];
-    var matchArray = rounds[0].matchs as MatchNode[];
-    var string = matchArray[0];
-    var string2 = string.teamOne;
-    console.log(string2);
     var dto = this.jsonService.jsonTournament(saveTournament);
-    this.tournamentService.create(dto);
+    //this.tournamentService.create(dto);
     //this.router.navigate(['tournament/viewtournament']);
   }
 

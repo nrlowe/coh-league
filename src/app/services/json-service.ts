@@ -10,6 +10,9 @@ import { MatchDto } from '../models/dto/matchdto';
   providedIn: 'root'
 })
 export class JsonService {
+    visited : Set<number> = new Set();
+
+    //Nodes -> JSON
     jsonTournament(tournament : TournamentTree) : TournamentDto{
         //description, start date, enddate
         var tournamentDto = new TournamentDto(tournament.title!, tournament.teamSize!,
@@ -30,46 +33,93 @@ export class JsonService {
     convertRoundsToJson(round : RoundNode) : RoundDto{
         var roundDto = new RoundDto(round.roundId!, round.roundName!, round.date!, 3);
         for(let match of round.matchs){
-            var matchdto = this.convertMatchsToMatchDto(match);
+            var matchdto = this.convertMatchInfoToMatchDto(match);
             roundDto.matchs.push(JSON.stringify(matchdto));
         }
         return roundDto;
     }
 
-    convertMatchsToMatchDto(match : MatchNode) : MatchDto {
-        var matchdto = new MatchDto(match.teamOneName!, match.teamTwoName!, match.teamOneScore!,
-            match.teamTwoScore!, match.matchId!);
-        return matchdto;
-    }
-    
-    convertMatchTreeToJson(matchTree : MatchNode) : string{
+    private convertMatchTreeToJson(matchTree : MatchNode) : string{
         var matchDto = this.convertMatchNodeToJSON(matchTree);
-        matchDto.leftNode = this.checkLeftNode(matchTree);
-        matchDto.rightNode = this.checkRightNode(matchTree);
-        console.log(JSON.stringify(matchDto));
+        matchDto.leftNode = this.checkNode(matchTree.leftNode!);
+        matchDto.rightNode = this.checkNode(matchTree.rightNode!);
         return JSON.stringify(matchDto);
     }
 
-    checkRightNode(node : MatchNode) : string{
-        if(node.rightNode != null && node.rightNode != undefined){
-            this.checkLeftNode(node.leftNode!);
-        }
-        return JSON.stringify(this.convertMatchNodeToJSON(node));
-    }
-
-    checkLeftNode(node : MatchNode) : string{
-        if(node.leftNode != null && node.leftNode != undefined){
-            this.checkLeftNode(node.leftNode);
-        }
-        this.checkRightNode(node);
-        return JSON.stringify(this.convertMatchNodeToJSON(node));
-    }
-
-    convertMatchNodeToJSON(node : MatchNode) : MatchDto{
-        var dto = this.convertMatchsToMatchDto(node);
+    private convertMatchNodeToJSON(node : MatchNode) : MatchDto{
+        var dto = this.convertMatchInfoToMatchDto(node);
         dto.gameDetails = JSON.stringify(node.gameDetails);
         dto.teamOne = JSON.stringify(node.teamOne);
         dto.teamTwo = JSON.stringify(node.teamTwo);
         return dto;
     }
+
+    private convertMatchInfoToMatchDto(match : MatchNode) : MatchDto {
+        var matchdto = new MatchDto(match.teamOneName!, match.teamTwoName!, match.teamOneScore!,
+            match.teamTwoScore!, match.matchId!);
+        matchdto.hasWinner = match.hasWinner;
+        if(matchdto.hasWinner){
+            matchdto.winner = JSON.stringify(match.winner)
+        }
+        return matchdto;
+    }
+    
+    private checkNode(node : MatchNode) : string{
+        var right = '';
+        var left = '';
+        if(node.rightNode != null && node.rightNode != undefined){
+            if(!this.visited.has(node.rightNode.matchId!)){
+                right = this.checkNode(node.rightNode);
+            }
+        }
+        if(node.leftNode != null && node.leftNode != undefined){
+            if(!this.visited.has(node.leftNode.matchId!)){
+                left = this.checkNode(node.leftNode);
+            }
+        }
+        var newMatchDto = this.convertMatchNodeToJSON(node)
+        newMatchDto.leftNode = left;
+        newMatchDto.rightNode = right;
+        return JSON.stringify(newMatchDto);
+    }
+
+
+    //JSON -> Nodes
+    private convertJsonToMatchNode(jsonMatchNode : string) : MatchNode{
+        var parsedJson = JSON.parse(jsonMatchNode) as MatchDto;
+        var matchNode = this.setMatchNodeValuesWithParsedJSON(parsedJson);
+        matchNode.leftNode = this.checkJSONMatchNode(JSON.parse(parsedJson.leftNode!));
+        matchNode.rightNode = this.checkJSONMatchNode(JSON.parse(parsedJson.rightNode!));
+        return matchNode;
+    }
+
+    private setMatchNodeValuesWithParsedJSON(parsedJson : MatchDto) : MatchNode{
+        var matchNode = new MatchNode([],[]);
+        matchNode.matchId = parsedJson.matchId;
+        matchNode.teamOne = JSON.parse(parsedJson.teamOne!);
+        matchNode.teamTwo =  JSON.parse(parsedJson.teamTwo!);
+        matchNode.teamOneName = parsedJson.teamOneName;
+        matchNode.teamTwoName = parsedJson.teamTwoName;
+        matchNode.teamOneScore = parsedJson.teamOneScore;
+        matchNode.teamTwoScore = parsedJson.teamTwoScore;
+        matchNode.gameDetails = JSON.parse(parsedJson.gameDetails!);
+        matchNode.matchId = parsedJson.matchId;
+        matchNode.hasWinner = parsedJson.hasWinner!;
+        if(matchNode.hasWinner){
+            matchNode.winner =  JSON.parse(parsedJson.winner!);
+        }
+        return matchNode;
+    }
+
+    private checkJSONMatchNode(parsedJson : MatchDto) : MatchNode{
+        var newMatchNode = this.setMatchNodeValuesWithParsedJSON(parsedJson);
+        if(parsedJson.leftNode){
+            newMatchNode.leftNode = this.checkJSONMatchNode(JSON.parse(parsedJson.leftNode));
+        }
+        if(parsedJson.rightNode){
+            newMatchNode.rightNode = this.checkJSONMatchNode(JSON.parse(parsedJson.rightNode));
+        }
+        return newMatchNode;
+    }
+
 }
