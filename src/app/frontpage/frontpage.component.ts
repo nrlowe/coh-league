@@ -1,6 +1,11 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { PlayerRank } from '../models/playerrank';
 import { Tournament } from '../models/tournament';
+import { TournamentService } from '../services/tournament.service';
+import { PlayerService } from '../services/player-service';
+import { Observer } from 'rxjs';
+import { PlayerDetails } from '../models/playerdetails';
+import { TournamentDto } from '../models/dto/tournamentdto';
 
 @Component({
   selector: 'app-frontpage',
@@ -18,7 +23,10 @@ export class FrontpageComponent implements OnInit {
   @Output() changeRankPage = new EventEmitter<any>(true);
 
   liveTournaments : Tournament[] = []; 
-  rankList : PlayerRank[] = [];
+  rankList : PlayerDetails[] = [];
+  rankObserver? : Promise<PlayerDetails[]>;
+  tournamentPromise? : Promise<TournamentDto[]>;
+  tournamentDtoList : TournamentDto[] = [];
   upComingTournaments : Tournament[] = [];
 
   @Input() liveTournamentPage = 1;
@@ -36,19 +44,46 @@ export class FrontpageComponent implements OnInit {
 //allow user to select team as 'OPEN' or 'BYE' 
 // user session
 // proceed button error animation
+  constructor(private tournamentService : TournamentService, private playerService : PlayerService) {
 
-  ngOnInit(): void {
-    for(var i = 0; i < 5; i++){
-      //this.liveTournaments.push(new Tournament(i, "Test Tournament " + i, "CoH 2",  new Date().toDateString()));
-    }
+  }
+  ngOnInit() {
+    //check login (or should this occur in app.component?)
+    this.getAllPLayers();
+    this.retrieveTournaments();
+    //this.retrievePlayers2();
+    //convert dto to tournamenttree
+  }
 
-    for(var i = 0; i < 39; i++){
-      this.rankList.push(new PlayerRank(i, "Test Name " + i, i * 2));
-    }
+  private async getAllPLayers(){
+    await this.retrievePlayers();
+    this.rankList.sort((a,b) => b.points! - a.points!);
+  }
 
-    this.setRankPage(this.rankingPage);
+  private async retrievePlayers(){
+    this.rankObserver = this.playerService.getAllPlayers();
+    await this.rankObserver;
+    await this.rankObserver?.then((value : PlayerDetails[]) => 
+    this.rankList = value)
+    .catch((err) => this.rankList = []);
+  }
 
-    this.pageLiveTournaments = this.liveTournaments;
+  private async retrieveTournaments(){
+    this.tournamentPromise = this.tournamentService.getAllTournaments();
+    this.tournamentPromise?.then((value : TournamentDto[]) =>
+    this.tournamentDtoList = value).catch((err) => this.tournamentDtoList = []);
+  }
+
+  splitTournaments(){
+
+  }
+
+  orderTournaments(){
+
+  }
+
+  orderRanks(){
+
   }
 
   setRankPage(page : number){
@@ -60,6 +95,10 @@ export class FrontpageComponent implements OnInit {
 
     // // call change page function in parent component
     // this.changePage.emit(pageOfItems);
+  }
+
+  ngOnDestroy(){
+    this.rankList = [];
   }
 
 

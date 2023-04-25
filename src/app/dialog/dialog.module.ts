@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { CreatetournamentComponent } from './tournament/createtournament/createtournament.component';
 import { EditRoundComponent } from './tournament/edittournament/edit-round/editround.component';
 import { SetRoundOneComponent } from './tournament/edittournament/set-round-one/set-round-one.component';
+import { MatDatepickerModule } from '@angular/material/datepicker'; 
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -24,7 +26,9 @@ import { SetRoundOneComponent } from './tournament/edittournament/set-round-one/
     MatDialogModule,
     FormsModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [EditMatchComponent, CreatetournamentComponent, EditRoundComponent]
 })

@@ -19,18 +19,36 @@ import { SharedTournamentService } from 'src/app/services/shared-tournament.serv
 export class CreatetournamentComponent {
   private tournament? : TournamentDetails;
   tournamentForm : FormGroup;
+  page : number = 1;
   constructor(public dialogRef: MatDialogRef<CreatetournamentComponent>){
       this.tournamentForm = new FormGroup({
-        tournamentTitle : new FormControl('',[Validators.required, Validators.minLength(4)]),
-        tournamentGame : new FormControl('',[Validators.required]),
-        tournamentGameFormat : new FormControl('',[Validators.required]),
-        tournamentPlayerNum : new FormControl('',[Validators.required]),
-        tournamentTeamSize : new FormControl('',[Validators.required])
+        pageOne : new FormGroup({
+          tournamentTitle : new FormControl('',[Validators.required, Validators.minLength(4)]),
+          tournamentDescription : new FormControl(undefined),
+          tournamentGame : new FormControl('',[Validators.required]),
+          tournamentGameFormat : new FormControl('',[Validators.required]),
+        }),
+        pageTwo : new FormGroup({
+          tournamentPlayerNum : new FormControl('',[Validators.required]),
+          tournamentTeamSize : new FormControl('',[Validators.required]),
+          tournamentStartDate : new FormControl<Date | null>(null, [Validators.required]),
+          tournamentEndDate : new FormControl<Date | null>(null, [Validators.required]),
+        }),
       })
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  goToNextPage(){
+    if(this.tournamentForm.get('pageOne')!.valid){
+      this.page = 2;
+    }
+  }
+
+  goToPreviousPage(){
+    this.page = 1;
   }
 
   submitNewTournament(): void {
@@ -43,7 +61,7 @@ export class CreatetournamentComponent {
   }
 
   hasError(controlName : string, errorName : string){
-    return this.tournamentForm.controls[controlName].hasError(errorName);
+    //return this.tournamentForm.controls[controlName].hasError(errorName);
   }
 
   // hasGameFormatError(){
@@ -59,12 +77,19 @@ export class CreatetournamentComponent {
   // }
 
   convertFormToTournamentTree(){
-    this.tournament = new TournamentDetails(this.tournamentForm.controls["tournamentTitle"].value, 
-    this.tournamentForm.controls["tournamentTeamSize"].value,
-    this.tournamentForm.controls["tournamentGameFormat"].value,
-    this.tournamentForm.controls["tournamentPlayerNum"].value,
-    this.tournamentForm.controls["tournamentGame"].value,
+    var pageOne = this.tournamentForm.get('pageOne');
+    var pageTwo = this.tournamentForm.get('pageTwo');
+    this.tournament = new TournamentDetails(pageOne?.get('tournamentTitle')?.value, 
+    pageTwo?.get('tournamentTeamSize')?.value, 
+    pageOne?.get('tournamentGameFormat')?.value,
+    pageTwo?.get('tournamentPlayerNum')?.value, 
+    pageOne?.get('tournamentGame')?.value,
     true);
+    if(pageOne?.get('tournamentDescription')){
+      this.tournament.description = pageOne?.get('tournamentDescription')?.value
+    }
+    this.tournament.startDate = pageTwo?.get('tournamentStartDate')?.value;
+    this.tournament.endDate = pageTwo?.get('tournamentEndDate')?.value;
   }
 
 

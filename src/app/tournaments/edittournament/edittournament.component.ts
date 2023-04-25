@@ -43,7 +43,7 @@ export class EdittournamentComponent {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.editTournament = data;
     });
-    await this.retrievePlayers();
+    //await this.retrievePlayers();
     var tournamentDetails = new TournamentDetails("Test Tournament", 2, 3, 4, "CoH2", true);
     var x = this.editTournamentService.createNewTournament(tournamentDetails);
     this.editTournament = x;
@@ -62,6 +62,21 @@ export class EdittournamentComponent {
 
   getTeamTwoPlayers(index : number) : FormArray {
     return this.getMatchs().at(index).get('teamTwoPlayers') as FormArray;
+  }
+
+  addorUpdatePlayer(){
+    //handle error message for player already exists?
+    // const dialogRef = this.dialog.open(CreatetournamentComponent, {
+    //   data : this.tournament,
+    // });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if(result.open){
+    //     this.tournament = this.editTournamentService.createNewTournament(result);
+    //     this.sharedTournamentService.setNewTournament(this.tournament);
+    //     this.router.navigate(['/edittournament']);
+    //   }
+    // })
   }
 
   constructDynamicForm(rounds : RoundNode) {
@@ -100,38 +115,10 @@ export class EdittournamentComponent {
   //       .catch((err) => this.players = []);
   // }
 
-
-  retrievePlayers(){
-    this.createAndAdd("xbubalo", 4, "fpsdiojfvpoidsj");
-    this.createAndAdd("pob", 17, "dsgvsdgvsd");
-    this.createAndAdd("farlion", 24, "dsgvdsvvdsv");
-    this.createAndAdd("fartlion", 39, "sdbgs");
-    this.createAndAdd("bob", 1, "sdbdsbsbs");
-    this.createAndAdd("joe", 98, "sdbsdbsdbsdb");
-    this.createAndAdd("sarah", 10, "sdbdsbxdbxc");
-    this.createAndAdd("stan", 90, "sdbsdbxcbvxf");
-    this.createAndAdd("papa", 42, "xcbxcbsdf");
-    this.createAndAdd("mama", 46, "xcbxcbsfb");
-    this.createAndAdd("God", 1000, "xcbxcbxcb");
-    this.createAndAdd("Dog", 9, "vdfbvddbf");
-    this.createAndAdd("120498343", 2, "dfhrtjtjnmrfhrtf");
-    this.createAndAdd("Stanstan", 5, "sdfgdfhdfbdf");
-    this.createAndAdd("Becca", 7, "dfhrtfhfghfghnfg");
-  }
- 
-
-  createAndAdd(name : string, points : number, id : string){
-    var player = new PlayerDetails();
-    player.name = name;
-    player.points = points;
-    player.steamId = id;
-    this.players.push(player);
-  }
-
   saveT1Player(player : PlayerDetails, teamIndex : number, playerIndex : number) {
     this.players = this.players.filter(x => player != x);
     var form = this.getTeamOnePlayers(teamIndex);
-    form.at(playerIndex).get('playerOneName')?.setValue(player.name);
+    form.at(playerIndex).get('playerOneName')?.setValue(player.playerName);
     form.at(playerIndex).get('playerOneName')?.disable();
     form.at(playerIndex).get('playerSelected')?.setValue(true);
     form.at(playerIndex).get('playerOneDetails')?.setValue(player);
@@ -150,7 +137,7 @@ export class EdittournamentComponent {
   saveT2Player(player : PlayerDetails, teamIndex : number, playerIndex : number) {
     this.players = this.players.filter(x => player != x);
     var form = this.getTeamTwoPlayers(teamIndex);
-    form.at(playerIndex).get('playerTwoName')?.setValue(player.name);
+    form.at(playerIndex).get('playerTwoName')?.setValue(player.playerName);
     form.at(playerIndex).get('playerTwoName')?.disable();
     form.at(playerIndex).get('playerSelected')?.setValue(true);
     form.at(playerIndex).get('playerTwoDetails')?.setValue(player);
@@ -169,7 +156,7 @@ export class EdittournamentComponent {
   playerFilter(playerNameInput : string) : PlayerDetails[]{
     console.log(playerNameInput);
     var filterValue = playerNameInput.toLocaleLowerCase();
-    return this.players.filter(option => option.name?.toLocaleLowerCase().includes(filterValue));
+    return this.players.filter(option => option.playerName?.toLocaleLowerCase().includes(filterValue));
   }
 
   onNoClick(): void {
@@ -180,12 +167,6 @@ export class EdittournamentComponent {
     if(this.roundOneForm.valid){
       this.addInfoToTournament(this.roundOneForm);
       this.sharedTournamentService.setNewTournament(this.editTournament);
-      console.log(this.editTournament.rounds!.length);
-    var roundArray = this.editTournament.rounds as RoundNode[];
-    var matchArray = roundArray[0].matchs;
-    console.log(matchArray.length);
-    var matchNode = matchArray[0] as MatchNode;
-    console.log(matchArray[0].teamOneName);
       this.router.navigate(['tournament/viewedit']);
     }
   }
@@ -219,11 +200,8 @@ export class EdittournamentComponent {
       var matchArrayForm = roundForm.controls['matchs'] as FormArray;
       var matchForm = matchArrayForm.at(i) as FormControl;
       var tournyMatch = matchArray[i] as MatchNode;
-      console.log( matchForm.get('teamOne')?.value);
-      console.log(tournyMatch.teamOneName);
       tournyMatch.teamOneName = matchForm.get('teamOne')?.value;
       tournyMatch.teamTwoName = matchForm.get('teamTwo')?.value;
-      console.log(tournyMatch.teamOneName);
       var playerOneArray = matchForm.get('teamOnePlayers') as FormArray;
       var playerTwoArray = matchForm.get('teamTwoPlayers') as FormArray;
       for(var x = 0; x < this.teamFormat.length; x++){
@@ -232,50 +210,4 @@ export class EdittournamentComponent {
       }
     }
   }
-
-
-
-  ///////////////////////////
-
-
-  editDate(round : RoundNode){
-    round.date = "March 2025";
-    round.roundName = "Round 50";
-  }
-
-  openRoundEditDialog(roundNode : RoundNode){
-    const dialogRef = this.dialog.open(EditRoundComponent, {
-      data : roundNode,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      roundNode = result;
-    })
-  }
-
-  openEditMatchDialog(match : MatchNode) {
-    const dialogRef = this.dialog.open(EditMatchComponent, {
-      data : match,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      match = result;
-    })
-  }
-
-
-  proceedToView(tournamentTree : TournamentTree) {
-    this.sharedTournamentService.setNewTournament(tournamentTree);
-    console.log(tournamentTree.rounds!.length);
-    var roundArray = tournamentTree.rounds as RoundNode[];
-    var matchArray = roundArray[0].matchs;
-    console.log(matchArray.length);
-    var matchNode = matchArray[0] as MatchNode;
-    console.log(matchNode.teamOne);
-    this.router.navigate(['/viewtournament']);
-  }
 }
-
-
-//get tournament, get players(for specified game)
-//option to create new player/update player(if current steam name is wrong) check via steam id

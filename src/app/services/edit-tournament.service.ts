@@ -63,7 +63,7 @@ export class EditTournamentService {
         this.addGameDetails(finalMatch);
         for(var i = 1; i <= this.teamSize; i++){
             var player = new PlayerDetails;
-            player.name = "Player " + i;
+            player.playerName = "Player " + i;
             finalMatch.teamOne?.push();
             finalMatch.teamTwo?.push();
         }
@@ -109,7 +109,7 @@ export class EditTournamentService {
         this.globalMatchCount++;
         for(var i = 1; i <= this.teamSize; i++){
             var player = new PlayerDetails;
-            player.name = "Player " + i;
+            player.playerName = "Player " + i;
             newMatch.teamOne?.push();
             newMatch.teamTwo?.push();
         }

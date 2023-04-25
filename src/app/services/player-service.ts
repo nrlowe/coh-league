@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class PlayerService {
     private dbPath = '/players';
-    private coh3Path = "players/rEh8a5JfD3HZUSQ1ZckS/CoH3";
+    private coh3Path = "/rankings/players/CoH2";
     playerRef$: Observable<any[]>;
     playerRef2: AngularFirestoreCollection<PlayerDetails>;
     tournamentDetails? : TournamentDetails;
@@ -34,12 +34,12 @@ export class PlayerService {
     //     return ref;
     // }
 
-    async getAll2() : Promise<PlayerDetails[]> {
-        const ref = await this.playerRef2.get();
-        ref.forEach(doc => {
+    async getAllPlayers() : Promise<PlayerDetails[]> {
+        const ref = this.playerRef2.get();
+        await ref.forEach(doc => {
             doc.forEach(player => {
                 var x = new PlayerDetails;
-                x.name = player.data().name;
+                x.playerName = player.data().playerName;
                 x.steamId = player.data().steamId;
                 x.points = player.data().points;
                 this.playerDetails?.push(x);

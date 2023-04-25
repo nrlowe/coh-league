@@ -13,6 +13,9 @@
 .twitch-row{
     height: 70vh;
 }
+.tour-col {
+    height: 25vh;
+}
 .livetour-row{
     border-left: 0.5vh solid lightcoral;
     padding-bottom: 0.5vh;
