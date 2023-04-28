@@ -3,11 +3,24 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "github",
+    "public": "nrlowe/coh-league",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "remoteconfig": {
+    "template": "remoteconfig.template.json"
   }
 }

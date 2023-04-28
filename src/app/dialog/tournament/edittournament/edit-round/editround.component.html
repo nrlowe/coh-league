@@ -9,6 +9,10 @@
     <mat-label>Round Date</mat-label>
     <input matInput [(ngModel)]="data.date">
   </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Round Game Format</mat-label>
+    <input matInput [(ngModel)]="data.roundFormat">
+  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Close</button>
