@@ -42,11 +42,12 @@ export class LoginComponent {
           this.user.key = this.loginForm.get('token')!.value;
           var y = await this.authService.retrieveUser(this.user);
           var x = y.pipe(map(changes => changes.map(c => ({
-            id : c.userName, key : c.key
+            userName : c.userName, key : c.key, documentId : c['Document ID']
         })))).subscribe(data => {
             if(data){
               localStorage.setItem('isLoggedIn', "true");  
-              localStorage.setItem('userId', this.user.userName!);
+              localStorage.setItem('userId', data[0].userName!);
+              localStorage.setItem('userKey', data[0].documentId);
               this.authService.isLoggedIn = true;
               this.router.navigate(["/frontpage"]);
             };

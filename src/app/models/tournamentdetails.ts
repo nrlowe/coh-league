@@ -12,6 +12,7 @@ export class TournamentDetails{
     startDate? : string;
     endDate? : string;
     open : boolean;
+    liveStatus : boolean = false;
 
     constructor(title : string, teamSize : number, gameFormat : number, playerNumber : number, 
         gameVersion : string, open : boolean){

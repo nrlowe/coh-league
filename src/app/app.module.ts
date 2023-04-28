@@ -30,6 +30,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { EditviewTournamentComponent } from './tournaments/editview-tournament/editview-tournament.component';
 import { AuthGuard } from './guards/auth-guard';
 import { LoginComponent } from './login/login.component';
+import { ToastComponent } from './toast/toast.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { LoginComponent } from './login/login.component';
     ViewtournamentComponent,
     EdittournamentComponent,
     EditviewTournamentComponent,
-    LoginComponent
+    LoginComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,7 @@ import { LoginComponent } from './login/login.component';
     MatSelectModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

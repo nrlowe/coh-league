@@ -21,7 +21,7 @@ export class CreatetournamentComponent {
   private tournament? : TournamentDetails;
   tournamentForm : FormGroup;
   page : number = 1;
-  dateformat : string = "dd/MM/yyyy";
+  dateformat : string = "MM/dd/yyyy";
   //TODO: If times are introduced - allow region select? pull from local storage?
   local : string = "en-US";
   constructor(public dialogRef: MatDialogRef<CreatetournamentComponent>){

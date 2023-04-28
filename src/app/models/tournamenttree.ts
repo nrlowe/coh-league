@@ -13,7 +13,9 @@ export class TournamentTree {
     startDate? : string;
     endDate? : string;
     open? : boolean | false;
+    liveStatus? : boolean | false;
     image? : string;
     displayImage: boolean = false;
     hasImage: boolean = false;
+    creatorKey? : string;
 }

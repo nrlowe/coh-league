@@ -1,120 +1,180 @@
-  *,
-  *::after,
-  *::before {
-    box-sizing: border-box;
-  }
-  .tournamentbox{
-    display: flex;
-    flex-direction: column;
-  }
-  .tournamentrow {
-    display: flex;
-    flex-direction: row;
-  }
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
 
-  
-  .roundheadercontainer{
-    display:flex;
-    flex-direction: row;
-    border: 2px solid red;
-    justify-content: space-around;
-  }
+.box{
+  margin-bottom: 5vh;
+}
+.tournamentbox{
+  display: flex;
+  flex-direction: column;
+  margin-left: 2vh;
+  margin-right: 2vh;
+}
+.tournamentrow {
+  display: flex;
+  flex-direction: row;
+}
 
-  .roundheader{
+/* Tournament Image/Title Content */
+.imagebox {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5vh;
+}
+
+h1{
     color: white;
-  }
-  .rounds {
-    display: flex;
-    flex-grow: 2;
-    flex-direction: column;
-  }
-  
-  .matchup {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 0px 10px;
-    padding: 30px 0;
-    flex-grow: 1;
-    position: relative;
-  }
+    font-weight: bold;
+    margin-left: 5vh;
+}
 
-  .matchcontent {
-    font-family:sans-serif;
-    background-color: #F6FAFE;
-    border: 2px solid #9DB7D0;
+.roundheadercontainer{
+  display:flex;
+  flex-direction: row;
+  border-bottom: 2px solid  rgb(129, 9, 9);
+  justify-content: space-around;
+  padding-bottom: 1vh;
+}
+
+/* Round Content */
+
+.roundheader{
+  color: white;
+  display:flex;
+  flex-direction: column;
+}
+
+
+.rounds {
+  display: flex;
+  flex-grow: 2;
+  flex-direction: column;
+}
+
+/* Match Content */
+
+.matchup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px 10px;
+  padding: 30px 0;
+  flex-grow: 1;
+  position: relative;
+}
+
+.matchcontent {
+  font-family:sans-serif;
+  border: 2px solid #b5b7ba;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.team{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
-    height: 50px;
-    position: relative;
-  }
+    color: white;
+    
+}
 
-  .matchup:nth-child(odd)::after {
-    content: "";
-    display: block;
-    border: 2px solid transparent;
-    border-left-color: grey;
-    height: 52%;
-    position: absolute;
-    right: -3%;
-    top: 50%;
-  }
-  
-  .matchup:nth-child(even)::after {
-    content: "";
-    display: block;
-    border: 2px solid transparent;
-    border-left-color: grey;
-    height: 52%;
-    position: absolute;
-    right: -3%;
-    bottom: 48%;
-  }
+.teamview{
+  position: absolute;
+  background-color: black;
+  /* border: 2px solid #b5b7ba; */
+}
 
-  .matchcontent {
-    font-family:sans-serif;
-    background-color: #F6FAFE;
-    border: 2px solid #9DB7D0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 50px;
-    position: relative;
-  }
-  
-  .matchcontent::after {
-    content: "";
-    display: block;
-    width: 14px;
-    border-bottom: 2px solid grey;
-    margin-left: -2px;
-    position: absolute;
-    top: 50%;
-    right: -14px;
-  }
-  
-  .matchcontent::before {
-    content: "";
-    display: block;
-    width: 3%;
-    border-bottom: 2px solid grey;
-    margin-left: 2px;
-    position: absolute;
-    top: 50%;
-    left: -4%;
-  }
-  
-  .rounds:last-child .matchup::after {
-    display: none;
-  }
-  
-  .rounds:first-child .matchup::before {
-    display: none;
-  }
-  
-  .rounds:last-child .matchcontent::after {
-    display: none;
-  }
+.teamname {
+  width: 100%;
+  background-color: rgb(35, 33, 33);
+  align-items: center;
+}
+
+
+.teamname:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+}
+.teamscore {
+    margin-left: auto;
+    background-color: rgb(129, 9, 9);
+    padding-left: 1%;
+    padding-right: 1%;
+    color: white;
+    font-weight: bold;
+}
+
+.matchcontent {
+  font-family:sans-serif;
+  /* border: 2px solid #b5b7ba; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  position: relative;
+}
+
+/* Bracket Content ---------------------------------------------------------------------------------- */
+
+/* Bracket Vertical Connector */
+.matchup:nth-child(odd)::after {
+  content: "";
+  display: block;
+  border-left:2px solid #b5b7ba;
+  height: 50%;
+  position: absolute;
+  right: -12px;
+  top: 50%;
+}
+
+.matchup:nth-child(even)::after {
+  content: "";
+  display: block;
+  border-left:2px solid #b5b7ba;
+  height: 50%;
+  position: absolute;
+  right: -12px;
+  bottom: 50%;
+}
+
+/* Bracket -- After Matchup line */
+.matchcontent::after {
+  content: "";
+  display: block;
+  width: 14px;
+  border-bottom: 2px solid #b5b7ba;
+  margin-left: -2px;
+  position: absolute;
+  top: 50%;
+  right: -14px;
+}
+
+/* Bracket -- Before Matchup line */
+.matchcontent::before {
+  content: "";
+  display: block;
+  width: 10px;
+  border-bottom: 2px solid #b5b7ba;
+  position: absolute;
+  top: 50%;
+  left: -10px;
+}
+
+.rounds:last-child .matchup::after {
+  display: none;
+}
+
+.rounds:first-child .matchcontent::before {
+  display: none;
+}
+
+.rounds:last-child .matchcontent::after {
+  display: none;
+}
+
+/* End of Bracket Lines ---------------------------------------------------- */

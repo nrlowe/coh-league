@@ -6,6 +6,9 @@ import { PlayerService } from '../services/player-service';
 import { Observer } from 'rxjs';
 import { PlayerDetails } from '../models/playerdetails';
 import { TournamentDto } from '../models/dto/tournamentdto';
+import { Router } from '@angular/router';
+import { SharedTournamentService } from '../services/shared-tournament.service';
+import { JsonService } from '../services/json-service';
 
 @Component({
   selector: 'app-frontpage',
@@ -46,7 +49,8 @@ export class FrontpageComponent implements OnInit {
 //allow user to select team as 'OPEN' or 'BYE' 
 // user session
 // proceed button error animation
-  constructor(private tournamentService : TournamentService, private playerService : PlayerService) {
+  constructor(private tournamentService : TournamentService, private playerService : PlayerService, private router : Router,
+    private sharedService : SharedTournamentService, private jsonService : JsonService) {
 
   }
   ngOnInit() {
@@ -80,10 +84,30 @@ export class FrontpageComponent implements OnInit {
       doc.forEach(tourny => {
         var t = new TournamentDto(tourny.title!, tourny.teamSize!, 
           tourny.playerNumber!, tourny.gameVersion!, tourny.open, tourny.hasImage);
+          t.matchTree = tourny.matchTree;
+          t.rounds = tourny.rounds;
+          t.startDate = tourny.startDate;
+          t.endDate = tourny.endDate;
+          t.liveStatus = this.checkLiveStatus(t.startDate!, t.endDate!);
+          t.creatorKey = tourny.creatorKey;
         this.liveTournaments.push(t);
         this.tournamentDtoList.push(t);
       })
     });
+  }
+
+  checkLiveStatus(startDate : string, endDate : string) : boolean {
+    const start = new Date(startDate);
+    const end = new Date(endDate)
+    const today = new Date();
+    console.log("START: " +start);
+    console.log("END: " +end);
+    console.log("TODAY: " + today);
+    if(today >= start && today <= end) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   splitTournaments(){
@@ -107,6 +131,12 @@ export class FrontpageComponent implements OnInit {
 
     // // call change page function in parent component
     // this.changePage.emit(pageOfItems);
+  }
+
+  viewTournament(tournamentDto : TournamentDto){
+    var tournamentTree = this.jsonService.convertTournamentDtoToTree(tournamentDto);
+    this.sharedService.setViewTournament(tournamentTree);
+    this.router.navigate(['/tournament/viewtournament']);
   }
 
   ngOnDestroy() : void{

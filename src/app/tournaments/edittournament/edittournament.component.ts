@@ -103,10 +103,13 @@ export class EdittournamentComponent {
   }
 
   async retrievePlayers() { 
-      // this.playerList = this.playerService.getAllPlayers()
-      // this.playerList?.then((value : PlayerDetails[]) => 
-      //   this.players = value)
-      //   .catch((err) => this.players = []);
+      this.playerService.getAllPlayers().subscribe(data => {
+        if(data){
+          data.forEach((p => {
+            this.players.push(p);
+          }))
+        }
+      });
   }
 
   saveT1Player(player : PlayerDetails, teamIndex : number, playerIndex : number) {

@@ -135,6 +135,8 @@ export class EditTournamentService {
         tournamentTree.playerNumber = tournamentDetails.playerNumber;
         tournamentTree.gameVersion = tournamentDetails.gameVersion;
         tournamentTree.open = tournamentDetails.open;
+        tournamentTree.startDate = tournamentDetails.startDate;
+        tournamentTree.endDate = tournamentDetails.endDate;
         return tournamentTree;
     }
 

@@ -18,6 +18,9 @@ export class JsonService {
         var tournamentDto = new TournamentDto(tournament.title!, tournament.teamSize!,
             tournament.playerNumber!, tournament.gameVersion!, tournament.open!,
             tournament.hasImage);
+        tournamentDto.creatorKey = localStorage.getItem("userKey")!;
+        tournamentDto.startDate = tournament.startDate;
+        tournamentDto.endDate = tournament.endDate;
         if(tournament.hasImage){
             tournamentDto.image = tournament.image;
             tournamentDto.displayImage = tournament.displayImage;
@@ -85,6 +88,46 @@ export class JsonService {
 
 
     //JSON -> Nodes
+    public convertTournamentDtoToTree(tournamentDto : TournamentDto) : TournamentTree {
+        var tournamentTree = new TournamentTree();
+        tournamentTree.matchTree = this.convertJsonToMatchNode(tournamentDto.matchTree!);
+        tournamentTree.creatorKey = tournamentDto.creatorKey;
+        tournamentTree.displayImage = tournamentDto.displayImage;
+        tournamentTree.endDate = tournamentDto.endDate;
+        tournamentTree.gameVersion = tournamentDto.gameVersion;
+        tournamentTree.hasImage = tournamentDto.hasImage;
+        tournamentTree.liveStatus = tournamentDto.liveStatus;
+        tournamentTree.open = tournamentDto.open;
+        tournamentTree.playerNumber = tournamentDto.playerNumber;
+        tournamentTree.rounds = this.convertRoundsDtoToRoundNodeArray(tournamentDto.rounds);
+        tournamentTree.startDate = tournamentDto.startDate;
+        tournamentTree.teamSize = tournamentDto.teamSize;
+        tournamentTree.title = tournamentDto.title;
+        if(tournamentDto.description){
+            tournamentTree.description = tournamentDto.description;
+        }
+        return tournamentTree;
+    }
+
+    //Rounds Array JSON Conversion
+    private convertRoundsDtoToRoundNodeArray(roundString : string[]) : RoundNode[] {
+        var roundArray = [] as RoundNode[];
+        for(var round of roundString){
+            var parsedJsonMatchs = JSON.parse(round);
+            var matchNodeArray = [] as MatchNode[];
+            parsedJsonMatchs.matchs.forEach((m : string) => {
+                var node = JSON.parse(m) as MatchNode;
+                matchNodeArray.push(node);
+            })
+            var node = new RoundNode(matchNodeArray);
+            node.roundId = parsedJsonMatchs.roundId;
+            node.roundFormat = parsedJsonMatchs.roundFormat;
+            roundArray.push(node);
+        }
+        return roundArray;
+    }
+
+    //MatchTree JSON conversion 
     private convertJsonToMatchNode(jsonMatchNode : string) : MatchNode{
         var parsedJson = JSON.parse(jsonMatchNode) as MatchDto;
         var matchNode = this.setMatchNodeValuesWithParsedJSON(parsedJson);

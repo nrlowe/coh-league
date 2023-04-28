@@ -21,7 +21,7 @@ export class AuthService {
     
     async retrieveUser(user : ULogin) {
         return this.db.collection<ULogin>(this.dbPath, ref => ref.where('userName', '==', user.userName!)
-        .where('key', '==', user.key!).limit(1)).valueChanges();
+        .where('key', '==', user.key!).limit(1)).valueChanges({ idField: 'Document ID'});
         }
    
     logout() : void {    

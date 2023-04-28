@@ -7,6 +7,7 @@ export class RoundNode {
     roundId? : number;
     roundName? : string;
     date? : string;
+    roundFormat? : number;
     constructor(matchs : MatchNode[]){
         this.matchs = matchs;
     }

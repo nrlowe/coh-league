@@ -8,6 +8,8 @@ float right, then center the next to matchs based on the left and right node to 
   <!-- Tournament Background -->
   <div class="tournamentbox">
     
+    
+    
     <!-- Tournament Image Header -->
     <div *ngIf="!tournamentView.hasImage" class="tournyName">
       <h1>{{tournamentView.title}}</h1>
@@ -23,7 +25,7 @@ float right, then center the next to matchs based on the left and right node to 
     <div class="roundheadercontainer">
       <div *ngFor = "let round of tournamentView.rounds">
         <div  class=" d-flex align-items-center justify-content-center roundheader">
-          <div>Round {{round.roundId + 1}}</div>
+          <div>Round {{round.roundId}}</div>
           <div>{{round.roundName}}</div>
           <div>{{round.date}}</div>
         </div>
@@ -37,7 +39,7 @@ float right, then center the next to matchs based on the left and right node to 
           <!-- if winner assign ngclass-->
           <div class="matchcontent">
             <div class="team">
-              <div class="align-items-center justify-content-center roundheader teamname" (click)="viewteam(match)">
+              <div class="align-items-center justify-content-center roundheader teamname">
                   {{match.teamOneName}}
                   <div *ngIf="match.teamview" class="teamview">
                     TEFDKGBDPOFBJKDPBKDPKB
@@ -64,6 +66,14 @@ float right, then center the next to matchs based on the left and right node to 
         </div>
       </div>
     </div>
+    <!-- Edit/Delete button for owner? -->
+    <!-- <div class="d-flex align-items-center justify-content-center col-12">
+   
+        <button class="submit-button" (click)="saveTournament(newTournament)">Save</button>
+      
+        <button class="cancel-button" (click)="cancelTournament()">Cancel</button>
+      
+    </div> -->
     
   </div>
 </div>
