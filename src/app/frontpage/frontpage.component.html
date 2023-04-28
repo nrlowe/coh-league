@@ -12,14 +12,14 @@
                     <div *ngIf="tournamentDtoList.length > 0">
                       <div *ngFor = "let livetour of liveTournaments" class="row livetour-row">
                           <div class="col-6 d-flex align-items-center justify-content-center livetour-name"><strong>{{livetour.title}}</strong></div>
-                          <div class="col-2 d-flex align-items-center justify-content-center livetour-name">{{livetour.game}}</div>
-                          <div class="col-4 d-flex align-items-center justify-content-center livetour-name">{{livetour.startdate}}</div>
+                          <div class="col-2 d-flex align-items-center justify-content-center livetour-name">{{livetour.gameVersion}}</div>
+                          <div class="col-4 d-flex align-items-center justify-content-center livetour-name">{{livetour.startDate}}</div>
                       </div>
                     </div>
                     <div *ngIf="tournamentDtoList.length == 0">
                       <p>No Tournaments Found</p>
                     </div>
-                    <div class="row d-flex align-items-center justify-content-center">Page Selection</div>
+                    <pagination-controls class="d-flex align-items-center justify-content-center" (pageChange)="rankingPage = $event"></pagination-controls>
                 </div>
             </div>
             <!-- upcoming tournament row -->
@@ -30,29 +30,11 @@
                     </div>
                     <div *ngFor = "let livetour of liveTournaments" class="row livetour-row">
                         <div class="col-6 d-flex align-items-center justify-content-center livetour-name"><strong>{{livetour.title}}</strong></div>
-                        <div class="col-2 d-flex align-items-center justify-content-center livetour-name">{{livetour.game}}</div>
-                        <div class="col-4 d-flex align-items-center justify-content-center livetour-name">{{livetour.startdate}}</div>
+                        <div class="col-2 d-flex align-items-center justify-content-center livetour-name">{{livetour.gameVersion}}</div>
+                        <div class="col-4 d-flex align-items-center justify-content-center livetour-name">{{livetour.startDate}}</div>
                     </div>
                     <div class="row d-flex align-items-center justify-content-center">
-                        <nav aria-label="Page navigation bg-dark example">
-                            <ul class="pagination">
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                  <span aria-hidden="true">&laquo;</span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                  <span aria-hidden="true">&raquo;</span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </nav>
+                      <pagination-controls (pageChange)="rankingPage = $event"></pagination-controls>
                     </div>
 
                 </div>
@@ -75,25 +57,7 @@
                     </div>
                     <div class="row d-flex align-items-center justify-content-center">
                         <pagination-controls (pageChange)="rankingPage = $event"></pagination-controls>
-                        <!-- <nav aria-label="Page navigation bg-dark example">
-                            <ul class="pagination">
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                  <span aria-hidden="true">&laquo;</span>
-                                  <span class="sr-only">Previous</span>
-                                </a>
-                              </li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
-                                  <span aria-hidden="true">&raquo;</span>
-                                  <span class="sr-only">Next</span>
-                                </a>
-                              </li>
-                            </ul>
-                          </nav> -->
+                       
                     </div>
                 </div>
             </div>
@@ -102,12 +66,10 @@
     </div>
     <!-- live twitch row -->
     <div class= "row twitch-row">
-        <div class="column-fluid col d-flex">
-            Twitch Integretation for CoH 2/ 3
+        <div class="column-fluid col d-flex align-items-center justify-content-center twitch-col">
+            Twitch API Integretation for CoH 2/3 WIP
         </div>
     </div>
 </div>
 
-
-have bracket / schedule option  ( shows results + more details? faction/vps?)
 

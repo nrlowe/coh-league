@@ -1,6 +1,7 @@
 
 .frontpage-container {
     width: 100vh;
+    margin-bottom: 5vh;
 }
 
 .tour-rank-row{
@@ -11,7 +12,6 @@
     color: white;
 }
 .twitch-row{
-    height: 70vh;
 }
 .tour-col {
     height: 25vh;
@@ -49,4 +49,12 @@
 
 .rank-row:hover{
     box-shadow: inset 0 0 100px 100px rgba(186, 184, 184, 0.1);
+}
+
+.twitch-col{
+    height: 30vh;
+    border: 2px solid #6441a5;
+    border-radius: 10% / 50%;
+    background-color:  rgba(186, 184, 184, 0.1); ;
+    color: white;
 }

@@ -25,32 +25,12 @@ export class CreateTournament {
     private editTournamentService : EditTournamentService, private router : Router,
     public dialog : MatDialog) { }
 
-  // saveTutorial(): void {
-  //   this.tournamentService.create(this.tournament).then(() => {
-  //     console.log('Created new item successfully!');
-  //     this.submitted = true;
-  //   });
-  // }
-
-  // newTutorial(): void {
-  //   this.submitted = false;
-  //   this.tournament = new Tournament(4);
-  // }
-
-  // createNewTournament(newTournament : Tournament){
-  //   var tournamentTree = this.editTournamentService.createNewTournament(newTournament);
-    
-  //   this.sharedTournamentService.setNewTournament(tournamentTree);
-  //   this.router.navigate(['/viewtournament', tournamentTree]);
-  // }
-
   createNewtournament(){
     const dialogRef = this.dialog.open(CreatetournamentComponent, {
-      data : this.tournament,
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.open){
+      if(result){
         this.tournament = this.editTournamentService.createNewTournament(result);
         this.sharedTournamentService.setNewTournament(this.tournament);
         this.router.navigate(['/edittournament']);

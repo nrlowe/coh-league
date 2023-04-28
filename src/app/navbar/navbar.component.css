@@ -1,0 +1,14 @@
+.logo {
+    font-family: 'Big Shoulders Stencil Display';
+    color: goldenrod;
+}
+
+.nav-brand .logo {
+    color: goldenrod;
+}
+
+ul li:last-child {
+    margin-right: auto;
+    right: 0;
+    position: absolute;
+}

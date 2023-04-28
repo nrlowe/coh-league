@@ -34,7 +34,12 @@ export class PlayerService {
     //     return ref;
     // }
 
-    async getAllPlayers() : Promise<PlayerDetails[]> {
+    getAllPlayers() : Observable<PlayerDetails[]> {
+        return this.db.collection<PlayerDetails>(this.coh3Path, ref => ref.orderBy("points", "desc")).valueChanges();
+        //return this.playerRef2.valueChanges();
+    }
+
+    async getAllPlayers2() : Promise<PlayerDetails[]> {
         const ref = this.playerRef2.get();
         await ref.forEach(doc => {
             doc.forEach(player => {
@@ -46,11 +51,11 @@ export class PlayerService {
             })
         });
         return this.playerDetails;
-      }
+    }
 
-    // create(tutorial: PlayerDetails): any {
-    //     return this.playerRef.add({ ...tutorial });
-    // }
+    async addNewPlayer(player: PlayerDetails) {
+        return this.playerRef2.add({ ...player });
+    }
 
     // update(id: string, data: any): Promise<void> {
     //     return this.playerRef.doc(id).update(data);

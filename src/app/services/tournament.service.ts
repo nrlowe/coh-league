@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { TournamentDetails } from '../models/tournamentdetails';
 import { TournamentTree } from '../models/tournamenttree';
 import { TournamentDto } from '../models/dto/tournamentdto';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -32,17 +33,8 @@ export class TournamentService {
         return this.tournamentRef.doc(id).delete();
     }
 
-    async getAllTournaments() : Promise<TournamentDto[]> {
-        const ref = await this.tournamentRef.get();
-        ref.forEach(doc => {
-            doc.forEach(tournament => {
-                var x = new TournamentDto(tournament.data().title!, tournament.data().teamSize!,
-                tournament.data().playerNumber!,tournament.data().gameVersion!,tournament.data().open,
-                tournament.data().hasImage);
-                this.tournamentDtoList?.push(x);
-            })
-        });
-        return this.tournamentDtoList;
-      }
+    getAllTournaments() : Observable<TournamentDto[]> {
+        return this.db.collection<TournamentDto>(this.dbPath).valueChanges();
+    }
     
 }

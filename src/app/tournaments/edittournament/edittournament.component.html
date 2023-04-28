@@ -3,6 +3,7 @@
 <!-- Save option at the bottom of that -> redirect to view the tournament -->
 <div class="container">
     <form [formGroup] = "roundOneForm" id="search-form">
+        <button (click)="addorUpdatePlayer()">Add or Update Player</button>
         <div formArrayName="matchs">
             <div *ngFor="let match of roundOneForm.controls.matchs.controls; let i = index" 
             [formGroupName]="i">
@@ -64,7 +65,6 @@
                                 matSuffix
                                 (click)="deleteT2Player(i, p)"
                                 color="primary"
-                                matTooltip="the number must be formatted in english"
                                 matTooltipPosition="below"><i class="bi bi-clipboard2-x" style="color: red"></i></mat-icon>
                                 <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option (click)="saveT2Player(option, i, p)" *ngFor="let option of players" [value]="option.playerName">

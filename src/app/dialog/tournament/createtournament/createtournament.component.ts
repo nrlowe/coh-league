@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, Inject, NgModule } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
@@ -20,6 +21,9 @@ export class CreatetournamentComponent {
   private tournament? : TournamentDetails;
   tournamentForm : FormGroup;
   page : number = 1;
+  dateformat : string = "dd/MM/yyyy";
+  //TODO: If times are introduced - allow region select? pull from local storage?
+  local : string = "en-US";
   constructor(public dialogRef: MatDialogRef<CreatetournamentComponent>){
       this.tournamentForm = new FormGroup({
         pageOne : new FormGroup({
@@ -61,20 +65,7 @@ export class CreatetournamentComponent {
   }
 
   hasError(controlName : string, errorName : string){
-    //return this.tournamentForm.controls[controlName].hasError(errorName);
   }
-
-  // hasGameFormatError(){
-    
-  // }
-
-  // hasGameVersionError(){
-    
-  // }
-
-  // hasNumberOfPlayersError(){
-    
-  // }
 
   convertFormToTournamentTree(){
     var pageOne = this.tournamentForm.get('pageOne');
@@ -88,8 +79,8 @@ export class CreatetournamentComponent {
     if(pageOne?.get('tournamentDescription')){
       this.tournament.description = pageOne?.get('tournamentDescription')?.value
     }
-    this.tournament.startDate = pageTwo?.get('tournamentStartDate')?.value;
-    this.tournament.endDate = pageTwo?.get('tournamentEndDate')?.value;
+    this.tournament.startDate = formatDate(pageTwo?.get('tournamentStartDate')?.value, this.dateformat, this.local);
+    this.tournament.endDate = formatDate(pageTwo?.get('tournamentEndDate')?.value, this.dateformat, this.local);
   }
 
 

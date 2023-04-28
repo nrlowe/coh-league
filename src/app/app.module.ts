@@ -28,6 +28,8 @@ import { EdittournamentComponent } from './tournaments/edittournament/edittourna
 import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
 import { EditviewTournamentComponent } from './tournaments/editview-tournament/editview-tournament.component';
+import { AuthGuard } from './guards/auth-guard';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { EditviewTournamentComponent } from './tournaments/editview-tournament/e
     CreateTournament,
     ViewtournamentComponent,
     EdittournamentComponent,
-    EditviewTournamentComponent
+    EditviewTournamentComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,7 @@ import { EditviewTournamentComponent } from './tournaments/editview-tournament/e
     MatAutocompleteModule,
     MatTooltipModule
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, HostListener } from '@angular/core';
 import { PlayerRank } from '../models/playerrank';
 import { Tournament } from '../models/tournament';
 import { TournamentService } from '../services/tournament.service';
@@ -22,12 +22,12 @@ export class FrontpageComponent implements OnInit {
 
   @Output() changeRankPage = new EventEmitter<any>(true);
 
-  liveTournaments : Tournament[] = []; 
+  liveTournaments : TournamentDto[] = []; 
   rankList : PlayerDetails[] = [];
-  rankObserver? : Promise<PlayerDetails[]>;
+  rankObserver? : Observer<PlayerDetails[]>;
   tournamentPromise? : Promise<TournamentDto[]>;
   tournamentDtoList : TournamentDto[] = [];
-  upComingTournaments : Tournament[] = [];
+  upComingTournaments : TournamentDto[] = [];
 
   @Input() liveTournamentPage = 1;
   @Input() upcomingTournamentPage = 1;
@@ -39,7 +39,9 @@ export class FrontpageComponent implements OnInit {
 
 
 //TODOS:::::::
-//make dates mandatory, date selection(only allow picks between start and end?)
+//make dates mandatory, date selection(only allow picks between start and end?) on round edit
+//when creating new player - make sure steamid is unique, have game picker (coh2 or coh3)
+//toasts for confirmation on completed actions (created new player success, etc etc)
 //convert string to image on editview load /save image to a global value in editview for quick access
 //allow user to select team as 'OPEN' or 'BYE' 
 // user session
@@ -51,27 +53,37 @@ export class FrontpageComponent implements OnInit {
     //check login (or should this occur in app.component?)
     this.getAllPLayers();
     this.retrieveTournaments();
+    this.rankList.sort((a,b) => b.points! - a.points!);
     //this.retrievePlayers2();
     //convert dto to tournamenttree
   }
 
-  private async getAllPLayers(){
-    await this.retrievePlayers();
+  private getAllPLayers(){
+    this.retrievePlayers();
     this.rankList.sort((a,b) => b.points! - a.points!);
   }
 
-  private async retrievePlayers(){
-    this.rankObserver = this.playerService.getAllPlayers();
-    await this.rankObserver;
-    await this.rankObserver?.then((value : PlayerDetails[]) => 
-    this.rankList = value)
-    .catch((err) => this.rankList = []);
+  private retrievePlayers(){
+    this.playerService.getAllPlayers().forEach(doc => {
+      doc.forEach(player => {
+          var x = new PlayerDetails;
+          x.playerName = player.playerName;
+          x.steamId = player.steamId;
+          x.points = player.points;
+          this.rankList.push(x);
+      })
+    }).catch((err)=>console.log(err));
   }
 
-  private async retrieveTournaments(){
-    this.tournamentPromise = this.tournamentService.getAllTournaments();
-    this.tournamentPromise?.then((value : TournamentDto[]) =>
-    this.tournamentDtoList = value).catch((err) => this.tournamentDtoList = []);
+  private retrieveTournaments(){
+    this.tournamentService.getAllTournaments().forEach(doc => {
+      doc.forEach(tourny => {
+        var t = new TournamentDto(tourny.title!, tourny.teamSize!, 
+          tourny.playerNumber!, tourny.gameVersion!, tourny.open, tourny.hasImage);
+        this.liveTournaments.push(t);
+        this.tournamentDtoList.push(t);
+      })
+    });
   }
 
   splitTournaments(){
@@ -97,8 +109,7 @@ export class FrontpageComponent implements OnInit {
     // this.changePage.emit(pageOfItems);
   }
 
-  ngOnDestroy(){
-    this.rankList = [];
+  ngOnDestroy() : void{
   }
 
 

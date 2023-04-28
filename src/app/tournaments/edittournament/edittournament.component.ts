@@ -15,6 +15,7 @@ import { PlayerDetails } from 'src/app/models/playerdetails';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FormArray, FormGroup, FormBuilder, Validators, FormControl, Form } from '@angular/forms';
 import { toResult } from 'brackets-manager/dist/helpers';
+import { AddupdateplayerComponent } from 'src/app/dialog/player/addupdateplayer/addupdateplayer.component';
 
 @Component({
   selector: 'app-edittournament',
@@ -43,11 +44,8 @@ export class EdittournamentComponent {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.editTournament = data;
     });
-    //await this.retrievePlayers();
-    var tournamentDetails = new TournamentDetails("Test Tournament", 2, 3, 4, "CoH2", true);
-    var x = this.editTournamentService.createNewTournament(tournamentDetails);
-    this.editTournament = x;
-    this.teamFormat = Array(x.teamSize).fill(0).map((x,i)=>i);
+    await this.retrievePlayers();
+    this.teamFormat = Array(this.editTournament.teamSize).fill(0).map((x,i)=>i);
     this.roundOneMatchNum = this.editTournament.rounds[0].matchs.length;
     this.constructDynamicForm(this.editTournament.rounds![0]);
   }
@@ -66,17 +64,13 @@ export class EdittournamentComponent {
 
   addorUpdatePlayer(){
     //handle error message for player already exists?
-    // const dialogRef = this.dialog.open(CreatetournamentComponent, {
-    //   data : this.tournament,
-    // });
+    const dialogRef = this.dialog.open(AddupdateplayerComponent, {
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if(result.open){
-    //     this.tournament = this.editTournamentService.createNewTournament(result);
-    //     this.sharedTournamentService.setNewTournament(this.tournament);
-    //     this.router.navigate(['/edittournament']);
-    //   }
-    // })
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.open){
+      }
+    })
   }
 
   constructDynamicForm(rounds : RoundNode) {
@@ -108,12 +102,12 @@ export class EdittournamentComponent {
     }
   }
 
-  // async retrievePlayers() {     
-  //     this.playerList = this.playerService.getAll2()
-  //     this.playerList?.then((value : PlayerDetails[]) => 
-  //       this.players = value)
-  //       .catch((err) => this.players = []);
-  // }
+  async retrievePlayers() { 
+      // this.playerList = this.playerService.getAllPlayers()
+      // this.playerList?.then((value : PlayerDetails[]) => 
+      //   this.players = value)
+      //   .catch((err) => this.players = []);
+  }
 
   saveT1Player(player : PlayerDetails, teamIndex : number, playerIndex : number) {
     this.players = this.players.filter(x => player != x);
@@ -154,7 +148,6 @@ export class EdittournamentComponent {
   }
 
   playerFilter(playerNameInput : string) : PlayerDetails[]{
-    console.log(playerNameInput);
     var filterValue = playerNameInput.toLocaleLowerCase();
     return this.players.filter(option => option.playerName?.toLocaleLowerCase().includes(filterValue));
   }
@@ -170,29 +163,6 @@ export class EdittournamentComponent {
       this.router.navigate(['tournament/viewedit']);
     }
   }
-
-  // teamOne: new FormControl('',[Validators.required, Validators.minLength(2)]),
-  //       teamTwo: new FormControl('',[Validators.required, Validators.minLength(2)]),
-  //       teamOnePlayers : this.formBuilder.array([]),
-  //       teamTwoPlayers : this.formBuilder.array([]),
-  //     });
-  //     this.getMatchs().push(x);
-  //     for(var j = 0; j < this.teamFormat.length; j++){
-  //         var playerTeamOne = this.formBuilder.group ({
-  //           playerOneName : new FormControl('', Validators.required),
-  //           playerSelected : new FormControl(false, Validators.requiredTrue),
-  //           playerOneDetails : new FormControl(new PlayerDetails, Validators.required)
-
-  //         });
-  //         var playerTeamTwo =this.formBuilder.group ({
-  //           playerTwoName : new FormControl('', Validators.required),
-  //           playerSelected : new FormControl(false, Validators.requiredTrue),
-  //           playerTwoDetails : new FormControl(new PlayerDetails, Validators.required)
-  //         });
-  //         var one = this.getTeamOnePlayers(i) as FormArray;
-  //         one.push(playerTeamOne);
-  //         var two = this.getTeamTwoPlayers(i) as FormArray;
-  //         two.push(playerTeamTwo);
 
   addInfoToTournament(roundForm : FormGroup){
     var matchArray = this.editTournament.rounds[0].matchs as MatchNode[];

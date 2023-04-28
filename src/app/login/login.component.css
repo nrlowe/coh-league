@@ -1,0 +1,9 @@
+.container {
+}
+.loginform {
+    background-color: white;
+    border: 2px solid red;
+    color: black;
+    height: 65vh;
+    margin-bottom: 5vh;
+}

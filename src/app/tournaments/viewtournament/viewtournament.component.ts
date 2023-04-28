@@ -25,7 +25,7 @@ export class ViewtournamentComponent implements OnInit{
   teamview : boolean = false;
   playerview : PlayerDetails[] = [];
   ngOnInit(): void {
-    this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
+    this.sharedTournamentService.getViewTournament().subscribe(data => {
       this.tournamentView = data;
     });
   }

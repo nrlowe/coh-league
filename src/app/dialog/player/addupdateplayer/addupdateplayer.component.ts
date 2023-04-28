@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PlayerDetails } from 'src/app/models/playerdetails';
+import { PlayerService } from 'src/app/services/player-service';
 
 @Component({
   selector: 'app-addupdateplayer',
@@ -12,7 +13,7 @@ export class AddupdateplayerComponent {
   private newPlayer : PlayerDetails = new PlayerDetails();
   newPlayerForm : FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<AddupdateplayerComponent>){
+  constructor(public dialogRef: MatDialogRef<AddupdateplayerComponent>, private playerService : PlayerService){
       this.newPlayerForm = new FormGroup({
         playerName : new FormControl('',[Validators.required]),
         steamId : new FormControl('', [Validators.required, Validators.pattern('^[0-9]{17}$')])
@@ -26,6 +27,7 @@ export class AddupdateplayerComponent {
   submitNewTournament(): void {
     if(this.newPlayerForm!.valid){
       this.convertFormToPlayer();
+      this.playerService.addNewPlayer(this.newPlayer);
       this.dialogRef.close(this.newPlayer);
     }
   }

@@ -1,9 +1,3 @@
-import { MatchNode } from "../matchnode";
-import { PlayerDetails } from "../playerdetails";
-import { RoundDetails } from "../rounddetails";
-import { RoundNode } from "../roundnode";
-import { MatchDto } from "./matchdto";
-
 export class TournamentDto{
     title? : string;
     description? : string;

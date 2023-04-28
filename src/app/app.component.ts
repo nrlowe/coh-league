@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthGuard } from './guards/auth-guard';
+import { Observable } from 'rxjs';
+import { AuthService } from './services/authservice';
 
 
 @Component({
@@ -9,14 +12,14 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'coh-league';
+  isLoggedIn$? : Observable<boolean>;
 
-
-  constructor(private router : Router){
+  constructor(private authService : AuthService,  private router : Router){
 
   }
 
   ngOnInit() {
-    this.router.navigate(['/tournaments/create'])
+    this.router.navigate(['/']);
   }
 
   // if error kick out to error screen

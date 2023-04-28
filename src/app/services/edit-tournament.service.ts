@@ -58,7 +58,6 @@ export class EditTournamentService {
         finalMatch.teamOneScore = 0;
         finalMatch.teamTwoScore = 0;
         finalMatch.matchId = this.globalMatchCount;
-        console.log(this.globalMatchCount);
         this.globalMatchCount++;
         this.addGameDetails(finalMatch);
         for(var i = 1; i <= this.teamSize; i++){

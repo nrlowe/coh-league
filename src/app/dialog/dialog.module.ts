@@ -10,6 +10,8 @@ import { EditRoundComponent } from './tournament/edittournament/edit-round/editr
 import { SetRoundOneComponent } from './tournament/edittournament/set-round-one/set-round-one.component';
 import { MatDatepickerModule } from '@angular/material/datepicker'; 
 import { MatNativeDateModule } from '@angular/material/core';
+import { AddupdateplayerComponent } from './player/addupdateplayer/addupdateplayer.component';
+import { DeleteplayerComponent } from './player/deleteplayer/deleteplayer.component';
 
 
 
@@ -18,7 +20,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     EditMatchComponent,
     CreatetournamentComponent,
     EditRoundComponent,
-    SetRoundOneComponent
+    SetRoundOneComponent,
+    AddupdateplayerComponent,
+    DeleteplayerComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +34,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatDatepickerModule,
     MatNativeDateModule
   ],
-  exports: [EditMatchComponent, CreatetournamentComponent, EditRoundComponent]
+  exports: [EditMatchComponent, CreatetournamentComponent, 
+    EditRoundComponent,AddupdateplayerComponent, DeleteplayerComponent]
 })
 export class DialogModule { }

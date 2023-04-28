@@ -28,11 +28,6 @@ export class EditviewTournamentComponent {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
     });
-
-    var tour = new TournamentDetails("Dirty Finishers Dirty 8", 3, 5, 16, "CoH2", true);
-    this.newTournament = this.editTournamentService.createNewTournament(tour);
-    this.newTournament.hasImage = true;
-    this.newTournament.image = "./assets/images/imagetest.jpg";
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
@@ -71,9 +66,8 @@ export class EditviewTournamentComponent {
   }
 
   editDate(round : RoundNode){
-    round.date = "March 2025";
-    round.roundName = "Round 50";
   }
+
   editRoundInfo(round : RoundNode){
     this.openRoundEditDialog(round);
   }
@@ -117,8 +111,9 @@ export class EditviewTournamentComponent {
 
   saveTournament(saveTournament : TournamentTree){
     var dto = this.jsonService.jsonTournament(saveTournament);
-    //this.tournamentService.create(dto);
-    //this.router.navigate(['tournament/viewtournament']);
+    this.tournamentService.create(dto);
+    this.sharedTournamentService.setViewTournament(saveTournament);
+    this.router.navigate(['tournament/viewtournament']);
   }
 
   cancelTournament(){
