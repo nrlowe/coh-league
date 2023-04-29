@@ -18,6 +18,7 @@ export class MatchNode {
     teamView : boolean = false;
     hasWinner : boolean = false;
     winner? : PlayerDetails[];
+    allowEdits : boolean = true;
     constructor(teamOne : PlayerDetails[], teamTwo : PlayerDetails[]){
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;

@@ -14,6 +14,7 @@ import { TournamentDetails } from 'src/app/models/tournamentdetails';
 import { PlayerDetails } from 'src/app/models/playerdetails';
 import { Router } from '@angular/router';
 import { TournamentService } from 'src/app/services/tournament.service';
+import { TournamentDto } from 'src/app/models/dto/tournamentdto';
 
 @Component({
   selector: 'app-viewtournament',
@@ -24,10 +25,17 @@ export class ViewtournamentComponent implements OnInit{
   tournamentView : any;
   teamview : boolean = false;
   playerview : PlayerDetails[] = [];
+  isOwner : boolean = false;
+
   ngOnInit(): void {
     this.sharedTournamentService.getViewTournament().subscribe(data => {
       this.tournamentView = data;
     });
+    if(localStorage.getItem("isLoggedIn")){
+      if(this.tournamentView.creatorKey == localStorage.getItem("userKey")){
+        this.isOwner = true;
+      }
+    }
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
@@ -47,6 +55,16 @@ export class ViewtournamentComponent implements OnInit{
   closeteamview(){
     this.teamview = false;
     this.playerview = [];
+  }
+
+
+  editTournament(tree : TournamentTree){
+    this.sharedTournamentService.setNewTournament(tree);
+    this.router.navigate(['tournament/viewedit'])
+  }
+
+  deleteTournament(dto : TournamentDto){
+
   }
 
 }

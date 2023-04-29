@@ -66,14 +66,14 @@ float right, then center the next to matchs based on the left and right node to 
         </div>
       </div>
     </div>
-    <!-- Edit/Delete button for owner? -->
-    <!-- <div class="d-flex align-items-center justify-content-center col-12">
+    
+    <div class="d-flex align-items-center justify-content-center col-12" *ngIf="isOwner">
    
-        <button class="submit-button" (click)="saveTournament(newTournament)">Save</button>
+        <button class="submit-button" (click)="editTournament(tournamentView)">Edit</button>
       
-        <button class="cancel-button" (click)="cancelTournament()">Cancel</button>
+        <button class="cancel-button" (click)="deleteTournament(tournamentView)">Delete</button>
       
-    </div> -->
+    </div>
     
   </div>
 </div>
