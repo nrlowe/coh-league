@@ -1,4 +1,5 @@
 import { GameDetails } from "./gameDetails";
+import { GameWinner } from "./gamewinner";
 import { PlayerDetails } from "./playerdetails";
 
 export class MatchNode {
@@ -17,7 +18,8 @@ export class MatchNode {
     matchId? : number;
     teamView : boolean = false;
     hasWinner : boolean = false;
-    winner? : PlayerDetails[];
+    winner? : GameWinner;
+    allowEdits : boolean = true;
     constructor(teamOne : PlayerDetails[], teamTwo : PlayerDetails[]){
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;

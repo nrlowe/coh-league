@@ -100,9 +100,6 @@ export class FrontpageComponent implements OnInit {
     const start = new Date(startDate);
     const end = new Date(endDate)
     const today = new Date();
-    console.log("START: " +start);
-    console.log("END: " +end);
-    console.log("TODAY: " + today);
     if(today >= start && today <= end) {
       return true;
     } else {

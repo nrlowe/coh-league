@@ -18,6 +18,7 @@ export class JsonService {
         var tournamentDto = new TournamentDto(tournament.title!, tournament.teamSize!,
             tournament.playerNumber!, tournament.gameVersion!, tournament.open!,
             tournament.hasImage);
+        console.log(tournament);
         tournamentDto.creatorKey = localStorage.getItem("userKey")!;
         tournamentDto.startDate = tournament.startDate;
         tournamentDto.endDate = tournament.endDate;
@@ -30,10 +31,11 @@ export class JsonService {
             tournamentDto.rounds.push(JSON.stringify(roundDto));
         }
         tournamentDto.matchTree = this.convertMatchTreeToJson(tournament.matchTree!);
+        console.log(tournamentDto);
         return tournamentDto;
     }
 
-    convertRoundsToJson(round : RoundNode) : RoundDto{
+    private convertRoundsToJson(round : RoundNode) : RoundDto{
         var roundDto = new RoundDto(round.roundId!, round.roundName!, round.date!, 3);
         for(let match of round.matchs){
             var matchdto = this.convertMatchInfoToMatchDto(match);
@@ -42,6 +44,16 @@ export class JsonService {
         return roundDto;
     }
 
+    private convertMatchNodeToJSON(node : MatchNode) : MatchDto{
+        var dto = this.convertMatchInfoToMatchDto(node);
+        dto.gameDetails = JSON.stringify(node.gameDetails);
+        dto.teamOne = JSON.stringify(node.teamOne);
+        dto.teamTwo = JSON.stringify(node.teamTwo);
+        console.log(dto);
+        return dto;
+    }
+
+    //Match Tree to JSON
     private convertMatchTreeToJson(matchTree : MatchNode) : string{
         var matchDto = this.convertMatchNodeToJSON(matchTree);
         matchDto.leftNode = this.checkNode(matchTree.leftNode!);
@@ -49,13 +61,6 @@ export class JsonService {
         return JSON.stringify(matchDto);
     }
 
-    private convertMatchNodeToJSON(node : MatchNode) : MatchDto{
-        var dto = this.convertMatchInfoToMatchDto(node);
-        dto.gameDetails = JSON.stringify(node.gameDetails);
-        dto.teamOne = JSON.stringify(node.teamOne);
-        dto.teamTwo = JSON.stringify(node.teamTwo);
-        return dto;
-    }
 
     private convertMatchInfoToMatchDto(match : MatchNode) : MatchDto {
         var matchdto = new MatchDto(match.teamOneName!, match.teamTwoName!, match.teamOneScore!,
@@ -114,9 +119,11 @@ export class JsonService {
         var roundArray = [] as RoundNode[];
         for(var round of roundString){
             var parsedJsonMatchs = JSON.parse(round);
+            console.log(parsedJsonMatchs);
             var matchNodeArray = [] as MatchNode[];
             parsedJsonMatchs.matchs.forEach((m : string) => {
                 var node = JSON.parse(m) as MatchNode;
+                console.log(m);
                 matchNodeArray.push(node);
             })
             var node = new RoundNode(matchNodeArray);

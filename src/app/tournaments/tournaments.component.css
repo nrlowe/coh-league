@@ -1,7 +1,8 @@
 
-.frontpage-container {
+.tournament-container {
     width: 100vh;
     margin-bottom: 5vh;
+    min-height: 80vh;
 }
 
 .tour-rank-row{

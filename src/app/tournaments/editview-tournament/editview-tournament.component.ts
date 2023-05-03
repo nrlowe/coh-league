@@ -24,6 +24,9 @@ export class EditviewTournamentComponent {
   teamview : boolean = false;
   playerview : PlayerDetails[] = [];
   imagepath : string = '';
+
+  //if tournament token exists, diable round modification?
+  
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
@@ -73,6 +76,7 @@ export class EditviewTournamentComponent {
   }
 
   editMatchInfo(match : MatchNode){
+    console.log(match);
     this.openEditMatchDialog(match);
   }
   openRoundEditDialog(roundNode : RoundNode){
@@ -83,6 +87,8 @@ export class EditviewTournamentComponent {
     dialogRef.afterClosed().subscribe(result => {
       roundNode = result;
     })
+    
+    //if changes to round info/format, now edit match info(game details)
   }
 
   openEditMatchDialog(match : MatchNode) {
