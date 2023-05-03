@@ -45,6 +45,7 @@ export class EdittournamentComponent {
       this.editTournament = data;
     });
     await this.retrievePlayers();
+    console.log(this.editTournament.teamSize);
     this.teamFormat = Array(this.editTournament.teamSize).fill(0).map((x,i)=>i);
     this.roundOneMatchNum = this.editTournament.rounds[0].matchs.length;
     this.constructDynamicForm(this.editTournament.rounds![0]);

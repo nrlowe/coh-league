@@ -6,6 +6,9 @@ import { BracketsManager } from 'brackets-manager/dist/manager';
 import { TournamentDto } from '../models/dto/tournamentdto';
 import { PlayerDetails } from '../models/playerdetails';
 import { Observer } from 'rxjs';
+import { JsonService } from '../services/json-service';
+import { SharedTournamentService } from '../services/shared-tournament.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -34,7 +37,8 @@ upComingTournaments : TournamentDto[] = [];
 @Input() rankPageSize = 10;
 
 pager: any = {};
-  constructor(private tournamentService: TournamentService){
+  constructor(private tournamentService: TournamentService, private jsonService : JsonService,
+    private sharedService : SharedTournamentService, private router : Router){
 
   }
   ngOnInit(): void {
@@ -46,10 +50,33 @@ pager: any = {};
       doc.forEach(tourny => {
         var t = new TournamentDto(tourny.title!, tourny.teamSize!, 
           tourny.playerNumber!, tourny.gameVersion!, tourny.open, tourny.hasImage);
+          t.matchTree = tourny.matchTree;
+          t.rounds = tourny.rounds;
+          t.startDate = tourny.startDate;
+          t.endDate = tourny.endDate;
+          t.liveStatus = this.checkLiveStatus(t.startDate!, t.endDate!);
+          t.creatorKey = tourny.creatorKey;
         this.liveTournaments.push(t);
         this.tournamentDtoList.push(t);
       })
     });
+  }
+
+  checkLiveStatus(startDate : string, endDate : string) : boolean {
+    const start = new Date(startDate);
+    const end = new Date(endDate)
+    const today = new Date();
+    if(today >= start && today <= end) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  viewTournament(tournamentDto : TournamentDto){
+    var tournamentTree = this.jsonService.convertTournamentDtoToTree(tournamentDto);
+    this.sharedService.setViewTournament(tournamentTree);
+    this.router.navigate(['/tournament/viewtournament']);
   }
   
   ngOnDestroy(){}
