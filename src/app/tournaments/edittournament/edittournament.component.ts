@@ -47,6 +47,7 @@ export class EdittournamentComponent {
     await this.retrievePlayers();
     console.log(this.editTournament.teamSize);
     this.teamFormat = Array(this.editTournament.teamSize).fill(0).map((x,i)=>i);
+    console.log(this.teamFormat.length);
     this.roundOneMatchNum = this.editTournament.rounds[0].matchs.length;
     this.constructDynamicForm(this.editTournament.rounds![0]);
   }
@@ -77,8 +78,8 @@ export class EdittournamentComponent {
   constructDynamicForm(rounds : RoundNode) {
     for(var i = 0; i < rounds.matchs.length; i++){
       var x = this.formBuilder.group({
-        teamOne: new FormControl('',[Validators.required, Validators.minLength(2)]),
-        teamTwo: new FormControl('',[Validators.required, Validators.minLength(2)]),
+        teamOne: new FormControl(''),
+        teamTwo: new FormControl(''),
         teamOnePlayers : this.formBuilder.array([]),
         teamTwoPlayers : this.formBuilder.array([]),
       });

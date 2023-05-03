@@ -137,6 +137,7 @@ export class EditTournamentService {
         tournamentTree.open = tournamentDetails.open;
         tournamentTree.startDate = tournamentDetails.startDate;
         tournamentTree.endDate = tournamentDetails.endDate;
+        console.log(tournamentTree);
         return tournamentTree;
     }
 

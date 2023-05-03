@@ -44,7 +44,7 @@ float right, then center the next to matchs based on the left and right node to 
           <div *ngFor = "let match of round.matchs" class="matchup">
             <!-- Match Column -->
             <!-- if winner assign ngclass-->
-            <div class="matchcontent" (click)="editMatchInfo(round)">
+            <div class="matchcontent" (click)="editMatchInfo(match)">
               <div class="team">
                 <div class="align-items-center justify-content-center roundheader teamname" (click)="viewteam(match)">
                     {{match.teamOneName}}

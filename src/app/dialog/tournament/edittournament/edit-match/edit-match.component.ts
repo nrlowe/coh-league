@@ -11,7 +11,9 @@ export class EditMatchComponent {
   constructor(
     public dialogRef: MatDialogRef<EditMatchComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MatchNode,
-  ) {}
+  ) {
+    
+  }
   
   onNoClick(): void {
     this.dialogRef.close();

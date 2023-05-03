@@ -76,6 +76,7 @@ export class EditviewTournamentComponent {
   }
 
   editMatchInfo(match : MatchNode){
+    console.log(match);
     this.openEditMatchDialog(match);
   }
   openRoundEditDialog(roundNode : RoundNode){
