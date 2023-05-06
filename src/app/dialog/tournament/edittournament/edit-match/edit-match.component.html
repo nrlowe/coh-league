@@ -16,25 +16,32 @@ TODO: Allow teams to be custom names, attch player details to teams,
 <div>
     <div class="row">
         <div class="col-6 teamone-col">
-            Team One
+            {{data.teamOne}}
         </div>
         <div class="col-6 teamtwo-col">
-            Team Two
+            {{data.teamTwo}}
         </div>
         </div>
         <div>
-            <div *ngFor="let game of data.gameDetails">
+            <div *ngFor="let game of data.gameDetails; let i = index" [attr.data-index]="i">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-4">
                         <mat-form-field appearance="fill">
-                            <mat-label>Team Name 2</mat-label>
-                            <input type="number" matInput [(ngModel)]="game.scoreOne" required>
+                            <mat-label>VP Count</mat-label>
+                            <input type="number" matInput [(ngModel)]="game.scoreOne">
                         </mat-form-field>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
+                        <mat-select (selectionChange)="winnerSelected(i, $event.value, game)">
+                            <mat-option *ngFor="let teamName of teamSelector" [value]="teamName">
+                              {{teamName}}
+                            </mat-option>
+                          </mat-select>
+                    </div>
+                    <div class="col-4">
                         <mat-form-field appearance="fill">
-                            <mat-label>Team Name 2</mat-label>
-                            <input type="number" matInput [(ngModel)]="game.scoreTwo" required>
+                            <mat-label>{{data.teamTwo}}  : {{data.teamTwoScore}}</mat-label>
+                            <input type="number" matInput [(ngModel)]="game.scoreTwo">
                         </mat-form-field>
                     </div>
                 </div>
@@ -42,6 +49,6 @@ TODO: Allow teams to be custom names, attch player details to teams,
         </div>
 </div>
 <div mat-dialog-actions>
-    Prevent closing if not filled out
-    <button mat-button (click)="onNoClick()">Close</button>
+    <button class="cancel-button" (click)="onNoClick()">Close</button>
+    <button class="submit-button" (click)="saveMatchDetails()">Save</button>
 </div>

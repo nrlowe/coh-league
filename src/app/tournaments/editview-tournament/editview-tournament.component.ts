@@ -26,11 +26,24 @@ export class EditviewTournamentComponent {
   imagepath : string = '';
 
   //if tournament token exists, diable round modification?
-  
+  //todo:: clean up image test
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
     });
+    //test for match edit / round edit views
+    this.newTournament = this.editTournamentService.createNewTournament(new TournamentDetails("Edit Match/Round Test", 1, 5, 4, "CoH2", true));
+    var roundOne = this.newTournament.rounds[0];
+    var players = ["Pob", "farlion", "jackass", "butt"];
+    for(let match of roundOne.matchs){
+      var i = 0;
+      match.teamOne = players[i];
+      match.teamOneName = players[i];
+      match.teamTwo = players[i + 1];
+      match.teamTwoName = players[i + 1];
+      i++;
+      i++;
+    }
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
@@ -97,7 +110,9 @@ export class EditviewTournamentComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      match = result;
+      if(result){
+        //
+      }
     })
   }
 

@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AddupdateplayerComponent } from './player/addupdateplayer/addupdateplayer.component';
 import { DeleteplayerComponent } from './player/deleteplayer/deleteplayer.component';
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
 
 
 
@@ -32,7 +33,8 @@ import { DeleteplayerComponent } from './player/deleteplayer/deleteplayer.compon
     MatSelectModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   exports: [EditMatchComponent, CreatetournamentComponent, 
     EditRoundComponent,AddupdateplayerComponent, DeleteplayerComponent]
