@@ -2,6 +2,7 @@ import { GameDetails } from "./gameDetails";
 import { GameWinner } from "./gamewinner";
 import { PlayerDetails } from "./playerdetails";
 
+//TODO:: refactor so scores are held in map with teamnames for o1 search on setting scores
 export class MatchNode {
     teamOne? : PlayerDetails[];
     teamTwo? : PlayerDetails[];

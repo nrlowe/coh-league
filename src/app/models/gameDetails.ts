@@ -6,7 +6,7 @@ export class GameDetails{
     gameNum : number;
     scoreOne? : number;
     scoreTwo? : number;
-    gameWinner? : GameWinner;
+    gameWinner? : string;
 
     constructor(gameNum : number){
         this.gameNum = gameNum;

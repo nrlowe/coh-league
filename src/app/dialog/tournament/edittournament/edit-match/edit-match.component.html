@@ -1,18 +1,3 @@
-<h1 mat-dialog-title>Edit Match Details</h1>
-TODO: Allow teams to be custom names, attch player details to teams,
- allow option to select to be individual vs multiple player teams + game details (determin best ofs/# of games)
-<!-- <div mat-dialog-content>
-    Team Selection
-    <mat-form-field appearance="fill">
-        <mat-label>Team Name 1</mat-label>
-        <input matInput [(ngModel)]="data.teamOne" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Team Name 2</mat-label>
-        <input matInput [(ngModel)]="data.teamTwo" required>
-    </mat-form-field>
-    
-</div> -->
 <div class="container">
     <form [formGroup] = "gameDetailsForm" id="gameDetailsForm">
         <div class="row teamNameRow">
@@ -33,7 +18,7 @@ TODO: Allow teams to be custom names, attch player details to teams,
                         </mat-form-field>
                     </div>
                     <div class="col-4">
-                        <mat-select (selectionChange)="winnerSelected()">
+                        <mat-select placeholder="Game Winner" (selectionChange)="winnerSelected(p)" formControlName="gameWinner">
                             <mat-option *ngFor="let teamName of teamSelector" [value]="teamName">
                             {{teamName}}
                             </mat-option>
