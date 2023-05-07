@@ -43,20 +43,23 @@ export class EditMatchComponent {
       }
       //first row always enabled
       if(i == 0 || (i > 0 && gameDetails[i].gameWinner)){
+        console.log("FORM VALUE:::: " + i + "  NOT DISABLED");
         gameGroup = this.formBuilder.group({
-          scoreOne : new FormControl([game.scoreOne, [Validators.min(0), Validators.max(500)]]),
-          scoreTwo : new FormControl([game.scoreTwo, [Validators.min(0), Validators.max(500)]]),
-          gameWinner : new FormControl([gameWinner])
+          scoreOne: new FormControl(game.scoreOne, [Validators.min(0), Validators.max(500)]),
+          scoreTwo : new FormControl(game.scoreTwo, [Validators.min(0), Validators.max(500)]),
+          gameWinner : new FormControl(gameWinner)
         });
       //no previous values + after row one = diabled
       } else {
+        console.log("FORM VALUE:::: " + i + "  !!!!!!DISABLED");
         gameGroup = this.formBuilder.group({
-          scoreOne : new FormControl([game.scoreOne, [Validators.min(0), Validators.max(500)]]),
-          scoreTwo : new FormControl([game.scoreTwo, [Validators.min(0), Validators.max(500)]]),
-          gameWinner : new FormControl([gameWinner])
+          scoreOne : new FormControl(game.scoreOne, [Validators.min(0), Validators.max(500)]),
+          scoreTwo : new FormControl(game.scoreTwo, [Validators.min(0), Validators.max(500)]),
+          gameWinner : new FormControl(gameWinner)
         });
-        gameGroup.disable;
+        gameGroup.disable();
       }
+      console.log(gameGroup);
       this.getGameDetailsFormArray().push(gameGroup);
     }
   }
@@ -65,18 +68,12 @@ export class EditMatchComponent {
     return this.gameDetailsForm.get('gameDetails') as FormArray;
   }
 
-  winnerSelected(i : number, teamName : string, game : GameDetails){
-    var gameNum = i + 1;
-    var playerList : PlayerDetails[];
-    console.log("Game Number::: " + gameNum + "  Team Name:::: " + teamName);
-    if(teamName == this.teamSelector[0]){
-      this.data.teamOneScore! += 1;
-      playerList = this.data.teamOne as PlayerDetails[];
-    } else {
-      this.data.teamTwoScore! += 1;
-      playerList = this.data.teamTwo as PlayerDetails[];
-    }
-    game.gameWinner = new GameWinner(teamName, playerList, 1);
+  getGameDetailsFromFormArray(index : number) : FormGroup{
+    return this.getGameDetailsFormArray().at(index) as FormGroup;
+  }
+
+  winnerSelected(){
+    //game.gameWinner = new GameWinner(teamName, playerList, 1);
   }
 
   saveMatchDetails(){

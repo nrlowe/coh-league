@@ -13,42 +13,45 @@ TODO: Allow teams to be custom names, attch player details to teams,
     </mat-form-field>
     
 </div> -->
-<div>
-    <div class="row">
-        <div class="col-6 teamone-col">
-            {{data.teamOne}}
+<div class="container">
+    <form [formGroup] = "gameDetailsForm" id="gameDetailsForm">
+        <div class="row teamNameRow">
+            <div class="col-6 teamone-col">
+                {{data.teamOne}}
+            </div>
+            <div class="col-6 teamtwo-col">
+                {{data.teamTwo}}
+            </div>
         </div>
-        <div class="col-6 teamtwo-col">
-            {{data.teamTwo}}
-        </div>
-        </div>
-        <div>
-            <div *ngFor="let game of data.gameDetails; let i = index" [attr.data-index]="i">
-                <div class="row">
+        <div formArrayName="gameDetails">
+            <div [formGroupName]="p" *ngFor="let game of gameDetailsForm.controls.gameDetails.controls; let p = index">
+                <div class="row scoreWinnerRow">
                     <div class="col-4">
-                        <mat-form-field appearance="fill">
-                            <mat-label>VP Count</mat-label>
-                            <input type="number" matInput [(ngModel)]="game.scoreOne">
+                        <mat-form-field class="teamVpCount" appearance="outline">
+                            <mat-label class="test">VP Count</mat-label>
+                            <input class="matinput" matInput formControlName=scoreOne value="">
                         </mat-form-field>
                     </div>
                     <div class="col-4">
-                        <mat-select (selectionChange)="winnerSelected(i, $event.value, game)">
+                        <mat-select (selectionChange)="winnerSelected()">
                             <mat-option *ngFor="let teamName of teamSelector" [value]="teamName">
-                              {{teamName}}
+                            {{teamName}}
                             </mat-option>
-                          </mat-select>
+                        </mat-select>
                     </div>
                     <div class="col-4">
-                        <mat-form-field appearance="fill">
-                            <mat-label>{{data.teamTwo}}  : {{data.teamTwoScore}}</mat-label>
-                            <input type="number" matInput [(ngModel)]="game.scoreTwo">
+                        <mat-form-field class="teamVpCount" appearance="outline">
+                            <mat-label class="test">VP Count</mat-label>
+                            <input class="matinput" matInput formControlName=scoreTwo value="">
                         </mat-form-field>
                     </div>
                 </div>
             </div>
         </div>
-</div>
-<div mat-dialog-actions>
-    <button class="cancel-button" (click)="onNoClick()">Close</button>
-    <button class="submit-button" (click)="saveMatchDetails()">Save</button>
+        
+        <div mat-dialog-actions>
+            <button class="cancel-button" (click)="onNoClick()">Close</button>
+            <button class="submit-button" (click)="saveMatchDetails()">Save</button>
+        </div>
+    </form>
 </div>
