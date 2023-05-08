@@ -52,7 +52,6 @@ export class EditMatchComponent {
         });
         gameGroup.disable();
       }
-      console.log(gameGroup);
       this.getGameDetailsFormArray().push(gameGroup);
     }
   }
@@ -85,8 +84,22 @@ export class EditMatchComponent {
         if(gameGroup.get('gameWinner')?.value){
           this.increaseScore(gameGroup.get('gameWinner')?.value, game);
         }
+        this.checkForMatchWinner();
       }
-      this.dialogRef.close();
+      this.dialogRef.close(this.data);
+    }
+  }
+
+  private checkForMatchWinner(){
+    if(this.data.teamOneScore! >= this.winningNum){
+      this.data.hasWinner = true;
+      this.data.winner = new GameWinner(this.data.teamOneName!, this.data.teamOne!, 1);
+    } else if(this.data.teamTwoScore! >= this.winningNum){
+      this.data.hasWinner = true;
+      this.data.winner = new GameWinner(this.data.teamTwoName!, this.data.teamTwo!, 2);
+    } else {
+      this.data.hasWinner = false;
+      this.data.winner = undefined;
     }
   }
 

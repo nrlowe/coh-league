@@ -19,7 +19,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.router.navigate(['tournament/viewedit']);
+    this.router.navigate(['/']);
   }
 
   // if error kick out to error screen
