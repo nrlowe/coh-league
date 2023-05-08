@@ -31,6 +31,7 @@ export class JsonService {
             tournamentDto.rounds.push(JSON.stringify(roundDto));
         }
         tournamentDto.matchTree = this.convertMatchTreeToJson(tournament.matchTree!);
+        console.log(tournamentDto);
         return tournamentDto;
     }
 

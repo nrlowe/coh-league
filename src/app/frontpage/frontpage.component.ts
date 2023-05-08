@@ -76,7 +76,7 @@ export class FrontpageComponent implements OnInit {
           x.points = player.points;
           this.rankList.push(x);
       })
-    }).catch((err)=>console.log(err));
+    }).catch((err)=>console.log("ERROR::::: " + err));
   }
 
   private retrieveTournaments(){
@@ -93,7 +93,7 @@ export class FrontpageComponent implements OnInit {
         this.liveTournaments.push(t);
         this.tournamentDtoList.push(t);
       })
-    });
+    }).catch((err)=>console.log("ERROR::::: " + err));
   }
 
   checkLiveStatus(startDate : string, endDate : string) : boolean {

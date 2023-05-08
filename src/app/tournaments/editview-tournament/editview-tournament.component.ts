@@ -10,6 +10,7 @@ import { TournamentDetails } from 'src/app/models/tournamentdetails';
 import { TournamentTree } from 'src/app/models/tournamenttree';
 import { EditTournamentService } from 'src/app/services/edit-tournament.service';
 import { JsonService } from 'src/app/services/json-service';
+import { MatchTreeService } from 'src/app/services/matchtree.service';
 import { SharedTournamentService } from 'src/app/services/shared-tournament.service';
 import { TournamentService } from 'src/app/services/tournament.service';
 
@@ -26,16 +27,30 @@ export class EditviewTournamentComponent {
   imagepath : string = '';
 
   //if tournament token exists, diable round modification?
-  
+  //todo:: clean up image test
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
     });
+    //test for match edit / round edit views
+    // this.newTournament = this.editTournamentService.createNewTournament(new TournamentDetails("Edit Match/Round Test", 1, 5, 4, "CoH2", true));
+    // var roundOne = this.newTournament.rounds[0];
+    // var players = ["Pob", "farlion", "jackass", "butt"];
+    // for(let match of roundOne.matchs){
+    //   var i = 0;
+    //   match.teamOne = players[i];
+    //   match.teamOneName = players[i];
+    //   match.teamTwo = players[i + 1];
+    //   match.teamTwoName = players[i + 1];
+    //   i++;
+    //   i++;
+    // }
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
     private router : Router, private editTournamentService : EditTournamentService,
-    private tournamentService : TournamentService, private jsonService : JsonService){
+    private tournamentService : TournamentService, private jsonService : JsonService, 
+    private matchtreeService : MatchTreeService){
   }
 
   displayImage(){
@@ -76,6 +91,7 @@ export class EditviewTournamentComponent {
   }
 
   editMatchInfo(match : MatchNode){
+    console.log(match);
     this.openEditMatchDialog(match);
   }
   openRoundEditDialog(roundNode : RoundNode){
@@ -96,8 +112,38 @@ export class EditviewTournamentComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      match = result;
+      if(result){
+        this.checkForMatchWinner(result);
+      }
     })
+  }
+  
+  private checkForMatchWinner(result : MatchNode) {
+    var map = this.matchtreeService.findParentNode(result, this.newTournament.matchTree);
+    var parentNode = map[1] as MatchNode;
+    var position = map[0] as number;
+    if(position == 1){
+      if(result.hasWinner){
+          parentNode!.teamOneName = result.winner?.teamName;
+          parentNode!.teamOne = result.winner?.teamPlayers;
+      } else {
+        parentNode!.teamOneName = "TBD";
+        parentNode!.teamOne = [];
+        parentNode!.teamOneScore = 0;
+      }
+    }
+    if(position == 2){
+      if(result.hasWinner){
+          parentNode!.teamTwoName = result.winner?.teamName;
+          parentNode!.teamTwo = result.winner?.teamPlayers;
+      } else {
+        parentNode!.teamTwoName = "TBD";
+        parentNode!.teamTwo = [];
+        parentNode!.teamTwoScore = 0;
+      }
+    }
+    //check for parent mode, if undefined -> champion or 3rd place
+    //service for modifying matchtree/round array??
   }
 
   viewteam(match : MatchNode){

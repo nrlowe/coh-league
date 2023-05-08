@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   //if loading have home be displayed
+  //todo clean up / add children
   { path: '',   redirectTo: 'frontpage', pathMatch: 'full' },
   { path: 'frontpage', component: FrontpageComponent},
   { path: 'tournaments', component: TournamentsComponent},
@@ -23,7 +24,7 @@ const routes: Routes = [
   { path: 'rankings', component: RankingsComponent},
   { path: 'tools', component: ToolsComponent},
   { path: 'tournament/viewtournament', component: ViewtournamentComponent},
-  { path: 'edittournament', component: EdittournamentComponent},
+  { path: 'tournament/edittournament', component: EdittournamentComponent},
   { path: 'login', component: LoginComponent },
 ];
 

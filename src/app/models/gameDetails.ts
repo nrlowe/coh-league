@@ -1,3 +1,5 @@
+import { GameWinner } from "./gamewinner";
+
 export class GameDetails{
     teamOne? : string;
     teamTwo? : string;

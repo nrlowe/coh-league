@@ -32,7 +32,7 @@ import { AuthGuard } from './guards/auth-guard';
 import { LoginComponent } from './login/login.component';
 import { ToastComponent } from './toast/toast.component';
 
-
+// todo:: clean up -- move dialog items/components into dialog module
 @NgModule({
   declarations: [
     AppComponent,
