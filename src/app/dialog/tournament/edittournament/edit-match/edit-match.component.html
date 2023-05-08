@@ -1,47 +1,42 @@
-<h1 mat-dialog-title>Edit Match Details</h1>
-TODO: Allow teams to be custom names, attch player details to teams,
- allow option to select to be individual vs multiple player teams + game details (determin best ofs/# of games)
-<!-- <div mat-dialog-content>
-    Team Selection
-    <mat-form-field appearance="fill">
-        <mat-label>Team Name 1</mat-label>
-        <input matInput [(ngModel)]="data.teamOne" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Team Name 2</mat-label>
-        <input matInput [(ngModel)]="data.teamTwo" required>
-    </mat-form-field>
-    
-</div> -->
-<div>
-    <div class="row">
-        <div class="col-6 teamone-col">
-            Team One
+<div class="container">
+    <form [formGroup] = "gameDetailsForm" id="gameDetailsForm">
+        <div class="row teamNameRow">
+            <div class="col-6 teamone-col">
+                {{data.teamOne}}
+            </div>
+            <div class="col-6 teamtwo-col">
+                {{data.teamTwo}}
+            </div>
         </div>
-        <div class="col-6 teamtwo-col">
-            Team Two
-        </div>
-        </div>
-        <div>
-            <div *ngFor="let game of data.gameDetails">
-                <div class="row">
-                    <div class="col-6">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Team Name 2</mat-label>
-                            <input type="number" matInput [(ngModel)]="game.scoreOne" required>
+        <div formArrayName="gameDetails">
+            <div [formGroupName]="p" *ngFor="let game of gameDetailsForm.controls.gameDetails.controls; let p = index">
+                <div class="row scoreWinnerRow">
+                    <div class="col-4">
+                        <mat-form-field class="teamVpCount" appearance="outline">
+                            <mat-label class="test">VP Count</mat-label>
+                            <input class="matinput" matInput formControlName=scoreOne value="">
                         </mat-form-field>
                     </div>
-                    <div class="col-6">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Team Name 2</mat-label>
-                            <input type="number" matInput [(ngModel)]="game.scoreTwo" required>
+                    <div class="col-4">
+                        <mat-select placeholder="Game Winner" (selectionChange)="winnerSelected(p)" formControlName="gameWinner">
+                            <mat-option *ngFor="let teamName of teamSelector" [value]="teamName">
+                            {{teamName}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-4">
+                        <mat-form-field class="teamVpCount" appearance="outline">
+                            <mat-label class="test">VP Count</mat-label>
+                            <input class="matinput" matInput formControlName=scoreTwo value="">
                         </mat-form-field>
                     </div>
                 </div>
             </div>
         </div>
-</div>
-<div mat-dialog-actions>
-    Prevent closing if not filled out
-    <button mat-button (click)="onNoClick()">Close</button>
+        
+        <div mat-dialog-actions>
+            <button class="cancel-button" (click)="onNoClick()">Close</button>
+            <button class="submit-button" (click)="saveMatchDetails()">Save</button>
+        </div>
+    </form>
 </div>
