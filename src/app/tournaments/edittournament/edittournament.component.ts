@@ -177,6 +177,7 @@ export class EdittournamentComponent {
       tournyMatch.teamTwoName = matchForm.get('teamTwo')?.value;
       var playerOneArray = matchForm.get('teamOnePlayers') as FormArray;
       var playerTwoArray = matchForm.get('teamTwoPlayers') as FormArray;
+      tournyMatch.allowEdits = true;
       for(var x = 0; x < this.teamFormat.length; x++){
         tournyMatch.teamOne?.push(playerOneArray.at(x).get('playerOneDetails')!.value);
         tournyMatch.teamOne?.push(playerTwoArray.at(x).get('playerTwoDetails')!.value);

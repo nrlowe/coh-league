@@ -17,6 +17,9 @@ export class MatchTreeService {
     
     findParentNode(matchNode : MatchNode, tree : MatchNode) {
         this.parentNodeFound = false;
+        if(matchNode.matchId == tree.matchId){
+            return ([0, this.parentNode])
+        }
         this.checkNode(matchNode, tree);
         return ([this.matchNodeSide, this.parentNode]);
     }
