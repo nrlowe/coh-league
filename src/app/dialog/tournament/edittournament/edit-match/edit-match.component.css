@@ -1,0 +1,22 @@
+.container{
+    min-width: 90vh;
+    background-color:white;
+    color: black;
+}
+
+mat-label {
+    color: black;
+}
+
+input .matInput{
+    border: 2px solid green;
+}
+h3{
+    font-weight: bold;
+}
+.teamNameRow{
+    display:flex;
+    flex-direction: row;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}

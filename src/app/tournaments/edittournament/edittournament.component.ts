@@ -28,7 +28,7 @@ export class EdittournamentComponent {
       matchs : this.formBuilder.array([])
   });
   editTournament! : any;
-  teamFormat? : any;
+  teamFormat : number[] = [];
   playerList? : Promise<PlayerDetails[]>;
   public players : PlayerDetails[] = [];
   roundOneMatchNum : number = 0;
@@ -45,7 +45,9 @@ export class EdittournamentComponent {
       this.editTournament = data;
     });
     await this.retrievePlayers();
-    this.teamFormat = Array(this.editTournament.teamSize).fill(0).map((x,i)=>i);
+    for(var i = 1; i <= this.editTournament.teamSize; i++){
+      this.teamFormat.push(i);
+    }
     this.roundOneMatchNum = this.editTournament.rounds[0].matchs.length;
     this.constructDynamicForm(this.editTournament.rounds![0]);
   }
@@ -177,6 +179,7 @@ export class EdittournamentComponent {
       tournyMatch.teamTwoName = matchForm.get('teamTwo')?.value;
       var playerOneArray = matchForm.get('teamOnePlayers') as FormArray;
       var playerTwoArray = matchForm.get('teamTwoPlayers') as FormArray;
+      tournyMatch.allowEdits = true;
       for(var x = 0; x < this.teamFormat.length; x++){
         tournyMatch.teamOne?.push(playerOneArray.at(x).get('playerOneDetails')!.value);
         tournyMatch.teamOne?.push(playerTwoArray.at(x).get('playerTwoDetails')!.value);

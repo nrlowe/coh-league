@@ -2,10 +2,10 @@
     <form [formGroup] = "gameDetailsForm" id="gameDetailsForm">
         <div class="row teamNameRow">
             <div class="col-6 teamone-col">
-                {{data.teamOne}}
+                <h3>{{data.teamOne}}</h3>
             </div>
             <div class="col-6 teamtwo-col">
-                {{data.teamTwo}}
+                <h3>{{data.teamTwo}}</h3>
             </div>
         </div>
         <div formArrayName="gameDetails">
@@ -18,7 +18,7 @@
                         </mat-form-field>
                     </div>
                     <div class="col-4">
-                        <mat-select placeholder="Game Winner" (selectionChange)="winnerSelected(p)" formControlName="gameWinner">
+                        <mat-select appearance="outline" placeholder="Game Winner" (selectionChange)="winnerSelected(p)" formControlName="gameWinner">
                             <mat-option *ngFor="let teamName of teamSelector" [value]="teamName">
                             {{teamName}}
                             </mat-option>
@@ -34,7 +34,7 @@
             </div>
         </div>
         
-        <div mat-dialog-actions>
+        <div mat-dialog-actions align="center">
             <button class="cancel-button" (click)="onNoClick()">Close</button>
             <button class="submit-button" (click)="saveMatchDetails()">Save</button>
         </div>

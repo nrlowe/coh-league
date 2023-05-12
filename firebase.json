@@ -1,7 +1,4 @@
 {
-  "database": {
-    "rules": "firestore.rules"
-  },
   "hosting": {
     "public": "dist/coh-league",
     "ignore": [

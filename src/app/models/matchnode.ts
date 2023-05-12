@@ -20,7 +20,8 @@ export class MatchNode {
     teamView : boolean = false;
     hasWinner : boolean = false;
     winner? : GameWinner;
-    allowEdits : boolean = true;
+    allowEdits : boolean = false;
+    roundId? : number;
     constructor(teamOne : PlayerDetails[], teamTwo : PlayerDetails[]){
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;
