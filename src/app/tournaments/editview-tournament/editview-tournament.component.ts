@@ -112,6 +112,7 @@ export class EditviewTournamentComponent {
   }
 
   openEditMatchDialog(match : MatchNode) {
+    console.log("CLICKED");
     const dialogRef = this.dialog.open(EditMatchComponent, {
       data : match,
     });
