@@ -58,13 +58,14 @@ export class EditTournamentService {
         finalMatch.teamOneScore = 0;
         finalMatch.teamTwoScore = 0;
         finalMatch.matchId = this.globalMatchCount;
+        finalMatch.roundId = roundNode.roundId;
         this.globalMatchCount++;
         this.addGameDetails(finalMatch);
-        for(var i = 1; i <= this.teamSize; i++){
+        for(var x = 1; x <= this.teamSize; x++){
             var player = new PlayerDetails;
-            player.playerName = "Player " + i;
-            finalMatch.teamOne?.push();
-            finalMatch.teamTwo?.push();
+            player.playerName = "Player " + x;
+            finalMatch.teamOne!.push();
+            finalMatch.teamTwo!.push();
         }
         matchArray.push(finalMatch);
         roundNode.matchs = matchArray;
@@ -76,8 +77,8 @@ export class EditTournamentService {
         if(roundNumber > 0){
             var newRound = new RoundNode([]);
             newRound.roundId = roundNumber;
+            newRound.matchs = this.addMatch(parentRoundNode, roundNumber);
             roundNumber--;
-            newRound.matchs = this.addMatch(parentRoundNode);
             parentRoundNode.previousRound = newRound;
             newRound.nextRound = parentRoundNode;
             nodearray.push(newRound);
@@ -86,31 +87,32 @@ export class EditTournamentService {
         return nodearray;
     }
 
-    private addMatch(parentRoundNode : RoundNode) : MatchNode[]{
+    private addMatch(parentRoundNode : RoundNode, roundId : number) : MatchNode[]{
         var roundMatchs = [];
         for(var node of parentRoundNode.matchs){
-            node.leftNode = this.creatMatch();
-            node.rightNode = this.creatMatch();
+            node.leftNode = this.creatMatch(roundId);
+            node.rightNode = this.creatMatch(roundId);
             roundMatchs.push(node.leftNode);
             roundMatchs.push(node.rightNode);
         }
         return roundMatchs;
     }
 
-    private creatMatch() : MatchNode{
+    private creatMatch(roundId : number) : MatchNode{
         var newMatch = new MatchNode([],[]);
         newMatch.teamSize = this.teamSize;
         newMatch.teamOneName = "TBD";
         newMatch.teamTwoName = "TBD";
         newMatch.teamOneScore = 0;
         newMatch.teamTwoScore = 0;
+        newMatch.roundId = roundId;
         newMatch.matchId = this.globalMatchCount;
         this.globalMatchCount++;
         for(var i = 1; i <= this.teamSize; i++){
             var player = new PlayerDetails;
             player.playerName = "Player " + i;
-            newMatch.teamOne?.push();
-            newMatch.teamTwo?.push();
+            newMatch.teamOne!.push();
+            newMatch.teamTwo!.push();
         }
         return this.addGameDetails(newMatch);
     }
@@ -137,7 +139,6 @@ export class EditTournamentService {
         tournamentTree.open = tournamentDetails.open;
         tournamentTree.startDate = tournamentDetails.startDate;
         tournamentTree.endDate = tournamentDetails.endDate;
-        console.log(tournamentTree);
         return tournamentTree;
     }
 

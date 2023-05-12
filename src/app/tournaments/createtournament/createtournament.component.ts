@@ -33,7 +33,7 @@ export class CreateTournament {
       if(result){
         this.tournament = this.editTournamentService.createNewTournament(result);
         this.sharedTournamentService.setNewTournament(this.tournament);
-        this.router.navigate(['/edittournament']);
+        this.router.navigate(['tournament/edittournament']);
       }
     })
   }

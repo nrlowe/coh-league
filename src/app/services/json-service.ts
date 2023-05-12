@@ -5,6 +5,7 @@ import { RoundNode } from '../models/roundnode';
 import { RoundDto } from '../models/dto/rounddto';
 import { MatchNode } from '../models/matchnode';
 import { MatchDto } from '../models/dto/matchdto';
+import { PlayerDetails } from '../models/playerdetails';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,6 @@ export class JsonService {
         var tournamentDto = new TournamentDto(tournament.title!, tournament.teamSize!,
             tournament.playerNumber!, tournament.gameVersion!, tournament.open!,
             tournament.hasImage);
-        console.log(tournament);
         tournamentDto.creatorKey = localStorage.getItem("userKey")!;
         tournamentDto.startDate = tournament.startDate;
         tournamentDto.endDate = tournament.endDate;
@@ -31,7 +31,6 @@ export class JsonService {
             tournamentDto.rounds.push(JSON.stringify(roundDto));
         }
         tournamentDto.matchTree = this.convertMatchTreeToJson(tournament.matchTree!);
-        console.log(tournamentDto);
         return tournamentDto;
     }
 
@@ -49,7 +48,6 @@ export class JsonService {
         dto.gameDetails = JSON.stringify(node.gameDetails);
         dto.teamOne = JSON.stringify(node.teamOne);
         dto.teamTwo = JSON.stringify(node.teamTwo);
-        console.log(dto);
         return dto;
     }
 
@@ -64,7 +62,7 @@ export class JsonService {
 
     private convertMatchInfoToMatchDto(match : MatchNode) : MatchDto {
         var matchdto = new MatchDto(match.teamOneName!, match.teamTwoName!, match.teamOneScore!,
-            match.teamTwoScore!, match.matchId!);
+            match.teamTwoScore!, match.matchId!, match.roundId!, match.allowEdits);
         matchdto.hasWinner = match.hasWinner;
         if(matchdto.hasWinner){
             matchdto.winner = JSON.stringify(match.winner)
@@ -104,7 +102,7 @@ export class JsonService {
         tournamentTree.liveStatus = tournamentDto.liveStatus;
         tournamentTree.open = tournamentDto.open;
         tournamentTree.playerNumber = tournamentDto.playerNumber;
-        tournamentTree.rounds = this.convertRoundsDtoToRoundNodeArray(tournamentDto.rounds);
+        tournamentTree.rounds = this.convertRoundsDtoToRoundNodeArray(tournamentDto.rounds, tournamentTree);
         tournamentTree.startDate = tournamentDto.startDate;
         tournamentTree.teamSize = tournamentDto.teamSize;
         tournamentTree.title = tournamentDto.title;
@@ -115,23 +113,75 @@ export class JsonService {
     }
 
     //Rounds Array JSON Conversion
-    private convertRoundsDtoToRoundNodeArray(roundString : string[]) : RoundNode[] {
+    private convertRoundsDtoToRoundNodeArray(roundString : string[], tournamentTree : TournamentTree) : RoundNode[] {
         var roundArray = [] as RoundNode[];
+        var matchsPerRoundMap = this.placeMatchInRoundMap(tournamentTree);
         for(var round of roundString){
             var parsedJsonMatchs = JSON.parse(round);
-            console.log(parsedJsonMatchs);
-            var matchNodeArray = [] as MatchNode[];
-            parsedJsonMatchs.matchs.forEach((m : string) => {
-                var node = JSON.parse(m) as MatchNode;
-                console.log(m);
-                matchNodeArray.push(node);
-            })
+            var matchNodeArray = matchsPerRoundMap.get(parsedJsonMatchs.roundId) as MatchNode[];
             var node = new RoundNode(matchNodeArray);
             node.roundId = parsedJsonMatchs.roundId;
             node.roundFormat = parsedJsonMatchs.roundFormat;
             roundArray.push(node);
         }
         return roundArray;
+    }
+
+    private placeMatchInRoundMap(tournamentTree : TournamentTree) : Map<number, MatchNode[]>{
+        var matchsPerRoundMap = new Map<number, MatchNode[]>;
+        var startNode = tournamentTree.matchTree;
+        var matchArray = [] as MatchNode[];
+        matchArray.push(this.createNewMiniMatchNode(startNode!));
+        matchsPerRoundMap.set(startNode!.roundId!, matchArray);
+        console.log("");
+        this.checkNextNode(startNode!, matchsPerRoundMap);
+        return matchsPerRoundMap;
+        // parsedJsonMatchs.matchs.forEach((m : string) => {
+        //     var node = JSON.parse(m) as MatchNode;
+        //     matchNodeArray.push(node);
+        // })
+    }
+
+    private createNewMiniMatchNode(tree : MatchNode) : MatchNode {
+        var mini = new MatchNode([],[]);
+        mini.matchId = tree.matchId;
+        mini.teamOne = tree.teamOne;
+        mini.teamTwo =  tree.teamTwo!;
+        mini.teamOneName = tree.teamOneName;
+        mini.teamTwoName = tree.teamTwoName;
+        mini.teamOneScore = tree.teamOneScore;
+        mini.teamTwoScore = tree.teamTwoScore;
+        mini.gameDetails = tree.gameDetails!;
+        mini.matchId = tree.matchId;
+        mini.hasWinner = tree.hasWinner!;
+        mini.roundId = tree.roundId;
+        mini.allowEdits = tree.allowEdits;
+        if(tree.hasWinner){
+            mini.winner =  tree.winner!;
+        }
+        return mini;
+    }
+
+    private checkNextNode(tree : MatchNode, map : Map<number, MatchNode[]>) {
+        if(tree.leftNode){
+            this.addNodeToMap(tree.leftNode, map);
+            this.checkNextNode(tree.leftNode, map);
+        }  
+        if (tree.rightNode) {
+            this.addNodeToMap(tree.rightNode, map);
+            this.checkNextNode(tree.rightNode, map);
+        }
+    }
+
+    private addNodeToMap(node : MatchNode, map : Map<number, MatchNode[]>) {
+        if(map.get(node.roundId!)){
+            var array = map.get(node.roundId!);
+            array?.push(this.createNewMiniMatchNode(node));
+        } else {
+            var newarray = [] as MatchNode[];
+            newarray.push(node);
+            map.set(node.roundId!, newarray);
+        }
     }
 
     //MatchTree JSON conversion 
@@ -155,6 +205,8 @@ export class JsonService {
         matchNode.gameDetails = JSON.parse(parsedJson.gameDetails!);
         matchNode.matchId = parsedJson.matchId;
         matchNode.hasWinner = parsedJson.hasWinner!;
+        matchNode.roundId = parsedJson.roundId;
+        matchNode.allowEdits = parsedJson.allowEdits!;
         if(matchNode.hasWinner){
             matchNode.winner =  JSON.parse(parsedJson.winner!);
         }
