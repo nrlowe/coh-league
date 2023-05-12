@@ -21,6 +21,7 @@ export class MatchNode {
     hasWinner : boolean = false;
     winner? : GameWinner;
     allowEdits : boolean = false;
+    roundId? : number;
     constructor(teamOne : PlayerDetails[], teamTwo : PlayerDetails[]){
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;

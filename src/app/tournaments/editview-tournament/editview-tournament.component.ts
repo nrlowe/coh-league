@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EditMatchComponent } from 'src/app/dialog/tournament/edittournament/edit-match/edit-match.component';
 import { EditRoundComponent } from 'src/app/dialog/tournament/edittournament/edit-round/editround.component';
+import { GameWinner } from 'src/app/models/gamewinner';
 import { MatchNode } from 'src/app/models/matchnode';
 import { PlayerDetails } from 'src/app/models/playerdetails';
 import { RoundNode } from 'src/app/models/roundnode';
@@ -25,27 +26,29 @@ export class EditviewTournamentComponent {
   teamview : boolean = false;
   playerview : PlayerDetails[] = [];
   imagepath : string = '';
+  champion? : GameWinner;
 
   //if tournament token exists, diable round modification?
   //todo:: clean up image test
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
+      console.log(this.newTournament);
     });
     //test for match edit / round edit views
-    this.newTournament = this.editTournamentService.createNewTournament(new TournamentDetails("Edit Match/Round Test", 1, 5, 4, "CoH2", true));
-    var roundOne = this.newTournament.rounds[0];
-    var players = ["Pob", "farlion", "jackass", "butt"];
-    for(let match of roundOne.matchs){
-      var i = 0;
-      match.teamOne = players[i];
-      match.teamOneName = players[i];
-      match.teamTwo = players[i + 1];
-      match.teamTwoName = players[i + 1];
-      match.allowEdits = true;
-      i++;
-      i++;
-    }
+    // this.newTournament = this.editTournamentService.createNewTournament(new TournamentDetails("Edit Match/Round Test", 1, 5, 4, "CoH2", true));
+    // var roundOne = this.newTournament.rounds[0];
+    // var players = ["Pob", "farlion", "jackass", "butt"];
+    // var i = 0;
+    // for(let match of roundOne.matchs){
+    //   match.teamOne = players[i];
+    //   match.teamOneName = players[i];
+    //   match.teamTwo = players[i + 1];
+    //   match.teamTwoName = players[i + 1];
+    //   match.allowEdits = true;
+    //   i++;
+    //   i++;
+    // }
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
@@ -150,6 +153,8 @@ export class EditviewTournamentComponent {
       } else {
         parentNode.allowEdits = false;
       }
+    } else {
+      this.champion = new GameWinner(result.winner!.teamName, result.winner!.teamPlayers, 1);
     }
     
     //check for parent mode, if undefined -> champion or 3rd place
@@ -175,6 +180,10 @@ export class EditviewTournamentComponent {
     this.tournamentService.create(dto);
     this.sharedTournamentService.setViewTournament(saveTournament);
     this.router.navigate(['tournament/viewtournament']);
+  }
+
+  publishTournament(publishTournament : TournamentTree){
+
   }
 
   cancelTournament(){

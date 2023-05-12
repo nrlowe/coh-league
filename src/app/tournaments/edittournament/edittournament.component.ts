@@ -28,7 +28,7 @@ export class EdittournamentComponent {
       matchs : this.formBuilder.array([])
   });
   editTournament! : any;
-  teamFormat? : any;
+  teamFormat : number[] = [];
   playerList? : Promise<PlayerDetails[]>;
   public players : PlayerDetails[] = [];
   roundOneMatchNum : number = 0;
@@ -45,7 +45,9 @@ export class EdittournamentComponent {
       this.editTournament = data;
     });
     await this.retrievePlayers();
-    this.teamFormat = Array(this.editTournament.teamSize).fill(0).map((x,i)=>i);
+    for(var i = 1; i <= this.editTournament.teamSize; i++){
+      this.teamFormat.push(i);
+    }
     this.roundOneMatchNum = this.editTournament.rounds[0].matchs.length;
     this.constructDynamicForm(this.editTournament.rounds![0]);
   }

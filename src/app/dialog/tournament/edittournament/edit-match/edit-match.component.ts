@@ -94,6 +94,7 @@ export class EditMatchComponent {
     if(this.data.teamOneScore! >= this.winningNum){
       this.data.hasWinner = true;
       this.data.winner = new GameWinner(this.data.teamOneName!, this.data.teamOne!, 1);
+      console.log(this.data.winner.teamPlayers);
     } else if(this.data.teamTwoScore! >= this.winningNum){
       this.data.hasWinner = true;
       this.data.winner = new GameWinner(this.data.teamTwoName!, this.data.teamTwo!, 2);
