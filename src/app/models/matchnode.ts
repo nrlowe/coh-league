@@ -14,7 +14,6 @@ export class MatchNode {
     rightNode? : MatchNode;
     teamOneScore? : number;
     teamTwoScore? : number;
-    gameFormat? : number;
     gameDetails? : GameDetails[];
     matchId? : number;
     teamView : boolean = false;
@@ -22,6 +21,8 @@ export class MatchNode {
     winner? : GameWinner;
     allowEdits : boolean = false;
     roundId? : number;
+    teamOneWin : boolean = false;
+    teamTwoWin : boolean = false;
     constructor(teamOne : PlayerDetails[], teamTwo : PlayerDetails[]){
         this.teamOne = teamOne;
         this.teamTwo = teamTwo;

@@ -17,6 +17,8 @@ export class MatchDto {
     hasWinner? : boolean;
     roundId? : number;
     allowEdits? : boolean;
+    teamOneWin : boolean = false;
+    teamTwoWin : boolean = false;
     constructor(teamOneName: string, teamTwoName : string,
        teamOneScore : number, teamTwoScore : number, matchId : number, roundId : number, allowEdits : boolean){
             this.teamOneName = teamOneName;

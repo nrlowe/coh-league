@@ -84,6 +84,11 @@ h1{
     
 }
 
+.matchwinner{
+  outline: 2px solid goldenrod;
+  color: black;
+}
+
 .teamview{
   position: absolute;
   background-color: black;
@@ -179,3 +184,21 @@ h1{
 }
 
 /* End of Bracket Lines ---------------------------------------------------- */
+
+.champion {
+  color: white;
+  background: 
+    linear-gradient(90deg,#0000 33%,rgba(255,255,255,0.3) 50%,#0000 66%)
+    rebeccapurple;
+  background-size:300% 100%;
+  animation: shine 2s infinite;
+  min-height: 5vh;
+}
+@keyframes shine {
+  0% {
+    background-position: right;    
+  }
+  /*100% {
+    background-position: left; it's the default value, no need to define it
+  }*/
+}
