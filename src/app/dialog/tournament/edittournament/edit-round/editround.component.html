@@ -1,20 +1,40 @@
-<h1 mat-dialog-title>Edit Round Details</h1>
-<div mat-dialog-content>
-  <mat-form-field appearance="fill">
-    <mat-label>Round Name</mat-label>
-    <input matInput [(ngModel)]="data.roundName">
-    *Note: Round name will replace Round # value on save
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Round Date</mat-label>
-    <input matInput [(ngModel)]="data.date">
-  </mat-form-field>
-  <mat-form-field appearance="fill">
-    <mat-label>Round Game Format</mat-label>
-    <input matInput [(ngModel)]="data.roundFormat">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
+<div class="container">
+  <h1 mat-dialog-title>Edit Round Details</h1>
+  <form [formGroup] = "roundForm">
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Round Name</mat-label>
+      <input matInput type="text" formControlName="roundName" required>
+      <mat-error *ngIf="hasError('roundName', 'required')">Round name is required 
+      and must be longer than 4 characters</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Round Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="roundDate">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="hasError('roundDate','required')">Invalid date</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="fill">
+    <mat-label>Round Format</mat-label>
+    <mat-select formControlName="roundFormat" required>
+      <mat-option value=1>Best of 1</mat-option>
+      <mat-option value=3>Best of 3</mat-option>
+      <mat-option value=5>Best of 5</mat-option>
+      <mat-option value=7>Best of 7</mat-option>
+    </mat-select>
+    <mat-error *ngIf="hasError('roundFormat', 'required')">Round format selection is required</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions align="center">
+    <button class="cancel-button"mat-button (click)="onNoClick()">Cancel</button>
+    <button class="submit-button" mat-button (click)="saveRoundDetails()">Save</button>
+  </div>
+  </form>
 </div>
 

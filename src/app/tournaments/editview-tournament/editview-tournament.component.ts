@@ -33,7 +33,6 @@ export class EditviewTournamentComponent {
   ngOnInit(): void {
     this.sharedTournamentService.getNewTournamentObject().subscribe(data => {
       this.newTournament = data;
-      console.log(this.newTournament);
     });
     //test for match edit / round edit views
     // this.newTournament = this.editTournamentService.createNewTournament(new TournamentDetails("Edit Match/Round Test", 1, 5, 4, "CoH2", true));
@@ -105,14 +104,13 @@ export class EditviewTournamentComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      roundNode = result;
+      
     })
     
     //if changes to round info/format, now edit match info(game details)
   }
 
   openEditMatchDialog(match : MatchNode) {
-    console.log("CLICKED");
     const dialogRef = this.dialog.open(EditMatchComponent, {
       data : match,
     });
@@ -155,7 +153,12 @@ export class EditviewTournamentComponent {
         parentNode.allowEdits = false;
       }
     } else {
-      this.champion = new GameWinner(result.winner!.teamName, result.winner!.teamPlayers, 1);
+      if(result.hasWinner){
+        this.champion = new GameWinner(result.winner!.teamName, result.winner!.teamPlayers, 1);
+      } else {
+        this.champion = undefined;
+
+      }
     }
     
     //check for parent mode, if undefined -> champion or 3rd place

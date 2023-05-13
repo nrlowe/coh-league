@@ -21,12 +21,17 @@ float right, then center the next to matchs based on the left and right node to 
       <div *ngIf="!image" class="tournyName">
         <h1>{{newTournament.title}}</h1>
       </div>
-      <div *ngIf="champion">
-        ALL HAIL THE VICTOR : <i style="font-size: 2em; color: goldenrod;" class="bi bi-trophy-fill"></i> {{champion.teamName}} <i style="font-size: 2em; color: goldenrod;" class="bi bi-trophy-fill"></i>
+      <!-- *ngIf="champion" -->
+      <div *ngIf="champion" class="row  d-flex align-items-center justify-content-center">
+      <div  class="  d-flex align-items-center justify-content-center col-6 champion">
+        <i style="color: goldenrod;" class="bi bi-trophy-fill"></i>
+        <span>-- ALL HAIL THE VICTOR :  {{champion.teamName}}  --</span> 
+        <i style="font-size: 1em; color: goldenrod;" class="bi bi-trophy-fill"></i>
         <!-- <div *ngFor="let player of champion.teamPlayers">
             {{player.playerName}}
         </div> -->
       </div>
+    </div>
       <div *ngIf="image" class="imagebox">
         <img src="./assets/images/imagetest.jpg" class="img-fluid"> 
         <!-- <img [src]="imagepath" style="width: 100px;height:100px;" /> -->
@@ -38,7 +43,7 @@ float right, then center the next to matchs based on the left and right node to 
       <div class="roundheadercontainer">
         <div *ngFor = "let round of newTournament.rounds">
           <div  class=" d-flex align-items-center justify-content-center roundheader" (click)="editRoundInfo(round)">
-            <div>Round {{round.roundId}}</div>
+            <div *ngIf="!round.roundName">Round {{round.roundId}}</div>
             <div>{{round.roundName}}</div>
             <div>{{round.date}}</div>
           </div>
@@ -51,21 +56,15 @@ float right, then center the next to matchs based on the left and right node to 
             <!-- Match Column -->
             <!-- if winner assign ngclass-->
             <div class="matchcontent" (click)="editMatchInfo(match)">
-              <div class="team">
-                <div class="align-items-center justify-content-center roundheader teamname" (click)="viewteam(match)">
+              <div class="team" [ngClass]= "{'matchwinner' : match.teamOneWin}">
+                <div class="align-items-center justify-content-center roundheader teamname">
                     {{match.teamOneName}}
-                    <div *ngIf="match.teamview" class="teamview">
-                      <div *ngFor="let player of match.teamOne">
-                        {{player.name}}
-                      </div>
-                      <button (click)="closeteamview()">Close</button>
-                    </div>
                 </div>
                 <div class="teamscore">
                     {{match.teamOneScore}}
                 </div>
               </div>
-              <div class="team">
+              <div class="team" [ngClass]= "{'matchwinner' : match.teamTwoWin}">
                     <div class="align-items-center justify-content-center roundheader teamname">
                         {{match.teamTwoName}}
                     </div>
