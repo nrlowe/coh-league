@@ -78,8 +78,8 @@ export class EdittournamentComponent {
   constructDynamicForm(rounds : RoundNode) {
     for(var i = 0; i < rounds.matchs.length; i++){
       var x = this.formBuilder.group({
-        teamOne: new FormControl(''),
-        teamTwo: new FormControl(''),
+        teamOne: new FormControl('',  Validators.required),
+        teamTwo: new FormControl('',  Validators.required),
         teamOnePlayers : this.formBuilder.array([]),
         teamTwoPlayers : this.formBuilder.array([]),
       });

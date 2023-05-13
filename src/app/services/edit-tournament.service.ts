@@ -50,6 +50,7 @@ export class EditTournamentService {
     private createHeadRoundAndMatchNodes(roundNum : number) : RoundNode {
         var roundNode = new RoundNode([]);
         roundNode.roundId = roundNum;
+        roundNode.roundFormat = this.gameFormat;
         var finalMatch = new MatchNode([],[]);
         var matchArray = [];
         finalMatch.teamSize = this.teamSize;
@@ -77,6 +78,7 @@ export class EditTournamentService {
         if(roundNumber > 0){
             var newRound = new RoundNode([]);
             newRound.roundId = roundNumber;
+            newRound.roundFormat = this.gameFormat;
             newRound.matchs = this.addMatch(parentRoundNode, roundNumber);
             roundNumber--;
             parentRoundNode.previousRound = newRound;
