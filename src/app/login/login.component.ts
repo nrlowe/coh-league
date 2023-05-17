@@ -15,8 +15,6 @@ export class LoginComponent {
   message?: string;  
   returnUrl?: string;  
   user : ULogin = new ULogin();
-  userSub : ULogin[] = [];
-  varvar : Number = 0;
     constructor(private formBuilder : FormBuilder,  
       private router : Router,  
       private authService : AuthService){
@@ -28,6 +26,7 @@ export class LoginComponent {
 
       ngOnInit() {  
         if(localStorage.getItem('isLoggedIn')){
+          console.log("Logging Out");
           this.authService.isLoggedIn = false;
           localStorage.clear();
           this.router.navigate(["/frontpage"]); 
