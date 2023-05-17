@@ -15,6 +15,7 @@ import { PlayerDetails } from 'src/app/models/playerdetails';
 import { Router } from '@angular/router';
 import { TournamentService } from 'src/app/services/tournament.service';
 import { TournamentDto } from 'src/app/models/dto/tournamentdto';
+import { GameWinner } from 'src/app/models/gamewinner';
 
 @Component({
   selector: 'app-viewtournament',
@@ -22,14 +23,18 @@ import { TournamentDto } from 'src/app/models/dto/tournamentdto';
   styleUrls: ['./viewtournament.component.css']
 })
 export class ViewtournamentComponent implements OnInit{
-  tournamentView : any;
+  tournamentView : any = TournamentTree;
   teamview : boolean = false;
   playerview : PlayerDetails[] = [];
   isOwner : boolean = false;
+  champion? : GameWinner = new GameWinner('',[],1);
 
   ngOnInit(): void {
     this.sharedTournamentService.getViewTournament().subscribe(data => {
       this.tournamentView = data;
+      if(this.tournamentView.matchnode.hasWinner){
+        this.champion = this.tournamentView.matchnode.winner;
+      }
     });
     if(localStorage.getItem("isLoggedIn")){
       if(this.tournamentView.creatorKey == localStorage.getItem("userKey")){

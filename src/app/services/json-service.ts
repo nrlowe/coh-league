@@ -66,6 +66,8 @@ export class JsonService {
         matchdto.hasWinner = match.hasWinner;
         if(matchdto.hasWinner){
             matchdto.winner = JSON.stringify(match.winner)
+            matchdto.teamOneWin = match.teamOneWin;
+            matchdto.teamTwoWin = match.teamTwoWin;
         }
         return matchdto;
     }
@@ -156,6 +158,8 @@ export class JsonService {
         mini.hasWinner = tree.hasWinner!;
         mini.roundId = tree.roundId;
         mini.allowEdits = tree.allowEdits;
+        mini.teamOneWin = tree.teamOneWin;
+        mini.teamTwoWin = tree.teamTwoWin;
         if(tree.hasWinner){
             mini.winner =  tree.winner!;
         }
@@ -207,6 +211,8 @@ export class JsonService {
         matchNode.hasWinner = parsedJson.hasWinner!;
         matchNode.roundId = parsedJson.roundId;
         matchNode.allowEdits = parsedJson.allowEdits!;
+        matchNode.teamOneWin = parsedJson.teamOneWin;
+        matchNode.teamTwoWin = parsedJson.teamTwoWin;
         if(matchNode.hasWinner){
             matchNode.winner =  JSON.parse(parsedJson.winner!);
         }

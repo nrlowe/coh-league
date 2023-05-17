@@ -25,7 +25,7 @@ float right, then center the next to matchs based on the left and right node to 
     <div class="roundheadercontainer">
       <div *ngFor = "let round of tournamentView.rounds">
         <div  class=" d-flex align-items-center justify-content-center roundheader">
-          <div>Round {{round.roundId}}</div>
+          <div *ngIf="!round.roundName">Round {{round.roundId}}</div>
           <div>{{round.roundName}}</div>
           <div>{{round.date}}</div>
         </div>
@@ -38,23 +38,15 @@ float right, then center the next to matchs based on the left and right node to 
           <!-- Match Column -->
           <!-- if winner assign ngclass-->
           <div class="matchcontent">
-            <div class="team">
+            <div class="team" [ngClass]= "{'matchwinner' : match.teamOneWin}">
               <div class="align-items-center justify-content-center roundheader teamname">
                   {{match.teamOneName}}
-                  <div *ngIf="match.teamview" class="teamview">
-                    TEFDKGBDPOFBJKDPBKDPKB
-                    <div *ngFor="let player of match.teamOne">
-                      {{player.name}}
-                      TEST TEST
-                    </div>
-                    <button (click)="closeteamview()">Close</button>
-                  </div>
               </div>
               <div class="teamscore">
                   {{match.teamOneScore}}
               </div>
             </div>
-            <div class="team">
+            <div class="team" [ngClass]= "{'matchwinner' : match.teamTwoWin}">
                   <div class="align-items-center justify-content-center roundheader teamname">
                       {{match.teamTwoName}}
                   </div>

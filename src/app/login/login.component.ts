@@ -45,6 +45,7 @@ export class LoginComponent {
             userName : c.userName, key : c.key, documentId : c['Document ID']
         })))).subscribe(data => {
             if(data){
+              console.log("User Logged");
               localStorage.setItem('isLoggedIn', "true");  
               localStorage.setItem('userId', data[0].userName!);
               localStorage.setItem('userKey', data[0].documentId);

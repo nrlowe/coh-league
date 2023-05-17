@@ -2,6 +2,7 @@
 .frontpage-container {
     width: 100vh;
     margin-bottom: 5vh;
+    min-height: 70vh;
 }
 
 .tour-rank-row{
@@ -52,9 +53,8 @@
 }
 
 .twitch-col{
-    height: 30vh;
+    height: 5vh;
     border: 2px solid #6441a5;
-    border-radius: 10% / 50%;
     background-color:  rgba(186, 184, 184, 0.1); ;
     color: white;
 }
