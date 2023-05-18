@@ -27,7 +27,7 @@ export class LoginComponent {
       ngOnInit() {  
         if(localStorage.getItem('isLoggedIn')){
           console.log("Logging Out");
-          this.authService.isLoggedIn = false;
+          this.authService.logout();
           localStorage.clear();
           this.router.navigate(["/frontpage"]); 
         }
@@ -44,11 +44,10 @@ export class LoginComponent {
             userName : c.userName, key : c.key, documentId : c['Document ID']
         })))).subscribe(data => {
             if(data){
-              console.log("User Logged");
+              this.authService.login();
               localStorage.setItem('isLoggedIn', "true");  
               localStorage.setItem('userId', data[0].userName!);
               localStorage.setItem('userKey', data[0].documentId);
-              this.authService.isLoggedIn = true;
               this.router.navigate(["/frontpage"]);
             };
         })

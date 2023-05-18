@@ -14,16 +14,8 @@ export class NavbarComponent {
 
     }
     ngOnInit(){
-      this.router.events.subscribe(event => {
-        if(event.constructor.name === "NavigationEnd"){
-          this.loggedIn = this.authService.isLoggedIn;
-          console.log(this.loggedIn);
-        }
+      this.authService.isLoggedInSubject.subscribe(status => {
+        this.loggedIn = status;
       })
-      if(localStorage.getItem('isLoggedIn')){
-        this.loggedIn = true;
-      } else {
-        this.loggedIn = false;
-      }
     }
 }

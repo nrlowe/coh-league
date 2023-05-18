@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';    
 import { ULogin } from '../models/dto/ulogin';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 
     
 @Injectable({    
@@ -13,6 +13,7 @@ export class AuthService {
     private user$ = new Observable<ULogin[]>;
     userRef: AngularFirestoreCollection<ULogin>;
     private userSub? : any;
+    isLoggedInSubject: Subject<boolean> = new Subject();
     isLoggedIn = false;
     pp : Number = 0;
     constructor(private db: AngularFirestore) { 
@@ -25,11 +26,13 @@ export class AuthService {
         }
    
     logout() : void {    
-            localStorage.setItem('isLoggedIn','false');    
-            localStorage.clear;    
+        this.isLoggedIn = false;
+        localStorage.setItem('isLoggedIn','false');    
+        localStorage.clear;    
     }
-    
-    
 
-
+    login() : void {
+        this.isLoggedIn = true;
+        this.isLoggedInSubject.next(this.isLoggedIn);
+    }
 }   
