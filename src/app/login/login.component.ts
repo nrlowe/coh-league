@@ -35,7 +35,7 @@ export class LoginComponent {
 
       get f() { return this.loginForm!.controls; }  
 
-       async login() {  
+      async login() {  
         if (this.loginForm!.valid) { 
           this.user.userName = this.loginForm.get('userId')!.value;
           this.user.key = this.loginForm.get('token')!.value;
@@ -53,7 +53,7 @@ export class LoginComponent {
             };
         })
             
-        }  
+      }  
       }
       
       onNoClick(){
