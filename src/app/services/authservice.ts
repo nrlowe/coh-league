@@ -28,7 +28,8 @@ export class AuthService {
     logout() : void {    
         this.isLoggedIn = false;
         localStorage.setItem('isLoggedIn','false');    
-        localStorage.clear;    
+        localStorage.clear;   
+        this.isLoggedInSubject.next(this.isLoggedIn); 
     }
 
     login() : void {
