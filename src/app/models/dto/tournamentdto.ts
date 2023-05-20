@@ -10,7 +10,7 @@ export class TournamentDto{
     endDate? : string; 
     open : boolean | false;
     image? : string;
-    displayImage?: any;
+    displayImage: boolean = false;
     hasImage: boolean = false;
     creatorKey? : string;
     liveStatus : boolean = false;

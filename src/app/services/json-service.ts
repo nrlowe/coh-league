@@ -23,7 +23,7 @@ export class JsonService {
         tournamentDto.startDate = tournament.startDate;
         tournamentDto.endDate = tournament.endDate;
         if(tournament.hasImage){
-            tournamentDto.image = tournament.image;
+            tournamentDto.hasImage = true;
             tournamentDto.displayImage = tournament.displayImage;
         }
         for(let round of tournament.rounds!){
