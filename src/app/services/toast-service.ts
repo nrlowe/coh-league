@@ -1,18 +1,69 @@
-import { Injectable, TemplateRef } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { ToastEvent } from '../models/events/toastevent';
+import { EventTypes } from '../models/events/eventtypes';
 
-@Injectable({ providedIn: 'root' })
+
+@Injectable({
+  providedIn: 'root',
+})
 export class ToastService {
-	toasts: any[] = [];
+  toastEvents: Observable<ToastEvent>;
+  private _toastEvents = new Subject<ToastEvent>();
 
-	show(textOrTpl: string | TemplateRef<any>, options: any = {}) {
-		this.toasts.push({ textOrTpl, ...options });
-	}
+  constructor() {
+    this.toastEvents = this._toastEvents.asObservable();
+  }
 
-	remove(toast : any) {
-		this.toasts = this.toasts.filter((t) => t !== toast);
-	}
+  /**
+   * Show success toast notification.
+   * @param title Toast title
+   * @param message Toast message
+   */
+  showSuccessToast(title: string, message: string) {
+    this._toastEvents.next({
+      message,
+      title,
+      type: EventTypes.Success,
+    });
+  }
 
-	clear() {
-		this.toasts.splice(0, this.toasts.length);
-	}
+  /**
+   * Show info toast notification.
+   * @param title Toast title
+   * @param message Toast message
+   */
+  showInfoToast(title: string, message: string) {
+    this._toastEvents.next({
+      message,
+      title,
+      type: EventTypes.Info,
+    });
+  }
+
+  /**
+   * Show warning toast notification.
+   * @param title Toast title
+   * @param message Toast message
+   */
+  showWarningToast(title: string, message: string) {
+    this._toastEvents.next({
+      message,
+      title,
+      type: EventTypes.Warning,
+    });
+  }
+
+  /**
+   * Show error toast notification.
+   * @param title Toast title
+   * @param message Toast message
+   */
+  showErrorToast(title: string, message: string) {
+    this._toastEvents.next({
+      message,
+      title,
+      type: EventTypes.Error,
+    });
+  }
 }

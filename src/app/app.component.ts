@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthGuard } from './guards/auth-guard';
 import { Observable } from 'rxjs';
 import { AuthService } from './services/authservice';
+import { ToastService } from './services/toast-service';
+import { EventTypes } from './models/events/eventtypes';
 
 
 @Component({
@@ -13,8 +15,9 @@ import { AuthService } from './services/authservice';
 export class AppComponent {
   title = 'coh-league';
   isLoggedIn$? : Observable<boolean>;
+  EventTypes = EventTypes;
 
-  constructor(private authService : AuthService,  private router : Router){
+  constructor(private authService : AuthService,  private router : Router, private toastService : ToastService){
 
   }
 
@@ -26,5 +29,6 @@ export class AppComponent {
   // if error kick out to error screen
 
   //user sessions
+
   
 }

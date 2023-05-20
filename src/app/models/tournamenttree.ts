@@ -18,4 +18,6 @@ export class TournamentTree {
     displayImage: boolean = false;
     hasImage: boolean = false;
     creatorKey? : string;
+    tournamentDocId? : string;
+    imageFile? : ImageData;
 }

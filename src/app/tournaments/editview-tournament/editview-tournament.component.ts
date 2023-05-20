@@ -23,6 +23,7 @@ import { TournamentService } from 'src/app/services/tournament.service';
 export class EditviewTournamentComponent {
   newTournament : any;
   image : boolean = false;
+  imagefile : any;
   teamview : boolean = false;
   playerview : PlayerDetails[] = [];
   imagepath : string = '';
@@ -56,34 +57,25 @@ export class EditviewTournamentComponent {
     private matchtreeService : MatchTreeService){
   }
 
+  uploadImage() : void {
+    document.getElementById('fileInput')?.click();
+  }
+
   displayImage(){
-    if(this.newTournament.hasImage){
+
+  }
+
+  handleFileInput(event: Event): void {
+    const file = (event.target as HTMLInputElement)?.files?.[0];
+    if (file) {
       this.image = true;
-      this.newTournament.displayImage = true;
-      var imageSave = "./assets/images/imagetest.jpg";
-      if(imageSave){
-        var reader = new FileReader();
-        var imageString = '';
-        reader.onload = (e : any) => {
-          var image = new Image();
-          image.src = e.target.result;
-          image.onload = rs => {
-            var basepath = e.target.result;
-            this.imagepath = basepath;
-          };
-        };
-        //reader.readAsDataURL();
-      }
+      this.imagefile = file;
     }
   }
 
   hideImage(){
     this.image = false;
     this.newTournament.displayImage = false;
-  }
-
-  uploadImage(){
-
   }
 
   editDate(round : RoundNode){
@@ -180,8 +172,18 @@ export class EditviewTournamentComponent {
   }
 
   saveTournament(saveTournament : TournamentTree){
+    if(this.image){
+      saveTournament.displayImage = true;
+      saveTournament.hasImage = true;
+      saveTournament.imageFile = this.imagefile;
+    }
+    console.log(saveTournament.imageFile);
     var dto = this.jsonService.jsonTournament(saveTournament);
-    this.tournamentService.create(dto);
+    if(dto.hasImage){
+      this.tournamentService.createTournamentWithImage(dto, saveTournament.imageFile!)
+    } else {
+      this.tournamentService.createTournament(dto);
+    }
     this.sharedTournamentService.setViewTournament(saveTournament);
     this.router.navigate(['tournament/viewtournament']);
   }

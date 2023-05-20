@@ -56,6 +56,7 @@ pager: any = {};
           t.endDate = tourny.endDate;
           t.liveStatus = this.checkLiveStatus(t.startDate!, t.endDate!);
           t.creatorKey = tourny.creatorKey;
+          t.documentId = tourny.documentId;
         this.liveTournaments.push(t);
         this.tournamentDtoList.push(t);
       })

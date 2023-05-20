@@ -27,7 +27,7 @@ export class AddupdateplayerComponent {
   submitNewTournament(): void {
     if(this.newPlayerForm!.valid){
       this.convertFormToPlayer();
-      this.playerService.addNewPlayer(this.newPlayer);
+      this.playerService.addNewPlayerCoH2(this.newPlayer);
       this.dialogRef.close(this.newPlayer);
     }
   }
@@ -37,8 +37,8 @@ export class AddupdateplayerComponent {
   }
 
   convertFormToPlayer(){
-    this.newPlayer.playerName = this.newPlayerForm?.get('playerName')?.value;
-    this.newPlayer.steamId = this.newPlayerForm?.get('steamId')?.value;
+    this.newPlayer.playerName = this.newPlayerForm!.get('playerName')!.value;
+    this.newPlayer.steamId = this.newPlayerForm!.get('steamId')!.value;
     this.newPlayer.points = 0;
   }
 }

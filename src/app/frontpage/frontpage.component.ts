@@ -89,7 +89,8 @@ export class FrontpageComponent implements OnInit {
           t.startDate = tourny.startDate;
           t.endDate = tourny.endDate;
           t.liveStatus = this.checkLiveStatus(t.startDate!, t.endDate!);
-          t.creatorKey = tourny.creatorKey;
+          t.creatorKey = tourny.documentId;
+          
         this.liveTournaments.push(t);
         this.tournamentDtoList.push(t);
       })

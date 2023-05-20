@@ -1,30 +1,55 @@
-import { Component, OnDestroy, TemplateRef  } from '@angular/core';
-import { ToastService } from '../services/toast-service';
-
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { fromEvent, take } from 'rxjs';
+import { EventTypes } from '../models/events/eventtypes';
+import { Toast } from 'bootstrap';
 
 @Component({
-	selector: 'app-toast',
-	templateUrl: './toast.component.html',
-  styleUrls: ['./toast.component.css']
+  selector: 'app-toast',
+  templateUrl: './toast.component.html',
+  styleUrls: ['./toast.component.css'],
 })
-export class ToastComponent implements OnDestroy {
-	constructor(public toastService: ToastService) {}
-  toast : any;
-  toasts : any[] = [];
-  showToast : boolean = false;
-  isTemplate(toast : any) {
-		return toast.textOrTpl instanceof TemplateRef;
-	}
+export class ToastComponent implements OnInit {
+  @Output() disposeEvent = new EventEmitter();
 
-	showStandard() {
-		this.toastService.show('I am a standard toast');
-	}
+  @ViewChild('toastElement', { static: true })
+  toastEl!: ElementRef;
 
-	showSuccess() {
-		this.toastService.show('I am a success toast', { classname: 'bg-success text-light', delay: 10000 });
-	}
+  @Input()
+  type!: EventTypes;
 
-	ngOnDestroy(): void {
-		this.toastService.clear();
-	}
+  @Input()
+  title!: string;
+
+  @Input()
+  message!: string;
+
+  toast!: Toast;
+
+  ngOnInit() {
+    this.show();
+  }
+
+  show() {
+    this.toast = new Toast(
+      this.toastEl.nativeElement,
+      this.type === EventTypes.Error
+        ? {
+            autohide: false,
+          }
+        : {
+            delay: 5000,
+          }
+    );
+
+    fromEvent(this.toastEl.nativeElement, 'hidden.bs.toast')
+      .pipe(take(1))
+      .subscribe(() => this.hide());
+
+    this.toast.show();
+  }
+
+  hide() {
+    this.toast.dispose();
+    this.disposeEvent.emit();
+  }
 }

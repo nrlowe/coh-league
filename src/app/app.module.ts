@@ -25,12 +25,15 @@ import { MatInputModule } from '@angular/material/input';
 import { DialogModule } from './dialog/dialog.module';
 import { MatSelectModule } from '@angular/material/select';
 import { EdittournamentComponent } from './tournaments/edittournament/edittournament.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
-import {MatTooltipModule} from '@angular/material/tooltip'; 
+import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
+import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { EditviewTournamentComponent } from './tournaments/editview-tournament/editview-tournament.component';
 import { AuthGuard } from './guards/auth-guard';
 import { LoginComponent } from './login/login.component';
 import { ToastComponent } from './toast/toast.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { ToasterComponent } from './toaster/toaster.component';
+
 
 // todo:: clean up -- move dialog items/components into dialog module
 @NgModule({
@@ -49,6 +52,7 @@ import { ToastComponent } from './toast/toast.component';
     EditviewTournamentComponent,
     LoginComponent,
     ToastComponent,
+    ToasterComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +61,7 @@ import { ToastComponent } from './toast/toast.component';
     NgxPaginationModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     BrowserAnimationsModule,
     MatIconModule,
     MatToolbarModule,

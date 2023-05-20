@@ -10,10 +10,11 @@ export class TournamentDto{
     endDate? : string; 
     open : boolean | false;
     image? : string;
-    displayImage: boolean = false;
+    displayImage?: any;
     hasImage: boolean = false;
     creatorKey? : string;
     liveStatus : boolean = false;
+    documentId? : string;
 
     constructor(title : string, teamSize : number, playerNumber : number,
         gameVersion : string, open : boolean, hasImage : boolean) {

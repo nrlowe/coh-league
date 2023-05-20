@@ -10,9 +10,7 @@ import { Observable, Subject, map } from 'rxjs';
 export class AuthService {    
 
     private dbPath = "/users";
-    private user$ = new Observable<ULogin[]>;
     userRef: AngularFirestoreCollection<ULogin>;
-    private userSub? : any;
     isLoggedInSubject: Subject<boolean> = new Subject();
     isLoggedIn = false;
     pp : Number = 0;

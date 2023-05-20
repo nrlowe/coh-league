@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { TournamentDetails } from '../models/tournamentdetails';
 import { TournamentTree } from '../models/tournamenttree';
 import { TournamentDto } from '../models/dto/tournamentdto';
 import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +16,35 @@ export class TournamentService {
     tournamentDetails? : TournamentDetails;
     tournamentDtoList : TournamentDto[] = [];
 
-    constructor(private db: AngularFirestore) {
-        this.tournamentRef = db.collection(this.dbPath);
+    constructor(private db: AngularFirestore, private storage : AngularFireStorage) {
+        this.tournamentRef = this.db.collection<TournamentDto>(this.dbPath);
     }
-    //save tournament + tournament details at the same time
     
 
-    create(tutorial: TournamentDto): any {
-        return this.tournamentRef.add({... tutorial
+    createTournamentWithImage(tournament: TournamentDto, file : ImageData) {
+        this.tournamentRef.add({... tournament
         });
+        const id = Math.random().toString(36).substring(2);
+        this.saveTournamentImage(file, id, tournament.title!);
+    }
+
+    createTournament(tournament: TournamentDto) {
+        this.tournamentRef.add({... tournament
+        });
+    }
+
+    saveTournamentImage(file : ImageData, id : string, name : string){
+        const path = `images/${id}${name}`;
+        const ref = this.storage.ref(path);
+        const task = ref.put(file);
+        task.snapshotChanges().pipe(
+            finalize(() => {
+              ref.getDownloadURL().subscribe(url => {
+                // Here, you can save the URL to Firestore or perform any other operations with it
+                console.log('Image URL:', url);
+              });
+            })
+          ).subscribe();
     }
 
     update(id: string, data: any): Promise<void> {
@@ -34,7 +56,15 @@ export class TournamentService {
     }
 
     getAllTournaments() : Observable<TournamentDto[]> {
-        return this.db.collection<TournamentDto>(this.dbPath).valueChanges();
+        return this.tournamentRef.snapshotChanges().pipe(
+            map((snapshot)=>
+            snapshot.map((doc) => {
+                var data = doc.payload.doc.data() as TournamentDto;
+                data.documentId = doc.payload.doc.id;
+                return {...data};
+            })
+            )
+        );
     }
     
 }

@@ -16,7 +16,8 @@ float right, then center the next to matchs based on the left and right node to 
         <button class="proceed-button" (click)="displayImage()">Image View</button>
       </div>
         <button class="proceed-button" (click)="hideImage()">Name View</button>
-        <button class="proceed-button" (click)="uploadImage()">Upload New Image</button>
+        <input type="file" accept="image/*" id="fileInput" style="display: none" (change)="handleFileInput($event)">
+        <button *ngIf="!image" class="proceed-button" (click)="uploadImage()">Upload New Image</button>
       </div>
       <div *ngIf="!image" class="tournyName">
         <h1>{{newTournament.title}}</h1>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { TournamentTree } from '../models/tournamenttree';
 import { BehaviorSubject } from 'rxjs';
 import { TournamentService } from './tournament.service';
+import { TournamentDto } from '../models/dto/tournamentdto';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { TournamentService } from './tournament.service';
 export class SharedTournamentService {
     public newTournamentTree = new BehaviorSubject(TournamentTree);
     public viewTournamentTree = new BehaviorSubject(TournamentTree);
-
+    public liveUpcomingTournaments? : TournamentDto[];
     constructor(private tournamentService : TournamentService){
 
     }
