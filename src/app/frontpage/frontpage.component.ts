@@ -33,9 +33,8 @@ export class FrontpageComponent implements OnInit {
   upComingTournaments : TournamentDto[] = [];
 
   @Input() liveTournamentPage = 1;
-  @Input() upcomingTournamentPage = 1;
   @Input() rankingPage = 1;
-  @Input() tournamentPageSize = 5;
+  @Input() tournamentPageSize = 10;
   @Input() rankPageSize = 10;
 
   pager: any = {};
