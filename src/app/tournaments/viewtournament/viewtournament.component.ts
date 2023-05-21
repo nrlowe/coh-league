@@ -12,7 +12,7 @@ import { EditRoundComponent } from 'src/app/dialog/tournament/edittournament/edi
 import { EditTournamentService } from 'src/app/services/edit-tournament.service';
 import { TournamentDetails } from 'src/app/models/tournamentdetails';
 import { PlayerDetails } from 'src/app/models/playerdetails';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TournamentService } from 'src/app/services/tournament.service';
 import { TournamentDto } from 'src/app/models/dto/tournamentdto';
 import { GameWinner } from 'src/app/models/gamewinner';
@@ -30,25 +30,31 @@ export class ViewtournamentComponent implements OnInit{
   champion? : GameWinner = new GameWinner('',[],1);
 
   ngOnInit(): void {
-    this.sharedTournamentService.getViewTournament().subscribe(data => {
-      this.tournamentView = data;
-      if(this.tournamentView.matchTree.hasWinner){
-        this.champion = this.tournamentView.matchnode.winner;
+    const tournyId = this.activatedroute.snapshot.paramMap.get('tournamentId');
+    if(!tournyId){
+      this.sharedTournamentService.getViewTournament().subscribe(data => {
+        this.tournamentView = data;
+        if(this.tournamentView.matchTree.hasWinner){
+          this.champion = this.tournamentView.matchnode.winner;
+        }
+        if(this.tournamentView.hasImage){
+          this.tournamentService.getTournamentImage(this.tournamentView.imageId, this.tournamentView);
+        }
+      });
+      if(localStorage.getItem("isLoggedIn")){
+        if(this.tournamentView.creatorKey == localStorage.getItem("userKey")){
+          this.isOwner = true;
+        }
       }
-      if(this.tournamentView.hasImage){
-        this.tournamentService.getTournamentImage(this.tournamentView.imageId, this.tournamentView);
-      }
-    });
-    if(localStorage.getItem("isLoggedIn")){
-      if(this.tournamentView.creatorKey == localStorage.getItem("userKey")){
-        this.isOwner = true;
-      }
+    } else {
+      
     }
   }
   
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
     private router : Router, private editTournamentService : EditTournamentService,
-    private tournamentService : TournamentService){
+    private tournamentService : TournamentService,
+    private activatedroute : ActivatedRoute){
   }
 
   viewteam(match : MatchNode){

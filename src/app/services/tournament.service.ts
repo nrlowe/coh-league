@@ -23,7 +23,7 @@ export class TournamentService {
 
     createTournamentWithImage(tournament: TournamentDto, file : ImageData) {
         const id = Math.random().toString(36).substring(2);
-        tournament.imageId = id;
+        tournament.imageId = id+tournament.title;
         this.tournamentRef.add({... tournament
         });
         this.saveTournamentImage(file, id, tournament.title!);

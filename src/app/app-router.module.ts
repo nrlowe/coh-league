@@ -24,6 +24,7 @@ const routes: Routes = [
   { path: 'rankings', component: RankingsComponent},
   { path: 'tools', component: ToolsComponent},
   { path: 'tournament/viewtournament', component: ViewtournamentComponent},
+  { path: 'tournament/viewtournament/:tournamentId', component: ViewtournamentComponent},
   { path: 'tournament/edittournament', component: EdittournamentComponent},
   { path: 'login', component: LoginComponent },
 ];
