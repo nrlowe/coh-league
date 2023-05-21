@@ -14,7 +14,7 @@
                         <div class="col-4 d-flex align-items-center justify-content-center rank-points"><strong>Start Date</strong></div>
                     </div>
                     <div *ngIf="tournamentDtoList.length > 0">
-                      <div *ngFor = "let livetour of liveTournaments | paginate: {itemsPerPage : tournamentPageSize, currentPage: liveTournamentPage}" class="row livetour-row" (click)="viewTournament(livetour)">
+                      <div *ngFor = "let livetour of liveTournaments | paginate:  {id: 'pagination1', itemsPerPage : tournamentPageSize, currentPage: liveTournamentPage}" class="row livetour-row" (click)="viewTournament(livetour)">
                         
                           <div class="col-6 d-flex align-items-center justify-content-center livetour-name"><strong>{{livetour.title}}</strong></div>
                           <div class="col-2 d-flex align-items-center justify-content-center livetour-name">{{livetour.gameVersion}}</div>
@@ -26,7 +26,7 @@
                     <div *ngIf="tournamentDtoList.length == 0">
                       <p>No Tournaments Found</p>
                     </div>
-                    <pagination-controls class="d-flex align-items-center justify-content-center" (pageChange)="liveTournamentPage = $event"></pagination-controls>
+                    <pagination-controls id="pagination1" class="d-flex align-items-center justify-content-center" (pageChange)="liveTournamentPage = $event"></pagination-controls>
                 </div>
             </div>
         </div>
@@ -41,12 +41,12 @@
                         <div class="col-8 d-flex align-items-center justify-content-center rank-name"><strong>Player Name</strong></div>
                         <div class="col-4 d-flex align-items-center justify-content-center rank-points"><strong>Points</strong></div>
                     </div>
-                    <div *ngFor = "let player of rankList | paginate: {itemsPerPage: rankPageSize, currentPage: rankingPage}" class="row rank-row">
+                    <div *ngFor = "let player of rankList | paginate: {id: 'pagination2', itemsPerPage: rankPageSize, currentPage: rankingPage}" class="row rank-row">
                         <div class="col-8 d-flex align-items-center justify-content-center rank-name"><strong>{{player.playerName}}</strong></div>
                         <div class="col-4 d-flex align-items-center justify-content-center rank-points">{{player.points}}</div>
                     </div>
                     <div class="row d-flex align-items-center justify-content-center">
-                        <pagination-controls (pageChange)="rankingPage = $event"></pagination-controls>
+                        <pagination-controls id="pagination2" (pageChange)="rankingPage = $event"></pagination-controls>
                        
                     </div>
                 </div>
