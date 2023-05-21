@@ -26,7 +26,7 @@
                     <div *ngIf="tournamentDtoList.length == 0">
                       <p>No Tournaments Found</p>
                     </div>
-                    <pagination-controls class="d-flex align-items-center justify-content-center" (pageChange)="rankingPage = $event"></pagination-controls>
+                    <pagination-controls class="d-flex align-items-center justify-content-center" (pageChange)="liveTournamentPage = $event"></pagination-controls>
                 </div>
             </div>
         </div>
