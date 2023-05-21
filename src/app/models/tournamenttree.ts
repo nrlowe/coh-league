@@ -20,4 +20,6 @@ export class TournamentTree {
     creatorKey? : string;
     tournamentDocId? : string;
     imageFile? : ImageData;
+    imageUrl : string = '';
+    imageId : string = '';
 }

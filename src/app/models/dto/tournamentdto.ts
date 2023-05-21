@@ -15,6 +15,7 @@ export class TournamentDto{
     creatorKey? : string;
     liveStatus : boolean = false;
     documentId? : string;
+    imageId: string = '';
 
     constructor(title : string, teamSize : number, playerNumber : number,
         gameVersion : string, open : boolean, hasImage : boolean) {

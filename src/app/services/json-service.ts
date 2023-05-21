@@ -101,6 +101,9 @@ export class JsonService {
         tournamentTree.endDate = tournamentDto.endDate;
         tournamentTree.gameVersion = tournamentDto.gameVersion;
         tournamentTree.hasImage = tournamentDto.hasImage;
+        if(tournamentTree.hasImage){
+            tournamentTree.imageId = tournamentDto.imageId!;
+        }
         tournamentTree.liveStatus = tournamentDto.liveStatus;
         tournamentTree.open = tournamentDto.open;
         tournamentTree.playerNumber = tournamentDto.playerNumber;

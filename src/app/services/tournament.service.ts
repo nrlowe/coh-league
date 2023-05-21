@@ -22,9 +22,10 @@ export class TournamentService {
     
 
     createTournamentWithImage(tournament: TournamentDto, file : ImageData) {
+        const id = Math.random().toString(36).substring(2);
+        tournament.imageId = id;
         this.tournamentRef.add({... tournament
         });
-        const id = Math.random().toString(36).substring(2);
         this.saveTournamentImage(file, id, tournament.title!);
     }
 
@@ -65,6 +66,13 @@ export class TournamentService {
             })
             )
         );
+    }
+
+    getTournamentImage(id : string, tournamenttree : TournamentTree) {
+        const path = `images/${id}`;
+        return this.storage.ref(path).getDownloadURL().subscribe((downloadUrl) => {
+            tournamenttree.imageUrl = downloadUrl;
+        });
     }
     
 }

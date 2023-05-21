@@ -32,8 +32,11 @@ export class ViewtournamentComponent implements OnInit{
   ngOnInit(): void {
     this.sharedTournamentService.getViewTournament().subscribe(data => {
       this.tournamentView = data;
-      if(this.tournamentView.matchnode.hasWinner){
+      if(this.tournamentView.matchTree.hasWinner){
         this.champion = this.tournamentView.matchnode.winner;
+      }
+      if(this.tournamentView.hasImage){
+        this.tournamentService.getTournamentImage(this.tournamentView.imageId, this.tournamentView);
       }
     });
     if(localStorage.getItem("isLoggedIn")){
