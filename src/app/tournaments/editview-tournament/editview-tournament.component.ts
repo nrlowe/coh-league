@@ -14,6 +14,7 @@ import { JsonService } from 'src/app/services/json-service';
 import { MatchTreeService } from 'src/app/services/matchtree.service';
 import { SharedTournamentService } from 'src/app/services/shared-tournament.service';
 import { TournamentService } from 'src/app/services/tournament.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-editview-tournament',
@@ -21,7 +22,7 @@ import { TournamentService } from 'src/app/services/tournament.service';
   styleUrls: ['./editview-tournament.component.css']
 })
 export class EditviewTournamentComponent {
-  newTournament : any;
+  newTournament : any = TournamentTree;
   image : boolean = false;
   imagefile : any;
   teamview : boolean = false;
@@ -54,7 +55,8 @@ export class EditviewTournamentComponent {
   constructor(private sharedTournamentService : SharedTournamentService, public dialog : MatDialog,
     private router : Router, private editTournamentService : EditTournamentService,
     private tournamentService : TournamentService, private jsonService : JsonService, 
-    private matchtreeService : MatchTreeService){
+    private matchtreeService : MatchTreeService,
+    private cdr: ChangeDetectorRef){
   }
 
   uploadImage() : void {
@@ -121,8 +123,8 @@ export class EditviewTournamentComponent {
     if(position != 0){
       if(position == 1){
         if(result.hasWinner){
-            parentNode!.teamOneName = result.winner?.teamName;
-            parentNode!.teamOne = result.winner?.teamPlayers;
+            parentNode!.teamOneName = result.winner!.teamName;
+            parentNode!.teamOne = result.winner!.teamPlayers;
         } else {
           parentNode!.teamOneName = "TBD";
           parentNode!.teamOne = [];
@@ -131,8 +133,8 @@ export class EditviewTournamentComponent {
       }
       if(position == 2){
         if(result.hasWinner){
-            parentNode!.teamTwoName = result.winner?.teamName;
-            parentNode!.teamTwo = result.winner?.teamPlayers;
+            parentNode!.teamTwoName = result.winner!.teamName;
+            parentNode!.teamTwo = result.winner!.teamPlayers;
         } else {
           parentNode!.teamTwoName = "TBD";
           parentNode!.teamTwo = [];
@@ -149,12 +151,30 @@ export class EditviewTournamentComponent {
         this.champion = new GameWinner(result.winner!.teamName, result.winner!.teamPlayers, 1);
       } else {
         this.champion = undefined;
-
       }
     }
+    this.upDateRoundArray(parentNode);
+    this.cdr.detectChanges();
     
     //check for parent mode, if undefined -> champion or 3rd place
     //service for modifying matchtree/round array??
+  }
+
+  upDateRoundArray(parentNode : MatchNode){
+    var roundId = parentNode.roundId! - 1;
+    var roundNode = this.newTournament.rounds[roundId] as RoundNode;
+    var matchIndex = 0;
+    for(let match of roundNode.matchs){
+      if(match.matchId == parentNode.matchId){
+        this.newTournament.rounds[roundId].matchs[matchIndex] = parentNode;
+        this.cdr.detectChanges();
+        console.log("MatchNode AFTER");
+        console.log(match);
+        console.log("ParentNode AFTER");
+        console.log(parentNode);
+      };
+      matchIndex++;
+    }
   }
 
   viewteam(match : MatchNode){
@@ -172,20 +192,24 @@ export class EditviewTournamentComponent {
   }
 
   saveTournament(saveTournament : TournamentTree){
-    if(this.image){
-      saveTournament.displayImage = true;
-      saveTournament.hasImage = true;
-      saveTournament.imageFile = this.imagefile;
-    }
-    console.log(saveTournament.imageFile);
-    var dto = this.jsonService.jsonTournament(saveTournament);
-    if(dto.hasImage){
-      this.tournamentService.createTournamentWithImage(dto, saveTournament.imageFile!)
+    if(saveTournament.tournamentDocId && saveTournament.tournamentDocId != ""){
+      var dto = this.jsonService.jsonTournament(saveTournament);
+      this.tournamentService.updateTournament(dto, saveTournament.tournamentDocId);
     } else {
-      this.tournamentService.createTournament(dto);
+      if(this.image){
+        saveTournament.displayImage = true;
+        saveTournament.hasImage = true;
+        saveTournament.imageFile = this.imagefile;
+      }
+      var dto = this.jsonService.jsonTournament(saveTournament);
+      if(dto.hasImage){
+        this.tournamentService.createTournamentWithImage(dto, saveTournament.imageFile!)
+      } else {
+        this.tournamentService.createTournament(dto);
+      }
+      this.sharedTournamentService.setViewTournament(saveTournament);
+      this.router.navigate(['tournament/viewtournament']);
     }
-    this.sharedTournamentService.setViewTournament(saveTournament);
-    this.router.navigate(['tournament/viewtournament']);
   }
 
   publishTournament(publishTournament : TournamentTree){

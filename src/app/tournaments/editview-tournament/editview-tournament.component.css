@@ -86,6 +86,7 @@ h1{
 
 .matchwinner{
   outline: 2px solid goldenrod;
+  background:  goldenrod;
   color: black;
 }
 

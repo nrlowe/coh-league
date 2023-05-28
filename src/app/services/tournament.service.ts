@@ -48,6 +48,13 @@ export class TournamentService {
           ).subscribe();
     }
 
+    updateTournament(tournament : TournamentDto, docId : string){
+        console.log(tournament);
+        const tournamentData = JSON.parse(JSON.stringify(tournament));
+
+        return this.tournamentRef.doc(docId).update(tournamentData);
+    }
+
     update(id: string, data: any): Promise<void> {
         return this.tournamentRef.doc(id).update(data);
     }

@@ -36,10 +36,6 @@ export class JsonService {
 
     private convertRoundsToJson(round : RoundNode) : RoundDto{
         var roundDto = new RoundDto(round.roundId!, round.roundName!, round.date!, 3);
-        for(let match of round.matchs){
-            var matchdto = this.convertMatchInfoToMatchDto(match);
-            roundDto.matchs.push(JSON.stringify(matchdto));
-        }
         return roundDto;
     }
 
@@ -53,6 +49,8 @@ export class JsonService {
 
     //Match Tree to JSON
     private convertMatchTreeToJson(matchTree : MatchNode) : string{
+        console.log("Match Tree");
+        console.log(matchTree);
         var matchDto = this.convertMatchNodeToJSON(matchTree);
         matchDto.leftNode = this.checkNode(matchTree.leftNode!);
         matchDto.rightNode = this.checkNode(matchTree.rightNode!);
@@ -75,19 +73,23 @@ export class JsonService {
     private checkNode(node : MatchNode) : string{
         var right = '';
         var left = '';
-        if(node.rightNode != null && node.rightNode != undefined){
-            if(!this.visited.has(node.rightNode.matchId!)){
-                right = this.checkNode(node.rightNode);
-            }
-        }
         if(node.leftNode != null && node.leftNode != undefined){
-            if(!this.visited.has(node.leftNode.matchId!)){
+           
                 left = this.checkNode(node.leftNode);
-            }
+            
+        }
+        if(node.rightNode != null && node.rightNode != undefined){
+            
+                right = this.checkNode(node.rightNode);
+        
         }
         var newMatchDto = this.convertMatchNodeToJSON(node)
-        newMatchDto.leftNode = left;
-        newMatchDto.rightNode = right;
+        if(left != ''){
+            newMatchDto.leftNode = left;
+        }
+        if(right != ''){
+            newMatchDto.rightNode = right;
+        }
         return JSON.stringify(newMatchDto);
     }
 
@@ -111,6 +113,7 @@ export class JsonService {
         tournamentTree.startDate = tournamentDto.startDate;
         tournamentTree.teamSize = tournamentDto.teamSize;
         tournamentTree.title = tournamentDto.title;
+        tournamentTree.tournamentDocId = tournamentDto.documentId;
         if(tournamentDto.description){
             tournamentTree.description = tournamentDto.description;
         }
@@ -121,6 +124,10 @@ export class JsonService {
     private convertRoundsDtoToRoundNodeArray(roundString : string[], tournamentTree : TournamentTree) : RoundNode[] {
         var roundArray = [] as RoundNode[];
         var matchsPerRoundMap = this.placeMatchInRoundMap(tournamentTree);
+        console.log("MatchMap");
+        console.log(matchsPerRoundMap);
+        console.log("MatchTree");
+        console.log(tournamentTree.matchTree);
         for(var round of roundString){
             var parsedJsonMatchs = JSON.parse(round);
             var matchNodeArray = matchsPerRoundMap.get(parsedJsonMatchs.roundId) as MatchNode[];
@@ -135,10 +142,11 @@ export class JsonService {
     private placeMatchInRoundMap(tournamentTree : TournamentTree) : Map<number, MatchNode[]>{
         var matchsPerRoundMap = new Map<number, MatchNode[]>;
         var startNode = tournamentTree.matchTree;
+        console.log("StartNODE");
+        console.log(startNode);
         var matchArray = [] as MatchNode[];
         matchArray.push(this.createNewMiniMatchNode(startNode!));
         matchsPerRoundMap.set(startNode!.roundId!, matchArray);
-        console.log("");
         this.checkNextNode(startNode!, matchsPerRoundMap);
         return matchsPerRoundMap;
         // parsedJsonMatchs.matchs.forEach((m : string) => {
@@ -150,7 +158,7 @@ export class JsonService {
     private createNewMiniMatchNode(tree : MatchNode) : MatchNode {
         var mini = new MatchNode([],[]);
         mini.matchId = tree.matchId;
-        mini.teamOne = tree.teamOne;
+        mini.teamOne = tree.teamOne!;
         mini.teamTwo =  tree.teamTwo!;
         mini.teamOneName = tree.teamOneName;
         mini.teamTwoName = tree.teamTwoName;
@@ -194,7 +202,9 @@ export class JsonService {
     //MatchTree JSON conversion 
     private convertJsonToMatchNode(jsonMatchNode : string) : MatchNode{
         var parsedJson = JSON.parse(jsonMatchNode) as MatchDto;
-        var matchNode = this.setMatchNodeValuesWithParsedJSON(parsedJson);
+        console.log("Parsed JSON MatchDTO");
+        console.log(parsedJson);
+        var matchNode = this.setMatchNodeValuesWithParsedJSON(parsedJson) as MatchNode;
         matchNode.leftNode = this.checkJSONMatchNode(JSON.parse(parsedJson.leftNode!));
         matchNode.rightNode = this.checkJSONMatchNode(JSON.parse(parsedJson.rightNode!));
         return matchNode;

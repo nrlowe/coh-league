@@ -78,8 +78,8 @@ export class EdittournamentComponent {
   constructDynamicForm(rounds : RoundNode) {
     for(var i = 0; i < rounds.matchs.length; i++){
       var x = this.formBuilder.group({
-        teamOne: new FormControl('',  Validators.required),
-        teamTwo: new FormControl('',  Validators.required),
+        teamOne: new FormControl(undefined),
+        teamTwo: new FormControl(undefined),
         teamOnePlayers : this.formBuilder.array([]),
         teamTwoPlayers : this.formBuilder.array([]),
       });
@@ -175,14 +175,22 @@ export class EdittournamentComponent {
       var matchArrayForm = roundForm.controls['matchs'] as FormArray;
       var matchForm = matchArrayForm.at(i) as FormControl;
       var tournyMatch = matchArray[i] as MatchNode;
-      tournyMatch.teamOneName = matchForm.get('teamOne')?.value;
-      tournyMatch.teamTwoName = matchForm.get('teamTwo')?.value;
       var playerOneArray = matchForm.get('teamOnePlayers') as FormArray;
       var playerTwoArray = matchForm.get('teamTwoPlayers') as FormArray;
+      if(matchForm.get('teamOne')?.value){
+        tournyMatch.teamOneName = matchForm.get('teamOne')!.value;
+      } else {
+        tournyMatch.teamOneName = playerOneArray.at(0).get('playerOneName')!.value;
+      }
+      if(matchForm.get('teamTwo')?.value){
+        tournyMatch.teamTwoName = matchForm.get('teamTwo')!.value;
+      } else {
+        tournyMatch.teamTwoName = playerTwoArray.at(0).get('playerTwoName')!.value;
+      }
       tournyMatch.allowEdits = true;
       for(var x = 0; x < this.teamFormat.length; x++){
         tournyMatch.teamOne?.push(playerOneArray.at(x).get('playerOneDetails')!.value);
-        tournyMatch.teamOne?.push(playerTwoArray.at(x).get('playerTwoDetails')!.value);
+        tournyMatch.teamTwo?.push(playerTwoArray.at(x).get('playerTwoDetails')!.value);
       }
     }
   }
