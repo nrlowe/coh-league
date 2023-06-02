@@ -153,25 +153,28 @@ export class EditviewTournamentComponent {
         this.champion = undefined;
       }
     }
-    this.upDateRoundArray(parentNode);
+    this.updateRoundArrayMatchNode(parentNode);
+    this.updateRoundArrayMatchNode(result);
+    this.updateTreeWithResult(result);
     this.cdr.detectChanges();
     
     //check for parent mode, if undefined -> champion or 3rd place
     //service for modifying matchtree/round array??
   }
 
-  upDateRoundArray(parentNode : MatchNode){
-    var roundId = parentNode.roundId! - 1;
-    var roundNode = this.newTournament.rounds[roundId] as RoundNode;
+  private updateTreeWithResult(node : MatchNode){
+    this.matchtreeService.updateTreeWithResult(node, this.newTournament.matchTree);
+  }
+
+  //** This updates the round array that is responsible for the view, this removes any 
+  //** references to old objects and instead points them to the current edits */
+  private updateRoundArrayMatchNode(node : MatchNode){
+    var roundArrayId = node.roundId! - 1;
+    var roundNode = this.newTournament.rounds[roundArrayId] as RoundNode;
     var matchIndex = 0;
     for(let match of roundNode.matchs){
-      if(match.matchId == parentNode.matchId){
-        this.newTournament.rounds[roundId].matchs[matchIndex] = parentNode;
-        this.cdr.detectChanges();
-        console.log("MatchNode AFTER");
-        console.log(match);
-        console.log("ParentNode AFTER");
-        console.log(parentNode);
+      if(match.matchId == node.matchId){
+        this.newTournament.rounds[roundArrayId].matchs[matchIndex] = node;
       };
       matchIndex++;
     }

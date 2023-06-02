@@ -49,8 +49,6 @@ export class JsonService {
 
     //Match Tree to JSON
     private convertMatchTreeToJson(matchTree : MatchNode) : string{
-        console.log("Match Tree");
-        console.log(matchTree);
         var matchDto = this.convertMatchNodeToJSON(matchTree);
         matchDto.leftNode = this.checkNode(matchTree.leftNode!);
         matchDto.rightNode = this.checkNode(matchTree.rightNode!);
@@ -124,10 +122,6 @@ export class JsonService {
     private convertRoundsDtoToRoundNodeArray(roundString : string[], tournamentTree : TournamentTree) : RoundNode[] {
         var roundArray = [] as RoundNode[];
         var matchsPerRoundMap = this.placeMatchInRoundMap(tournamentTree);
-        console.log("MatchMap");
-        console.log(matchsPerRoundMap);
-        console.log("MatchTree");
-        console.log(tournamentTree.matchTree);
         for(var round of roundString){
             var parsedJsonMatchs = JSON.parse(round);
             var matchNodeArray = matchsPerRoundMap.get(parsedJsonMatchs.roundId) as MatchNode[];
@@ -142,8 +136,6 @@ export class JsonService {
     private placeMatchInRoundMap(tournamentTree : TournamentTree) : Map<number, MatchNode[]>{
         var matchsPerRoundMap = new Map<number, MatchNode[]>;
         var startNode = tournamentTree.matchTree;
-        console.log("StartNODE");
-        console.log(startNode);
         var matchArray = [] as MatchNode[];
         matchArray.push(this.createNewMiniMatchNode(startNode!));
         matchsPerRoundMap.set(startNode!.roundId!, matchArray);
@@ -202,8 +194,6 @@ export class JsonService {
     //MatchTree JSON conversion 
     private convertJsonToMatchNode(jsonMatchNode : string) : MatchNode{
         var parsedJson = JSON.parse(jsonMatchNode) as MatchDto;
-        console.log("Parsed JSON MatchDTO");
-        console.log(parsedJson);
         var matchNode = this.setMatchNodeValuesWithParsedJSON(parsedJson) as MatchNode;
         matchNode.leftNode = this.checkJSONMatchNode(JSON.parse(parsedJson.leftNode!));
         matchNode.rightNode = this.checkJSONMatchNode(JSON.parse(parsedJson.rightNode!));
